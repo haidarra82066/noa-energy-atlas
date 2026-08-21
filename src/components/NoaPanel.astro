@@ -2,24 +2,26 @@
 import { news } from "../data/atlas";
 import { newsAr } from "../data/localization";
 const latest = news.slice(0, 2);
+const basePath=import.meta.env.BASE_URL.replace(/\/$/,"");
+const withBase=(target:string)=>`${basePath}${target}`;
 ---
 <button class="noa-launcher" id="noa-open" type="button" aria-controls="noa-panel" aria-expanded="false" data-aria-en="Open Noa's atlas note" data-aria-ar="فتح ملاحظة نوا">
-  <span class="noa-avatar" aria-hidden="true"><img src="/assets/noa-phoenix-editorial-idle.webp" alt="" width="1280" height="1280" /></span>
+  <span class="noa-avatar" aria-hidden="true"><img src={withBase("/assets/noa-phoenix-editorial-idle.webp")} alt="" width="1280" height="1280" /></span>
   <span><strong>Noa</strong><small data-en="Atlas watch" data-ar="مراقبة الأطلس">Atlas watch</small></span>
   <span class="live-dot" aria-hidden="true"></span>
 </button>
 
 <aside class="noa-panel" id="noa-panel" role="dialog" aria-modal="false" aria-labelledby="noa-title" aria-hidden="true" data-open="false" inert>
   <button class="icon-button noa-close" id="noa-close" type="button" data-aria-en="Close Noa's note" data-aria-ar="إغلاق ملاحظة نوا"><i class="ph ph-x" aria-hidden="true"></i></button>
-  <span class="noa-avatar noa-panel-avatar" aria-hidden="true"><img class="noa-idle" src="/assets/noa-phoenix-editorial-idle.webp" alt="" width="1280" height="1280" /><img class="noa-listening" src="/assets/noa-phoenix-editorial-listening.webp" alt="" width="1280" height="1280" /></span>
+  <span class="noa-avatar noa-panel-avatar" aria-hidden="true"><img class="noa-idle" src={withBase("/assets/noa-phoenix-editorial-idle.webp")} alt="" width="1280" height="1280" /><img class="noa-listening" src={withBase("/assets/noa-phoenix-editorial-listening.webp")} alt="" width="1280" height="1280" /></span>
   <div class="noa-copy">
     <span class="noa-state"><span class="signal-dot" aria-hidden="true"></span><span data-en="Atlas review active" data-ar="مراجعة الأطلس نشطة">Atlas review active</span></span>
     <h2 id="noa-title" data-en="Noa keeps the framework in view." data-ar="نوا يبقي الإطار القانوني تحت المراجعة.">Noa keeps the framework in view.</h2>
-    <p data-en="Legal records are checked on Mondays. The energy briefing is refreshed on Tuesdays and Fridays. Select any law to open its verified dossier and professional interpretation." data-ar="تُراجع السجلات القانونية يوم الاثنين. وتُحدّث إحاطة الطاقة يومي الثلاثاء والجمعة. اختر أي قانون لفتح ملفه الموثّق وقراءته المهنية.">Legal records are checked on Mondays. The energy briefing is refreshed on Tuesdays and Fridays. Select any law to open its verified dossier and professional interpretation.</p>
+    <p data-en="Legal records are checked on the 1st and 15th. The energy briefing is refreshed on Tuesdays and Fridays. Select any law to open its verified dossier and professional interpretation." data-ar="تُراجع السجلات القانونية في اليومين الأول والخامس عشر. وتُحدّث إحاطة الطاقة يومي الثلاثاء والجمعة. اختر أي قانون لفتح ملفه الموثّق وقراءته المهنية.">Legal records are checked on the 1st and 15th. The energy briefing is refreshed on Tuesdays and Fridays. Select any law to open its verified dossier and professional interpretation.</p>
     <div class="noa-latest">
-      {latest.map((item)=><a href={`/updates/#${item.slug}`}><time datetime={item.date}>{item.date}</time><span data-en={item.title} data-ar={newsAr[item.id]?.title}>{item.title}</span></a>)}
+      {latest.map((item)=><a href={withBase(`/updates/#${item.slug}`)}><time datetime={item.date}>{item.date}</time><span data-en={item.title} data-ar={newsAr[item.id]?.title}>{item.title}</span></a>)}
     </div>
-    <a class="noa-briefing-link" href="/updates/"><span data-en="Open the energy briefing" data-ar="فتح إحاطة الطاقة">Open the energy briefing</span><i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+    <a class="noa-briefing-link" href={withBase("/updates/")}><span data-en="Open the energy briefing" data-ar="فتح إحاطة الطاقة">Open the energy briefing</span><i class="ph ph-arrow-right" aria-hidden="true"></i></a>
   </div>
 </aside>
 

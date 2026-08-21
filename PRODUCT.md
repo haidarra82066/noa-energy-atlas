@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-Astro static site, deployed as a public installable PWA on Netlify.
+Astro static site, deployed as a public installable PWA on GitHub Pages.
 
 ## Users
 

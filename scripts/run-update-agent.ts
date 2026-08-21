@@ -138,7 +138,7 @@ async function fetchEvidence(source: IntelligenceSource, previous: UpdateState):
     const response = await fetch(source.url, {
       redirect: "follow",
       signal: AbortSignal.timeout(25_000),
-      headers: { "user-agent": "Noa-Energy-Atlas-Research/3.0 (+https://noa-energy-atlas.netlify.app/)" }
+      headers: { "user-agent": "Noa-Energy-Atlas-Research/3.0 (+https://haidarra82066.github.io/noa-energy-atlas/)" }
     });
     const contentType = response.headers.get("content-type") ?? "";
     const buffer = Buffer.from(await response.arrayBuffer());

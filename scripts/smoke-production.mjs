@@ -1,4 +1,4 @@
-const base=(process.argv[2]||process.env.DEPLOY_URL||"https://noa-energy-atlas.netlify.app").replace(/\/$/,"");
+const base=(process.argv[2]||process.env.DEPLOY_URL||"https://haidarra82066.github.io/noa-energy-atlas").replace(/\/$/,"");
 const expected=process.argv[3]||process.env.PUBLICATION_ID||"";
 const deadline=Date.now()+Number(process.env.SMOKE_TIMEOUT_MS||240000);
 const wait=(ms)=>new Promise((resolve)=>setTimeout(resolve,ms));

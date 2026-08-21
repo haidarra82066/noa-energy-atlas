@@ -2,6 +2,8 @@
 
 An English–Arabic reference to Lebanon’s energy laws and consequential sector updates through 16 August 2026. The primary experience is a source-backed neural law map with organic fields, animated legal relationships, contextual dossiers and a concise energy briefing maintained by Noa. Arabic mode uses RTL layout and the original official Arabic names of laws and instruments when available.
 
+Production: `https://haidarra82066.github.io/noa-energy-atlas/`
+
 ## Commands
 
 - `npm run dev` — local development server
