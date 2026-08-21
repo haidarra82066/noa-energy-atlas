@@ -2,6 +2,8 @@
 
 The public production origin is `https://noa-energy-atlas.netlify.app`. The linked existing Netlify site ID is `ffdfa234-6474-4155-af51-7e08c6b6c3b9`; do not create a duplicate site.
 
+The site is connected to `https://github.com/haidarra82066/noa-energy-atlas`, branch `main`, for ordinary continuous deployment. Scheduled intelligence workflows use a two-phase manual artifact deployment and exact-marker smoke check, then push a `[skip netlify]` commit after success to avoid a second racing build.
+
 Local release verification uses Node 22.19 or later:
 
 ```text
