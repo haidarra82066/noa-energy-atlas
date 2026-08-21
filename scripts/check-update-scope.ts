@@ -1,8 +1,10 @@
 import { execFileSync } from "node:child_process";
+import { resolve } from "node:path";
 type Mode="news"|"law";
 const mode=process.argv.includes("--mode")?process.argv[process.argv.indexOf("--mode")+1] as Mode:undefined;
 if(!mode||!["news","law"].includes(mode))throw new Error("Use --mode news or --mode law");
-const changed=execFileSync("git",["status","--porcelain"],{encoding:"utf8"}).split(/\r?\n/).filter(Boolean).map((line)=>line.slice(3).replace(/\\/g,"/"));
+const repository=resolve(".").replace(/\\/g,"/");
+const changed=execFileSync("git",["-c",`safe.directory=${repository}`,"status","--porcelain"],{encoding:"utf8"}).split(/\r?\n/).filter(Boolean).map((line)=>line.slice(3).replace(/\\/g,"/"));
 const shared=[/^src\/data\/automated-publications\.json$/, /^public\/deployment-marker\.json$/];
 const news=[/^updates\/research\/news-evidence\.json$/, /^updates\/candidates\/news(?:\.json|-briefing\.md|\.md)$/, /^updates\/pending-state\/news\.json$/, /^updates\/publication-ledger-news\.jsonl$/, /^updates\/memory\/(briefing-history|watchlist|data-gaps)\.md$/];
 const law=[/^updates\/research\/law-evidence\.json$/, /^updates\/candidates\/law(?:\.json|-verification\.json|\.md)$/, /^updates\/pending-state\/law\.json$/, /^updates\/publication-ledger-law\.jsonl$/];
