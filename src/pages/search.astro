@@ -1,0 +1,21 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { instruments, news, sources } from "../data/atlas";
+import { instrumentAr, newsAr } from "../data/localization";
+const records=[
+  ...instruments.map((x)=>({title:x.title,titleAr:instrumentAr[x.id]?.title??x.title,description:x.summary,descriptionAr:instrumentAr[x.id]?.summary??x.summary,url:`/instruments/${x.slug}/`,kind:"Instrument",kindAr:"أداة"})),
+  ...news.map((x)=>({title:x.title,titleAr:newsAr[x.slug]?.title??x.title,description:x.summary,descriptionAr:newsAr[x.slug]?.summary??x.summary,url:`/updates/#${x.slug}`,kind:"Update",kindAr:"تحديث"})),
+  ...sources.map((x)=>({title:x.title,titleAr:x.title,description:x.publisher,descriptionAr:x.publisher,url:x.url,kind:"Source",kindAr:"مصدر"}))
+];
+---
+<BaseLayout title="Search" description="Search Noa Energy Atlas laws, instruments, updates and primary sources.">
+  <header class="page-head"><div><p class="eyebrow" data-en="Atlas search" data-ar="البحث في الأطلس">Atlas search</p><h1 data-en="Find a law, development or source" data-ar="ابحث عن قانون أو تطور أو مصدر">Find a law, development or source</h1><p data-en="Search official titles, legal summaries, dated updates and source publishers." data-ar="ابحث في العناوين الرسمية والملخصات القانونية والتحديثات المؤرخة وناشري المصادر.">Search official titles, legal summaries, dated updates and source publishers.</p></div></header>
+  <div class="field"><label for="site-search" data-en="Search query" data-ar="عبارة البحث">Search query</label><input id="site-search" type="search" placeholder="Try ‘Law 318’, ‘solar’ or ‘UNFCCC’" data-placeholder-en="Try ‘Law 318’, ‘solar’ or ‘UNFCCC’" data-placeholder-ar="جرّب «القانون 318» أو «الطاقة الشمسية»" autofocus /></div>
+  <p class="results-count" aria-live="polite"><span id="search-count">{records.length}</span> <span data-en="results" data-ar="نتيجة">results</span></p>
+  <div class="record-list" id="search-results">{records.map((record)=><article class="record" data-search={`${record.title} ${record.titleAr} ${record.description} ${record.descriptionAr} ${record.kind} ${record.kindAr}`.toLowerCase()}><div class="record-year" data-en={record.kind} data-ar={record.kindAr}>{record.kind}</div><div><h2><a href={record.url} data-en={record.title} data-ar={record.titleAr}>{record.title}</a></h2><p data-en={record.description} data-ar={record.descriptionAr}>{record.description}</p></div></article>)}</div>
+  <p class="empty-state" id="search-empty" hidden data-en="No results. Try a different term." data-ar="لا توجد نتائج. جرّب عبارة أخرى.">No results. Try a different term.</p>
+  <script>
+    const input=document.querySelector<HTMLInputElement>("#site-search"); const records=[...document.querySelectorAll<HTMLElement>("#search-results .record")]; const count=document.querySelector("#search-count"); const empty=document.querySelector<HTMLElement>("#search-empty"); const params=new URLSearchParams(location.search); if(input)input.value=params.get("q")||"";
+    const search=()=>{const q=input?.value.toLocaleLowerCase().trim()||"";let shown=0;records.forEach((r)=>{r.hidden=Boolean(q&&!r.dataset.search?.includes(q));if(!r.hidden)shown++});if(count)count.textContent=String(shown);if(empty)empty.hidden=shown>0;const next=new URLSearchParams();if(q)next.set("q",q);history.replaceState(null,"",`${location.pathname}${next.size?`?${next}`:""}`)}; input?.addEventListener("input",search); search();
+  </script>
+</BaseLayout>

@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.astro/
+.netlify/
+.env
+.env.*
+!.env.example
+qa-screenshots/
+work/
+tmp/
+*.log
+*.tsbuildinfo
+.DS_Store
+Thumbs.db

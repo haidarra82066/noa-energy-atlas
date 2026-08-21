@@ -1,0 +1,185 @@
+---
+import { CONTENT_CUTOFF, instruments, relationships, resolveSources } from "../data/atlas";
+import { categoryAr, instrumentAr, relationshipAr, statusAr } from "../data/localization";
+import { legalDetails } from "../data/legal-details";
+
+interface Props { immersive?: boolean; }
+const { immersive = false } = Astro.props;
+const categories = ["Electricity", "Renewables", "Climate", "Petroleum", "Finance", "Institutions"] as const;
+const palette: Record<string, string> = {
+  Electricity: "#348ca2", Renewables: "#119ba7", Climate: "#5aa8ba",
+  Petroleum: "#c7612b", Finance: "#a94b20", Institutions: "#737b83"
+};
+const fields: Record<string, {d:string; tx:number; ty:number; view:[number,number,number,number]}> = {
+  Electricity: { d:"M360 62 C510 26 945 35 1067 116 C1152 174 1134 438 1002 490 C826 560 493 524 370 430 C282 362 269 107 360 62Z", tx:700, ty:82, view:[270,25,900,520] },
+  Institutions: { d:"M45 174 C127 121 384 130 448 213 C503 285 472 526 383 573 C274 631 77 572 38 475 C2 387 -23 218 45 174Z", tx:224, ty:176, view:[0,105,505,535] },
+  Climate: { d:"M1183 63 C1305 25 1665 44 1742 133 C1812 214 1774 437 1665 493 C1542 557 1234 521 1164 423 C1103 338 1095 90 1183 63Z", tx:1442, ty:86, view:[1090,25,700,520] },
+  Renewables: { d:"M414 570 C541 523 1014 530 1091 633 C1160 727 1124 1002 1003 1061 C853 1135 510 1094 413 990 C326 895 318 606 414 570Z", tx:746, ty:590, view:[320,520,820,570] },
+  Finance: { d:"M36 665 C124 616 374 626 447 710 C505 777 481 1010 383 1066 C269 1131 70 1080 28 983 C-8 897 -34 704 36 665Z", tx:226, ty:678, view:[0,600,500,500] },
+  Petroleum: { d:"M1174 574 C1295 527 1663 545 1744 636 C1819 720 1784 1010 1662 1068 C1520 1135 1226 1095 1157 993 C1095 900 1083 610 1174 574Z", tx:1440, ty:594, view:[1090,520,710,580] }
+};
+const layout: Record<string,{x:number;y:number;cols:number;xGap:number;yGap:number}> = {
+  Electricity:{x:405,y:145,cols:3,xGap:260,yGap:96}, Institutions:{x:120,y:260,cols:2,xGap:230,yGap:112},
+  Climate:{x:1250,y:150,cols:2,xGap:300,yGap:110}, Renewables:{x:475,y:665,cols:3,xGap:270,yGap:105},
+  Finance:{x:125,y:770,cols:2,xGap:230,yGap:112}, Petroleum:{x:1240,y:670,cols:3,xGap:230,yGap:108}
+};
+const coords: Record<string,[number,number]> = {};
+for (const category of categories) instruments.filter((item)=>item.category===category).forEach((item,index)=>{const spec=layout[category]!;coords[item.id]=[spec.x+(index%spec.cols)*spec.xGap,spec.y+Math.floor(index/spec.cols)*spec.yGap]});
+const kindOf = (id:string) => /law|decree|petroleum|opr|env|sea-|eia-|standards/.test(id) ? "law" : /era|lpa|lra/.test(id) ? "institution" : /lresrp|solar-licenses|wind-licenses/.test(id) ? "project" : "policy";
+const toneOf = (type:string) => type === "amends" ? "amendment" : ["informs","finances","sets-target-for"].includes(type) ? "reference" : "implementation";
+const nodeInfo = new Map(instruments.map((item) => {
+  const [cx,cy] = coords[item.id] || [900,550];
+  const width = Math.max(132, Math.min(210, 70 + item.shortTitle.length * 7.4));
+  const height = ["ins-law-462","ins-law-318"].includes(item.id) ? 44 : 38;
+  return [item.id, {cx,cy,width,height,x:cx-width/2,y:cy-height/2}];
+}));
+const boundaryPoint=(a:{cx:number;cy:number;width:number;height:number},b:{cx:number;cy:number})=>{const dx=b.cx-a.cx,dy=b.cy-a.cy,length=Math.hypot(dx,dy)||1,ux=dx/length,uy=dy/length,radius=1/Math.sqrt((ux/(a.width/2))**2+(uy/(a.height/2))**2);return {x:a.cx+ux*radius,y:a.cy+uy*radius}};
+const connectedFor = (id:string) => relationships.filter((rel) => rel.from === id || rel.to === id).map((rel) => {
+  const otherId = rel.from === id ? rel.to : rel.from;
+  const other = instruments.find((item) => item.id === otherId);
+  return { id:otherId, title:other?.shortTitle || otherId, titleAr:instrumentAr[otherId]?.shortTitle || other?.shortTitle || otherId, slug:other?.slug || "", label:rel.label, labelAr:relationshipAr[rel.id] || rel.label };
+});
+---
+<section class:list={["knowledge-workspace", immersive && "knowledge-workspace--immersive"]} aria-labelledby="knowledge-title">
+  <h1 id="knowledge-title" class="visually-hidden" data-en="Lebanon energy-law knowledge map" data-ar="خريطة المعرفة لقوانين الطاقة في لبنان">Lebanon energy-law knowledge map</h1>
+  <div class="graph-stage" id="graph-stage">
+    <header class="graph-masthead">
+      <div>
+        <span class="graph-masthead-label" data-en="Lebanon energy system" data-ar="منظومة الطاقة في لبنان">Lebanon energy system</span>
+        <strong data-en="The legal framework, connected" data-ar="الإطار القانوني، مترابطاً">The legal framework, connected</strong>
+      </div>
+      <div class="map-count" aria-live="polite"><span class="signal-dot" aria-hidden="true"></span><strong id="visible-node-count">{instruments.length}</strong><span data-en="verified records" data-ar="سجلاً موثّقاً">verified records</span></div>
+    </header>
+    <div class="graph-toolbar" role="toolbar" aria-label="Map controls" data-aria-en="Map controls" data-aria-ar="أدوات الخريطة">
+      <button type="button" data-graph-action="zoom-in" data-aria-en="Zoom in" data-aria-ar="تكبير"><i class="ph ph-plus" aria-hidden="true"></i></button>
+      <button type="button" data-graph-action="zoom-out" data-aria-en="Zoom out" data-aria-ar="تصغير"><i class="ph ph-minus" aria-hidden="true"></i></button>
+      <button type="button" data-graph-action="reset" data-aria-en="Fit the complete map" data-aria-ar="إظهار الخريطة كاملة"><i class="ph ph-arrows-out" aria-hidden="true"></i></button>
+      <a class="graph-ledger-link" href="/relationships/" data-aria-en="Open accessible relationship ledger" data-aria-ar="فتح سجل العلاقات الميسّر" aria-label="Open accessible relationship ledger"><i class="ph ph-list" aria-hidden="true"></i></a>
+    </div>
+
+    <svg id="knowledge-graph" viewBox="0 0 1800 1100" role="img" aria-describedby="knowledge-description" tabindex="0">
+      <desc id="knowledge-description" data-en="An interactive neural map showing Lebanon's energy laws, institutions, plans and projects. Moving signals trace documented legal and institutional relationships." data-ar="خريطة عصبية تفاعلية تعرض قوانين الطاقة في لبنان ومؤسساتها وخططها ومشاريعها. تتبع الإشارات المتحركة العلاقات القانونية والمؤسسية الموثقة.">An interactive neural map showing Lebanon's energy laws, institutions, plans and projects. Moving signals trace documented legal and institutional relationships.</desc>
+      <defs>
+        <filter id="node-glow" x="-40%" y="-80%" width="180%" height="260%"><feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#25334a" flood-opacity=".13"/></filter>
+      </defs>
+      <g class="cluster-layer" aria-hidden="true">
+        {categories.map((category) => { const field=fields[category]!; const recordCount=instruments.filter((item)=>item.category===category).length; return <g class="graph-cluster" data-category={category} style={`--cluster:${palette[category]}`}>
+          <path class="cluster-hull" d={field.d}></path>
+          <text class="cluster-title" x={field.tx} y={field.ty} text-anchor="middle" data-en={category} data-ar={categoryAr[category]}>{category}</text>
+          <text class="cluster-count" x={field.tx} y={field.ty + 20} text-anchor="middle" data-en={`${recordCount} records`} data-ar={`${recordCount} سجلات`}>{recordCount} records</text>
+        </g>})}
+      </g>
+      <g class="edge-layer" aria-hidden="true">
+        {relationships.map((rel,index) => {
+          const a=nodeInfo.get(rel.from); const b=nodeInfo.get(rel.to); if(!a||!b)return null;
+          const start=boundaryPoint(a,b),end=boundaryPoint(b,a); const mx=(start.x+end.x)/2; const my=(start.y+end.y)/2 - Math.min(65,Math.abs(end.x-start.x)*.08+20) * (index%2?1:-1);
+          const d=`M ${start.x} ${start.y} Q ${mx} ${my} ${end.x} ${end.y}`;
+          return <g class="edge-group" data-from={rel.from} data-to={rel.to} data-tone={toneOf(rel.type)} data-ax={start.x} data-ay={start.y} data-bx={end.x} data-by={end.y} data-bend={index%2?1:-1}>
+            <path class="graph-edge" d={d}></path>
+            <circle class="graph-pulse" r="3.4" data-phase={(index*.137)%1} data-duration={2.8+(index%5)*.42} cx={start.x} cy={start.y}></circle>
+          </g>;
+        })}
+      </g>
+      <g class="node-layer">
+        {instruments.map((item,index) => {
+          const p=nodeInfo.get(item.id)!; const ar=instrumentAr[item.id]; const sources=resolveSources(item.sourceIds); const connected=connectedFor(item.id); const legal=legalDetails[item.id];
+          return <a class="graph-node" href={`/instruments/${item.slug}/`} data-node={item.id} data-category={item.category} data-category-ar={categoryAr[item.category]} data-scope={item.jurisdiction} data-kind={kindOf(item.id)} data-cx={p.cx} data-cy={p.cy} data-seed={index+1} data-search={`${item.title} ${item.shortTitle} ${item.summary} ${item.whyItMatters} ${ar?.title||""} ${ar?.summary||""}`.toLowerCase()} data-title-en={item.title} data-title-ar={ar?.title||item.title} data-short-en={item.shortTitle} data-short-ar={ar?.shortTitle||item.shortTitle} data-summary-en={item.summary} data-summary-ar={ar?.summary||item.summary} data-why-en={item.whyItMatters} data-why-ar={ar?.whyItMatters||item.whyItMatters} data-engineering-en={(legal?.engineeringEn||[]).join(" • ")} data-engineering-ar={(legal?.engineeringAr||[]).join(" • ")} data-economics-en={(legal?.economicsEn||[]).join(" • ")} data-economics-ar={(legal?.economicsAr||[]).join(" • ")} data-status-en={item.status} data-status-ar={statusAr[item.status]} data-year={item.year} data-url={`/instruments/${item.slug}/`} data-connected={JSON.stringify(connected)} data-sources={JSON.stringify(sources.map((source)=>({title:source.title,publisher:source.publisher,url:source.url,language:source.language})))} data-aria-en={`Open details for ${item.title}`} data-aria-ar={`فتح تفاصيل ${ar?.title||item.title}`} aria-label={`Open details for ${item.title}`} style={`--node:${palette[item.category]}`}>
+            <rect class="node-body" x={p.x} y={p.y} width={p.width} height={p.height} rx={p.height/2}></rect>
+            <circle class="node-dot" cx={p.x+16} cy={p.cy} r="4.5"></circle>
+            <text class="node-title" x={p.cx} y={p.cy+3.7} text-anchor="middle" data-en={item.shortTitle} data-ar={ar?.shortTitle||item.shortTitle}>{item.shortTitle}</text>
+            <circle class="node-status" cx={p.x+p.width-15} cy={p.cy} r="3.2"></circle>
+            <title>{item.title}: {item.summary}</title>
+          </a>;
+        })}
+      </g>
+    </svg>
+
+    <div class="graph-hint" aria-hidden="true"><i class="ph ph-cursor-click" aria-hidden="true"></i><span data-en="Select a record" data-ar="اختر سجلاً">Select a record</span><span data-en="Drag bubbles to reorganize" data-ar="اسحب الفقاعات لإعادة ترتيبها">Drag bubbles to reorganize</span><span data-en="Drag the canvas to navigate" data-ar="اسحب اللوحة للتنقل">Drag the canvas to navigate</span></div>
+    <div class="graph-tooltip" id="graph-tooltip" role="tooltip" hidden><div class="tooltip-top"><span></span><small></small></div><strong></strong><p></p><div class="tooltip-stats"><span></span><span></span></div></div>
+
+    <aside class="graph-inspector" id="graph-inspector" aria-labelledby="inspector-title" aria-hidden="true" data-open="false" inert>
+      <button class="inspector-close" type="button" data-aria-en="Close legal dossier" data-aria-ar="إغلاق الملف القانوني"><i class="ph ph-x" aria-hidden="true"></i></button>
+      <div class="inspector-accent"></div>
+      <p class="eyebrow" id="inspector-category"></p>
+      <h2 id="inspector-title"></h2>
+      <p class="inspector-lede" id="inspector-summary"></p>
+      <div class="inspector-facts"><div><strong id="inspector-year"></strong><span data-en="Year" data-ar="السنة">Year</span></div><div><strong id="inspector-status"></strong><span data-en="Status" data-ar="الحالة">Status</span></div><div><strong id="inspector-links"></strong><span data-en="Connections" data-ar="الروابط">Connections</span></div><div><strong id="inspector-sources-count"></strong><span data-en="Primary sources" data-ar="المصادر الأساسية">Primary sources</span></div></div>
+      <section><h3 data-en="Why this record matters" data-ar="أهمية هذا السجل">Why this record matters</h3><p id="inspector-why"></p></section>
+      <div class="inspector-lenses"><section><h3 data-en="Engineering lens" data-ar="المنظور الهندسي">Engineering lens</h3><p id="inspector-engineering"></p></section><section><h3 data-en="Economic lens" data-ar="المنظور الاقتصادي">Economic lens</h3><p id="inspector-economics"></p></section></div>
+      <section><h3 data-en="Connected framework" data-ar="الإطار المرتبط">Connected framework</h3><div class="inspector-relations" id="inspector-relations"></div></section>
+      <section><h3 data-en="Primary text and records" data-ar="النصوص والسجلات الأساسية">Primary text and records</h3><div class="inspector-sources" id="inspector-sources"></div></section>
+      <div class="inspector-actions"><a class="button-link" id="inspector-open" href="/instruments/" data-en="Open full legal record" data-ar="فتح السجل القانوني الكامل">Open full legal record</a><span><span class="signal-dot" aria-hidden="true"></span><span data-en={`Current to ${CONTENT_CUTOFF}`} data-ar={`محدّث حتى ${CONTENT_CUTOFF}`}>Current to {CONTENT_CUTOFF}</span></span></div>
+    </aside>
+  </div>
+
+  <details class="relationship-alternative">
+    <summary><span data-en="Accessible relationship ledger" data-ar="سجل العلاقات الميسّر">Accessible relationship ledger</span><span>{relationships.length}</span></summary>
+    <div class="table-scroll"><table class="relationship-table"><caption class="visually-hidden">Documented relationships between energy-law records</caption><thead><tr><th scope="col" data-en="From" data-ar="من">From</th><th scope="col" data-en="Relationship" data-ar="العلاقة">Relationship</th><th scope="col" data-en="To" data-ar="إلى">To</th><th scope="col" data-en="Evidence" data-ar="الدليل">Evidence</th></tr></thead><tbody>
+      {relationships.map((rel)=>{const from=instruments.find((item)=>item.id===rel.from);const to=instruments.find((item)=>item.id===rel.to);const source=resolveSources(rel.sourceIds)[0];return <tr><td><a href={`/instruments/${from?.slug}/`} data-en={from?.shortTitle} data-ar={instrumentAr[rel.from]?.shortTitle}>{from?.shortTitle}</a></td><td data-en={rel.label} data-ar={relationshipAr[rel.id]}>{rel.label}</td><td><a href={`/instruments/${to?.slug}/`} data-en={to?.shortTitle} data-ar={instrumentAr[rel.to]?.shortTitle}>{to?.shortTitle}</a></td><td>{source&&<a href={source.url} rel="external"><span data-en="Primary source" data-ar="المصدر الأساسي">Primary source</span></a>}</td></tr>})}
+    </tbody></table></div>
+  </details>
+</section>
+
+<script>
+  const svg = document.querySelector<SVGSVGElement>("#knowledge-graph");
+  const stage = document.querySelector<HTMLElement>("#graph-stage");
+  const query = document.querySelector<HTMLInputElement>("#atlas-query");
+  const resultBox = document.querySelector<HTMLElement>("#atlas-results");
+  const count = document.querySelector<HTMLElement>("#visible-node-count");
+  const tooltip = document.querySelector<HTMLElement>("#graph-tooltip");
+  const inspector = document.querySelector<HTMLElement>("#graph-inspector");
+  const nodes = [...document.querySelectorAll<SVGElement>(".graph-node")];
+  const edges = [...document.querySelectorAll<SVGGElement>(".edge-group")];
+  const clusters = [...document.querySelectorAll<SVGGElement>(".graph-cluster")];
+  const nodeById = new Map(nodes.map((node)=>[node.dataset.node || "",node]));
+  const homeView={x:0,y:0,w:1800,h:1100}; let view={...homeView};let cameraFrame=0;
+  let activeCategory="", activeScope="", activeKind="", dragging=false, moved=false, selectedId="", pinching=false, suppressNodeClick=false;
+  let dragStart={x:0,y:0,viewX:0,viewY:0};
+  let nodeDrag:{node:SVGElement;pointerId:number;startX:number;startY:number;originX:number;originY:number;moved:boolean}|null=null;
+  const nodeOffsets=new Map<string,{x:number;y:number}>();let inspectorTrigger:SVGElement|null=null;
+  const categoryViews:Record<string,{x:number;y:number;w:number;h:number}>={Electricity:{x:270,y:25,w:900,h:520},Climate:{x:1090,y:25,w:700,h:520},Institutions:{x:0,y:105,w:505,h:535},Renewables:{x:320,y:520,w:820,h:570},Finance:{x:0,y:600,w:500,h:500},Petroleum:{x:1090,y:520,w:710,h:580}};
+  const pointers=new Map<number,{x:number;y:number}>();let pinchStart:{distance:number;midX:number;midY:number;view:typeof view}|null=null;
+  const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(matchMedia("(max-width: 736px)").matches)svg?.setAttribute("preserveAspectRatio","xMidYMid meet");
+
+  const setView=(next:typeof view)=>{view=next;svg?.setAttribute("viewBox",`${view.x} ${view.y} ${view.w} ${view.h}`)};
+  const stopCamera=()=>{if(cameraFrame){cancelAnimationFrame(cameraFrame);cameraFrame=0}};
+  const animateView=(next:typeof view)=>{stopCamera();if(reduced){setView(next);return}const start={...view},t0=performance.now();const tick=(now:number)=>{const p=Math.min(1,(now-t0)/260),e=1-Math.pow(1-p,4);setView({x:start.x+(next.x-start.x)*e,y:start.y+(next.y-start.y)*e,w:start.w+(next.w-start.w)*e,h:start.h+(next.h-start.h)*e});if(p<1)cameraFrame=requestAnimationFrame(tick);else cameraFrame=0};cameraFrame=requestAnimationFrame(tick)};
+  const zoom=(factor:number)=>{const w=Math.min(3600,Math.max(280,view.w*factor)),h=w*(1100/1800);animateView({x:view.x+(view.w-w)/2,y:view.y+(view.h-h)/2,w,h})};
+  const visible=(node:SVGElement)=>!node.hasAttribute("hidden");
+  const updateEdges=()=>edges.forEach((edge)=>{const a=nodeById.get(edge.dataset.from||""),b=nodeById.get(edge.dataset.to||"");edge.toggleAttribute("hidden",!a||!b||!visible(a)||!visible(b))});
+  const updateUrl=()=>{const p=new URLSearchParams();if(activeCategory)p.set("category",activeCategory);if(activeScope)p.set("scope",activeScope);if(activeKind)p.set("kind",activeKind);if(query?.value.trim())p.set("q",query.value.trim());if(selectedId)p.set("instrument",selectedId.replace("ins-", ""));history.replaceState(null,"",`${location.pathname}${p.size?`?${p}`:""}`)};
+  const renderResults=(term:string,matches:SVGElement[])=>{if(!resultBox)return;if(!term){resultBox.hidden=true;resultBox.innerHTML="";return}const ar=document.documentElement.lang==="ar";resultBox.hidden=false;resultBox.innerHTML=matches.length?matches.slice(0,6).map((node)=>`<button type="button" data-result-node="${node.dataset.node}"><span>${ar?node.dataset.shortAr:node.dataset.shortEn}</span><small>${ar?node.dataset.categoryAr:node.dataset.category} · ${node.dataset.year}</small></button>`).join(""):`<p>${ar?"لا توجد نتائج في الخريطة":"No map results"}</p>`;resultBox.querySelectorAll<HTMLButtonElement>("[data-result-node]").forEach((button)=>button.addEventListener("click",()=>{const node=nodeById.get(button.dataset.resultNode||"");if(node)openInspector(node);resultBox.hidden=true}))};
+  const applyFilters=()=>{const term=query?.value.trim().toLowerCase()||"";const matches:SVGElement[]=[];nodes.forEach((node)=>{const show=(!activeCategory||node.dataset.category===activeCategory)&&(!activeScope||node.dataset.scope===activeScope)&&(!activeKind||node.dataset.kind===activeKind)&&(!term||node.dataset.search?.includes(term));node.toggleAttribute("hidden",!show);if(show)matches.push(node)});clusters.forEach((cluster)=>{const any=nodes.some((node)=>node.dataset.category===cluster.dataset.category&&visible(node));cluster.toggleAttribute("hidden",!any)});updateEdges();if(count)count.textContent=String(matches.length);document.querySelectorAll<HTMLElement>("[data-graph-filter]").forEach((control)=>control.toggleAttribute("aria-current",control.dataset.graphFilter===activeCategory));document.querySelectorAll<HTMLElement>("[data-graph-scope]").forEach((control)=>control.toggleAttribute("aria-pressed",control.dataset.graphScope===activeScope));document.querySelectorAll<HTMLElement>("[data-graph-kind]").forEach((control)=>control.toggleAttribute("aria-pressed",control.dataset.graphKind===activeKind));renderResults(term,matches);updateUrl()};
+  const focusCategory=(category:string)=>{activeCategory=activeCategory===category?"":category;animateView(activeCategory?(categoryViews[activeCategory]||homeView):homeView);applyFilters()};
+  document.querySelectorAll<HTMLElement>("[data-graph-filter]").forEach((el)=>el.addEventListener("click",(event)=>{event.preventDefault();focusCategory(el.dataset.graphFilter||"")}));
+  document.querySelectorAll<HTMLElement>("[data-graph-focus]").forEach((el)=>el.addEventListener("click",(event)=>{event.preventDefault();const category=el.dataset.graphFocus||"";activeCategory=category;animateView(categoryViews[category]||homeView);applyFilters()}));
+  document.querySelectorAll<HTMLElement>("[data-graph-scope]").forEach((el)=>el.addEventListener("click",(event)=>{event.preventDefault();activeScope=activeScope===el.dataset.graphScope?"":el.dataset.graphScope||"";applyFilters()}));
+  document.querySelectorAll<HTMLElement>("[data-graph-kind]").forEach((el)=>el.addEventListener("click",(event)=>{event.preventDefault();activeKind=activeKind===el.dataset.graphKind?"":el.dataset.graphKind||"";applyFilters()}));
+  const nodeGeometry=(id:string)=>{const node=nodeById.get(id),offset=nodeOffsets.get(id)||{x:0,y:0},body=node?.querySelector<SVGRectElement>(".node-body");return {cx:Number(node?.dataset.cx||0)+offset.x,cy:Number(node?.dataset.cy||0)+offset.y,width:Number(body?.getAttribute("width")||140),height:Number(body?.getAttribute("height")||38)}};
+  const boundary=(a:ReturnType<typeof nodeGeometry>,b:ReturnType<typeof nodeGeometry>)=>{const dx=b.cx-a.cx,dy=b.cy-a.cy,length=Math.hypot(dx,dy)||1,ux=dx/length,uy=dy/length,radius=1/Math.sqrt((ux/(a.width/2))**2+(uy/(a.height/2))**2);return {x:a.cx+ux*radius,y:a.cy+uy*radius}};
+  const updateEdgeGeometry=(edge:SVGGElement)=>{const a=nodeGeometry(edge.dataset.from||""),b=nodeGeometry(edge.dataset.to||""),start=boundary(a,b),end=boundary(b,a),bend=Number(edge.dataset.bend||1),cx=(start.x+end.x)/2,cy=(start.y+end.y)/2-Math.min(65,Math.abs(end.x-start.x)*.08+20)*bend;edge.dataset.ax=String(start.x);edge.dataset.ay=String(start.y);edge.dataset.bx=String(end.x);edge.dataset.by=String(end.y);edge.querySelector<SVGPathElement>(".graph-edge")?.setAttribute("d",`M ${start.x} ${start.y} Q ${cx} ${cy} ${end.x} ${end.y}`)};
+  const resetNodeLayout=()=>{nodeOffsets.clear();nodes.forEach((node)=>node.removeAttribute("transform"));edges.forEach(updateEdgeGeometry)};
+  document.querySelector<HTMLElement>("[data-graph-clear]")?.addEventListener("click",()=>{activeCategory=activeScope=activeKind="";if(query)query.value="";selectedId="";resetNodeLayout();animateView(homeView);closeInspector();applyFilters()});
+  query?.closest("form")?.addEventListener("submit",(event)=>event.preventDefault()); query?.addEventListener("input",applyFilters);
+  document.querySelectorAll<HTMLButtonElement>("[data-graph-action]").forEach((button)=>button.addEventListener("click",()=>{if(button.dataset.graphAction==="zoom-in")zoom(.72);if(button.dataset.graphAction==="zoom-out")zoom(1.5);if(button.dataset.graphAction==="reset"){activeCategory="";resetNodeLayout();animateView(homeView);applyFilters()}}));
+
+  const dimFor=(id:string,on:boolean)=>{if(!on){nodes.forEach((n)=>n.classList.remove("is-dimmed","is-neighbor"));edges.forEach((e)=>e.classList.remove("is-dimmed","is-active"));return}const related=new Set([id]);edges.forEach((edge)=>{const hit=edge.dataset.from===id||edge.dataset.to===id;edge.classList.toggle("is-active",hit);edge.classList.toggle("is-dimmed",!hit);if(hit){related.add(edge.dataset.from||"");related.add(edge.dataset.to||"")}});nodes.forEach((node)=>{const near=related.has(node.dataset.node||"");node.classList.toggle("is-neighbor",near&&node.dataset.node!==id);node.classList.toggle("is-dimmed",!near)})};
+  const localeValue=(node:SVGElement,key:string)=>document.documentElement.lang==="ar"?(node.dataset[`${key}Ar`]||node.dataset[`${key}En`]||""):(node.dataset[`${key}En`]||"");
+  const openInspector=(node:SVGElement)=>{inspectorTrigger=node;selectedId=node.dataset.node||"";nodes.forEach((candidate)=>candidate.classList.toggle("is-selected",candidate===node));const ar=document.documentElement.lang==="ar";const set=(id:string,value:string)=>{const el=document.querySelector<HTMLElement>(id);if(el)el.textContent=value};const connected=JSON.parse(node.dataset.connected||"[]");const sources=JSON.parse(node.dataset.sources||"[]");set("#inspector-category",ar?node.dataset.categoryAr||"":node.dataset.category||"");set("#inspector-title",localeValue(node,"title"));set("#inspector-summary",localeValue(node,"summary"));set("#inspector-why",localeValue(node,"why"));set("#inspector-engineering",localeValue(node,"engineering")|| (ar?"راجع الملف الكامل للتفاصيل الفنية.":"Open the full record for technical detail."));set("#inspector-economics",localeValue(node,"economics")|| (ar?"راجع الملف الكامل للتفاصيل الاقتصادية.":"Open the full record for economic detail."));set("#inspector-year",node.dataset.year||"");set("#inspector-status",localeValue(node,"status"));set("#inspector-links",String(connected.length));set("#inspector-sources-count",String(sources.length));const relBox=document.querySelector<HTMLElement>("#inspector-relations");if(relBox)relBox.innerHTML=connected.map((item:any)=>`<a href="/instruments/${item.slug}/"><span>${ar?item.titleAr:item.title}</span><small>${ar?item.labelAr:item.label}</small></a>`).join("")||`<p>${ar?"لا توجد روابط موثقة بعد.":"No documented links yet."}</p>`;const srcBox=document.querySelector<HTMLElement>("#inspector-sources");if(srcBox)srcBox.innerHTML=sources.map((source:any)=>`<a href="${source.url}" rel="external"><span>${source.publisher}</span><small>${source.language} · ${ar?"فتح السجل الأصلي":"Open original record"} ↗</small></a>`).join("");const open=document.querySelector<HTMLAnchorElement>("#inspector-open");if(open)open.href=node.dataset.url||"/instruments/";if(inspector){inspector.inert=false;inspector.dataset.open="true";inspector.setAttribute("aria-hidden","false");requestAnimationFrame(()=>inspector.querySelector<HTMLButtonElement>(".inspector-close")?.focus())}updateUrl()};
+  function closeInspector(){selectedId="";nodes.forEach((node)=>node.classList.remove("is-selected"));if(inspector){inspector.dataset.open="false";inspector.setAttribute("aria-hidden","true");inspector.inert=true}updateUrl();inspectorTrigger?.focus();inspectorTrigger=null}
+  nodes.forEach((node)=>{node.addEventListener("click",(event)=>{if(suppressNodeClick||moved){event.preventDefault();suppressNodeClick=false;return}event.preventDefault();openInspector(node)});node.addEventListener("pointerenter",()=>{dimFor(node.dataset.node||"",true);if(!tooltip)return;const ar=document.documentElement.lang==="ar";const top=tooltip.querySelector(".tooltip-top span"),date=tooltip.querySelector(".tooltip-top small"),title=tooltip.querySelector("strong"),summary=tooltip.querySelector("p"),stats=tooltip.querySelectorAll(".tooltip-stats span");if(top)top.textContent=ar?node.dataset.categoryAr||"":node.dataset.category||"";if(date)date.textContent=node.dataset.year||"";if(title)title.textContent=localeValue(node,"short");if(summary)summary.textContent=localeValue(node,"summary");if(stats[0])stats[0].textContent=localeValue(node,"status");if(stats[1])stats[1].textContent=ar?"انقر لفتح الملف":"Select for dossier";tooltip.hidden=false});node.addEventListener("pointermove",(event)=>{if(!tooltip||!stage||nodeDrag)return;const box=stage.getBoundingClientRect();tooltip.style.left=`${Math.min(box.width-300,event.clientX-box.left+16)}px`;tooltip.style.top=`${Math.min(box.height-175,event.clientY-box.top+16)}px`});node.addEventListener("pointerleave",()=>{if(tooltip)tooltip.hidden=true;if(!selectedId)dimFor("",false)})});
+  nodes.forEach((node)=>{node.addEventListener("pointerdown",(event)=>{if(event.pointerType==="mouse"&&event.button!==0)return;if(event.pointerType==="touch"&&nodeDrag)return;stopCamera();if(event.pointerType!=="touch")event.stopPropagation();const id=node.dataset.node||"",origin=nodeOffsets.get(id)||{x:0,y:0};nodeDrag={node,pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,originX:origin.x,originY:origin.y,moved:false};node.setPointerCapture(event.pointerId);node.classList.add("is-node-dragging");if(tooltip)tooltip.hidden=true});node.addEventListener("pointermove",(event)=>{if(!nodeDrag||nodeDrag.node!==node||nodeDrag.pointerId!==event.pointerId||!svg)return;const box=svg.getBoundingClientRect(),dx=(event.clientX-nodeDrag.startX)*view.w/box.width,dy=(event.clientY-nodeDrag.startY)*view.h/box.height;if(Math.abs(dx)+Math.abs(dy)>6)nodeDrag.moved=true;if(!nodeDrag.moved)return;event.preventDefault();const id=node.dataset.node||"",offset={x:nodeDrag.originX+dx,y:nodeDrag.originY+dy};nodeOffsets.set(id,offset);node.setAttribute("transform",`translate(${offset.x} ${offset.y})`);edges.filter((edge)=>edge.dataset.from===id||edge.dataset.to===id).forEach(updateEdgeGeometry)});const endNodeDrag=(event:PointerEvent)=>{if(!nodeDrag||nodeDrag.node!==node||nodeDrag.pointerId!==event.pointerId)return;suppressNodeClick=nodeDrag.moved;if(node.hasPointerCapture(event.pointerId))node.releasePointerCapture(event.pointerId);node.classList.remove("is-node-dragging");nodeDrag=null};node.addEventListener("pointerup",endNodeDrag);node.addEventListener("pointercancel",endNodeDrag)});
+  document.querySelector<HTMLButtonElement>(".inspector-close")?.addEventListener("click",closeInspector);addEventListener("keydown",(event)=>{if(event.key==="Escape"){if(inspector?.dataset.open==="true")closeInspector();else{activeCategory=activeScope=activeKind="";animateView(homeView);applyFilters()}}});addEventListener("noa:locale",()=>{const selected=nodeById.get(selectedId);if(selected)openInspector(selected);applyFilters()});
+  svg?.addEventListener("wheel",(event)=>{event.preventDefault();zoom(event.deltaY < 0 ? .88 : 1.12)},{passive:false});
+  svg?.addEventListener("pointerdown",(event)=>{stopCamera();const onNode=Boolean((event.target as Element).closest(".graph-node"));if(onNode&&event.pointerType!=="touch"){moved=false;return}pointers.set(event.pointerId,{x:event.clientX,y:event.clientY});if(!onNode)svg.setPointerCapture(event.pointerId);if(pointers.size===2){if(nodeDrag){if(nodeDrag.node.hasPointerCapture(nodeDrag.pointerId))nodeDrag.node.releasePointerCapture(nodeDrag.pointerId);nodeDrag.node.classList.remove("is-node-dragging");nodeDrag=null}suppressNodeClick=true;const values=[...pointers.values()],a=values[0]!,b=values[1]!;pinching=true;dragging=false;moved=true;pinchStart={distance:Math.hypot(b.x-a.x,b.y-a.y),midX:(a.x+b.x)/2,midY:(a.y+b.y)/2,view:{...view}};svg.classList.add("is-dragging");return}if(onNode)return;dragging=true;moved=false;dragStart={x:event.clientX,y:event.clientY,viewX:view.x,viewY:view.y};svg.classList.add("is-dragging")});
+  svg?.addEventListener("pointermove",(event)=>{if(!svg||!pointers.has(event.pointerId))return;pointers.set(event.pointerId,{x:event.clientX,y:event.clientY});const box=svg.getBoundingClientRect();if(pinching&&pinchStart&&pointers.size>=2){event.preventDefault();const values=[...pointers.values()],a=values[0]!,b=values[1]!;const distance=Math.max(12,Math.hypot(b.x-a.x,b.y-a.y)),factor=pinchStart.distance/distance;const w=Math.min(3600,Math.max(280,pinchStart.view.w*factor)),h=w*(1100/1800);const midX=(a.x+b.x)/2,midY=(a.y+b.y)/2;const anchorX=pinchStart.view.x+(pinchStart.midX-box.left)/box.width*pinchStart.view.w;const anchorY=pinchStart.view.y+(pinchStart.midY-box.top)/box.height*pinchStart.view.h;setView({x:anchorX-(midX-box.left)/box.width*w,y:anchorY-(midY-box.top)/box.height*h,w,h});return}if(!dragging)return;if(Math.abs(event.clientX-dragStart.x)+Math.abs(event.clientY-dragStart.y)>5)moved=true;setView({...view,x:dragStart.viewX-(event.clientX-dragStart.x)*view.w/box.width,y:dragStart.viewY-(event.clientY-dragStart.y)*view.h/box.height})});
+  const stopDrag=(event:PointerEvent)=>{pointers.delete(event.pointerId);if(svg?.hasPointerCapture(event.pointerId))svg.releasePointerCapture(event.pointerId);if(pointers.size<2){pinching=false;pinchStart=null}if(pointers.size===0){dragging=false;svg?.classList.remove("is-dragging");setTimeout(()=>{moved=false},0)}};svg?.addEventListener("pointerup",stopDrag);svg?.addEventListener("pointercancel",stopDrag);svg?.addEventListener("pointerleave",(event)=>{if(event.pointerType==="mouse"&&pointers.has(event.pointerId))stopDrag(event)});
+
+  if(!reduced){
+    const start=performance.now(),pulsePaths=edges.map((edge)=>({edge,pulse:edge.querySelector<SVGCircleElement>(".graph-pulse")}));let lastFrame=0;
+    const tick=(now:number)=>{requestAnimationFrame(tick);if(document.hidden||now-lastFrame<33)return;lastFrame=now;const t=(now-start)/1000;pulsePaths.forEach(({edge,pulse})=>{if(!pulse||edge.hasAttribute("hidden"))return;const ax=Number(edge.dataset.ax),ay=Number(edge.dataset.ay),bx=Number(edge.dataset.bx),by=Number(edge.dataset.by),bend=Number(edge.dataset.bend||1),cx=(ax+bx)/2,cy=(ay+by)/2-Math.min(65,Math.abs(bx-ax)*.08+20)*bend,duration=Number(pulse.dataset.duration||3),phase=Number(pulse.dataset.phase||0),u=((t/duration)+phase)%1,iu=1-u;pulse.setAttribute("cx",String(iu*iu*ax+2*iu*u*cx+u*u*bx));pulse.setAttribute("cy",String(iu*iu*ay+2*iu*u*cy+u*u*by))})};
+    requestAnimationFrame(tick)
+  }
+  const initial=new URLSearchParams(location.search);activeCategory=initial.get("category")||"";activeScope=initial.get("scope")||"";activeKind=initial.get("kind")||"";if(query)query.value=initial.get("q")||"";const initialView=activeCategory?categoryViews[activeCategory]:undefined;if(initialView)setView(initialView);applyFilters();const instrument=initial.get("instrument");if(instrument){const match=nodes.find((node)=>(node.dataset.node||"").replace("ins-","")===instrument);if(match)openInspector(match)}
+</script>

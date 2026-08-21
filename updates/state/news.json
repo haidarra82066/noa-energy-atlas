@@ -1,0 +1,458 @@
+{
+  "version": 2,
+  "mode": "news",
+  "lastSuccessfulRun": "2026-08-16T17:36:55.448Z",
+  "editorialTimezone": "Asia/Beirut",
+  "sources": {
+    "monitor-lcec": {
+      "hash": "36691666f04c244d66f2e84baaaa6acf063e60382ec0e59e1f3ccbb57379541b",
+      "checkedAt": "2026-08-16T17:36:55.551Z",
+      "status": 200,
+      "finalUrl": "https://lcec.org.lb/"
+    },
+    "atlas-src-law-318": {
+      "hash": "df61cd036ca054dae6a4d13426f077e426f4ed1c0978602777cbac851f645789",
+      "checkedAt": "2026-08-16T17:36:55.553Z",
+      "status": 200,
+      "finalUrl": "https://lcec.org.lb/index.php/our-work/partners/RELaw"
+    },
+    "atlas-src-nreap": {
+      "hash": "ab4eabb3f37e1a21fa5f32010e6c4f76b24e47c12eb26d9ab6eb609307ecc313",
+      "checkedAt": "2026-08-16T17:36:55.554Z",
+      "status": 200,
+      "finalUrl": "https://lcec.org.lb/sites/default/files/2025-10/NREAP-of-Lebanon-2025_2030.pdf"
+    },
+    "atlas-src-solar-licenses": {
+      "hash": "47806beb861bbd26a59eaf94a9e3185dfadd8dafb514be75b2e26a4cfcf4ad9b",
+      "checkedAt": "2026-08-16T17:36:55.555Z",
+      "status": 200,
+      "finalUrl": "https://www.lcec.org.lb/node/12857"
+    },
+    "monitor-parliament": {
+      "hash": "8e91cc5e1a7793fc9f4a85e994b23c69ea1d63eeb1df6b0c4e0cbc9794c40fdc",
+      "checkedAt": "2026-08-16T17:36:55.943Z",
+      "status": 200,
+      "finalUrl": "https://www.lp.gov.lb/"
+    },
+    "atlas-src-parliament-181": {
+      "hash": "6898d1ad28e5f48f9df3fc946082476d448c8d86617288a8002b99e6f7107623",
+      "checkedAt": "2026-08-16T17:36:55.986Z",
+      "status": 200,
+      "finalUrl": "https://www.lp.gov.lb/backoffice/uploads/files/Laws%20whose%20implementation%20decrees%20have%20not%20been%20issued%20-%20update%20September%202%2C%202021.pdf"
+    },
+    "atlas-src-parliament-129": {
+      "hash": "122e85a903ed5c03d3c9bbb344b0738b83cbeeb7db04fbac21c463cb13623e41",
+      "checkedAt": "2026-08-16T17:36:56.015Z",
+      "status": 200,
+      "finalUrl": "https://www.lp.gov.lb/ContentRecordDetails?id=29316"
+    },
+    "monitor-lpa": {
+      "hash": "9a480d1788f2e50d02b566c1a29d8f632024a634feed5a4f777171349037957a",
+      "checkedAt": "2026-08-16T17:36:56.128Z",
+      "status": 200,
+      "finalUrl": "https://www.lpa.gov.lb/"
+    },
+    "atlas-src-lpa-laws": {
+      "hash": "f0874e96524ccc4a5a2d708972a0dad06db4f80256c7f8d960c4dfe8dea03c63",
+      "checkedAt": "2026-08-16T17:36:56.139Z",
+      "status": 200,
+      "finalUrl": "https://www.lpa.gov.lb/english/sector-governance/legislative-framework"
+    },
+    "monitor-moew": {
+      "hash": "92e469c0ce4fec806649cb1f237d770b358a323698ff6619d474a8c33c21f361",
+      "checkedAt": "2026-08-16T17:36:56.193Z",
+      "status": 200,
+      "finalUrl": "https://www.energyandwater.gov.lb/"
+    },
+    "atlas-src-law-462": {
+      "hash": "e377a6b0357624e1a51e12060f307f8968550be4741d956bd30a3a9aee68c9d0",
+      "checkedAt": "2026-08-16T17:36:56.683Z",
+      "status": 200,
+      "finalUrl": "https://energyandwater.gov.lb/ar/details/99862/%D8%A7%D9%84%D9%82%D8%A7%D9%86%D9%88%D9%86-%D8%B1%D9%82%D9%85-462-%D8%AA%D8%A7%D8%B1%D9%8A%D8%AE-2-9-2002-%D8%AA%D9%86%D8%B8%D9%8A%D9%85-%D9%82%D8%B7%D8%A7%D8%B9-%D8%A7%D9%84%D9%83%D9%87%D8%B1%D8%A8%D8%A7%D8%A1"
+    },
+    "atlas-src-era-framework": {
+      "hash": "c6cd11498d924d69b3ec7c2bbf00522278579e47de82f3d3f69624dcd06ceaeb",
+      "checkedAt": "2026-08-16T17:36:56.703Z",
+      "status": 200,
+      "finalUrl": "https://www.energyandwater.gov.lb/ar/details/101160/%D9%85%D8%AC%D9%84%D8%B3-%D8%A7%D9%84%D9%88%D8%B2%D8%B1%D8%A7%D8%A1-%D9%8A%D9%82%D8%B1-%D9%88%D8%B1%D9%82%D8%A9-%D8%A7%D9%84%D8%A5%D8%B7%D8%A7%D8%B1-%D8%A7%D9%84%D8%AA%D9%86%D9%81%D9%8A%D8%B0%D9%8A-%D9%84%D9%84%D9%87%D9%8A%D8%A6%D8%A9-%D8%A7%D9%84%D9%86%D8%A7%D8%B8%D9%85%D8%A9-%D9%84%D9%82%D8%B7%D8%A7%D8%B9-%D8%A7%D9%84%D9%83%D9%87%D8%B1%D8%A8%D8%A7%D8%A1"
+    },
+    "atlas-src-policy-2026": {
+      "hash": "3ddcba6acaa749d2629a3ec4bb1c93e2a00cdaeacfec40321909d742c5c1efd3",
+      "checkedAt": "2026-08-16T17:36:56.713Z",
+      "status": 200,
+      "finalUrl": "https://www.energyandwater.gov.lb/ar/details/101159/%D9%88%D8%B2%D8%A7%D8%B1%D8%A9-%D8%A7%D9%84%D8%B7%D8%A7%D9%82%D8%A9-%D9%88%D8%A7%D9%84%D9%85%D9%8A%D8%A7%D9%87-%D8%AA%D8%B7%D9%84%D9%82-%D9%88%D8%B1%D9%82%D8%A9-%D8%B3%D9%8A%D8%A7%D8%B3%D8%A9-%D9%82%D8%B7%D8%A7%D8%B9-%D8%A7%D9%84%D9%83%D9%87%D8%B1%D8%A8%D8%A7%D8%A1"
+    },
+    "atlas-src-era-appointment": {
+      "hash": "0cb98630d94282773c0017056790fd1500651ff90c86656aa91dac4161781906",
+      "checkedAt": "2026-08-16T17:36:57.042Z",
+      "status": 200,
+      "finalUrl": "https://pcm.gov.lb/arabic/subpg.aspx?pageid=26256"
+    },
+    "atlas-src-ndc3": {
+      "hash": "f7b7e970a405e679a8fa1af2ea9db36749a10000b269d7369172a1f6602b675a",
+      "checkedAt": "2026-08-16T17:35:14.407Z",
+      "status": 200,
+      "finalUrl": "https://unfccc.int/documents/650167"
+    },
+    "atlas-src-ltleds": {
+      "hash": "516545de845bdc6e67bde95b1698e11a2bbc8ff165c42b2acb3f88e182772813",
+      "checkedAt": "2026-08-16T17:35:14.433Z",
+      "status": 200,
+      "finalUrl": "https://unfccc.int/documents/647272"
+    },
+    "atlas-src-btr-review": {
+      "hash": "49f11448078f24efdb18476a93f223102c47a82c24213db00c0ff60f934155f3",
+      "checkedAt": "2026-08-16T17:35:14.506Z",
+      "status": 200,
+      "finalUrl": "https://unfccc.int/documents/659618"
+    },
+    "atlas-src-energy-compact": {
+      "hash": "3dc8f83feeb3235fac2e5150e8a140c0abdbe0b7584156932b4fccd5f6639b2e",
+      "checkedAt": "2026-08-16T17:36:57.331Z",
+      "status": 200,
+      "finalUrl": "https://www.un.org/en/energycompacts/page/registry"
+    },
+    "atlas-src-ersoy-2021": {
+      "hash": "5ad28013e93355283a3befb80c1b5c7729db0cb32847819e3994307e9e7b545a",
+      "checkedAt": "2026-08-16T17:36:57.360Z",
+      "status": 200,
+      "finalUrl": "https://collections.fes.de/publikationen/ident/fes/18567"
+    },
+    "atlas-src-lgee": {
+      "hash": "507d85ce7a76e120294073ee1bd61abbd57cc264b0716048803f15886c9d27a1",
+      "checkedAt": "2026-08-16T17:36:57.681Z",
+      "status": 200,
+      "finalUrl": "https://lcec.org.lb/WEC/LGEE2025"
+    },
+    "monitor-nna": {
+      "hash": "e224a5a19bef00ee479c49177d2b5eb7cd3458c99c86da5874e47fdce05ff6e1",
+      "checkedAt": "2026-08-16T17:36:57.689Z",
+      "status": 200,
+      "finalUrl": "https://www.nna-leb.gov.lb/en"
+    },
+    "monitor-unfccc": {
+      "hash": "15529f390e5865f6a102a54784b5d83d23a85209cbcb0a87d53b02c3780e1db9",
+      "checkedAt": "2026-08-16T17:35:15.025Z",
+      "status": 200,
+      "finalUrl": "https://unfccc.int/node/61011"
+    },
+    "monitor-undp": {
+      "hash": "739c8acd30861f0d7ef2d214f42413b7ab76914f4328ca77ba389a538095d1ca",
+      "checkedAt": "2026-08-16T17:36:57.871Z",
+      "status": 200,
+      "finalUrl": "https://www.undp.org/lebanon/publications"
+    },
+    "atlas-src-drei-2025": {
+      "hash": "7c9bb83211a0e256298597f789d4d263ffddcb43ccae94ca1c08446a05ec85b1",
+      "checkedAt": "2026-08-16T17:36:57.914Z",
+      "status": 200,
+      "finalUrl": "https://www.undp.org/lebanon/publications/lebanon-derisking-renewable-energy-investment-2025"
+    },
+    "atlas-src-law318-tender": {
+      "hash": "3c7afaad193dc3ea20b45555237a56eccdb33002dee2653519ae3455d355bca6",
+      "checkedAt": "2026-08-16T17:36:57.922Z",
+      "status": 200,
+      "finalUrl": "https://www.ungm.org/Public/Notice/296620"
+    },
+    "monitor-worldbank": {
+      "hash": "64d0ec751fa788b4bdc1d5eff85be84d3e68780be45a27ea457ec65fb29dd810",
+      "checkedAt": "2026-08-16T17:36:58.033Z",
+      "status": 200,
+      "finalUrl": "https://www.worldbank.org/ext/en/country/lebanon"
+    },
+    "atlas-src-worldbank-project": {
+      "hash": "ee446bdaf23e6c5f9454b7143f2980a1341da999be7dc40b1e1436956ac3ed2c",
+      "checkedAt": "2026-08-16T17:36:58.037Z",
+      "status": 200,
+      "finalUrl": "https://documents1.worldbank.org/curated/en/099091124181525582/pdf/BOSIB-c260299b-4517-48c7-a0c1-b95eb42d17a7.pdf"
+    },
+    "atlas-src-drei-2017": {
+      "hash": "5fcb20f61a7c923a9fc2c132f7a145c89edea1a5bd71150658a8cf29c13e0155",
+      "checkedAt": "2026-08-16T17:36:58.004Z",
+      "status": 200,
+      "finalUrl": "https://www.undp.org/lebanon/publications/derisking-renewable-energy-investment-lebanon"
+    },
+    "monitor-aub-ifi": {
+      "hash": "8b68178767bca4fc89c123eec19515fed801bbb577854f7026436fd09a9a9c73",
+      "checkedAt": "2026-08-16T17:36:58.089Z",
+      "status": 200,
+      "finalUrl": "https://www.aub.edu.lb/ifi/Pages/energy-policy-and-security.aspx"
+    },
+    "monitor-iea-oil": {
+      "hash": "ec7a2c00d4e2058141f8713234dda1d83773620f5e24d36e70688806f9a50d91",
+      "checkedAt": "2026-08-16T17:36:58.135Z",
+      "status": 200,
+      "finalUrl": "https://www.iea.org/energy-system/fuels/oil"
+    },
+    "discovered-e4eec8e25cf9": {
+      "hash": "cdb83219151700ff02ab35d6a332f5d4358d7f5d8d87e69cc681525ad1bd1420",
+      "checkedAt": "2026-08-16T17:26:55.118Z",
+      "status": 200,
+      "finalUrl": "https://www.energyandwater.gov.lb/ar/details/101170/%D8%A7%D9%84%D8%B5%D8%AF%D9%8A-%D8%AA%D9%81%D9%82%D8%AF-%D9%85%D9%86%D8%B4-%D8%AA-%D8%A7%D9%84%D9%86%D9%81%D8%B7-%D9%88%D8%A7%D9%84%D8%BA%D8%A7%D8%B2-%D9%81%D9%8A-%D8%A7%D9%84%D8%A8%D8%AF%D8%A7%D9%88%D9%8A-%D9%88%D8%A7%D8%B7-%D9%84%D8%B9-%D8%B9%D9%84%D9%89-%D8%A7%D9%84%D8%AE%D8%B2%D8%A7%D9%86%D8%A7%D8%AA-%D9%88%D8%A3%D8%B9%D9%85%D8%A7%D9%84-%D8%B5%D9%8A%D8%A7%D9%86%D8%A9-%D8%AE%D8%B7-%D8%A7%D9%84%D8%BA%D8%A7%D8%B2-%D8%AA%D8%A3%D9%87%D9%8A%D9%84-%D8%AE%D8%B7-%D8%A7%D9%84%D8%BA%D8%A7%D8%B2-%D8%A5%D9%84%D9%89-%D8%AF%D9%8A%D8%B1-%D8%B9%D9%85%D8%A7%D8%B1-%D9%8A-%D9%86%D8%AC%D8%B2-%D8%AE%D9%84%D8%A7%D9%84-%D8%A3%D8%B3%D8%A7%D8%A8%D9%8A%D8%B9-%D9%88%D8%B9%D9%82%D9%88%D8%AF-%D8%B4%D8%B1%D8%A7-%D8%A7%D9%84%D8%BA%D8%A7%D8%B2-%D9%88%D8%B9%D8%A8%D9%88%D8%B1%D9%87-%D9%81%D9%8A-%D9%85%D8%B1%D8%A7%D8%AD%D9%84%D9%87%D8%A7-%D8%A7%D9%84%D8%A3%D8%AE%D9%8A%D8%B1%D8%A9-%D8%A7%D9%82%D8%AA%D8%B5%D8%A7%D8%AF"
+    },
+    "discovered-888ad7564393": {
+      "hash": "384bcec64715885c631373bb6ecf4d5ee07c1831dfed506e2b4291391e758926",
+      "checkedAt": "2026-08-16T17:26:55.120Z",
+      "status": 200,
+      "finalUrl": "https://www.energyandwater.gov.lb/ar/details/101168/%D8%A8%D9%8A%D8%A7%D9%86-%D8%B5%D8%A7%D8%AF%D8%B1-%D8%B9%D9%86-%D9%85%D8%A4%D8%B3%D8%B3%D8%A9-%D9%83%D9%87%D8%B1%D8%A8%D8%A7-%D9%84%D8%A8%D9%86%D8%A7%D9%86-%D8%A8%D8%B4%D8%A3%D9%86-%D8%A7%D9%84%D9%85%D9%88%D8%A7%D8%AF-%D8%A7%D9%84%D9%83%D9%85%D9%8A%D8%A7%D8%A6%D9%8A%D8%A9"
+    },
+    "discovered-3aca8202f8f2": {
+      "hash": "df481094d6fedd728c3aad8381ea09972bed087c94a00430a6f9079cebf0e972",
+      "checkedAt": "2026-08-16T17:26:55.121Z",
+      "status": 200,
+      "finalUrl": "https://www.energyandwater.gov.lb/ar/details/101171/%D8%B5%D8%AF%D8%B1-%D8%B9%D9%86-%D9%85%D9%86%D8%B4-%D8%AA-%D8%A7%D9%84%D9%86%D9%81%D8%B7-%D9%81%D9%8A-%D8%B7%D8%B1%D8%A7%D8%A8%D9%84%D8%B3-%D8%A7%D9%84%D8%A8%D9%8A%D8%A7%D9%86-%D8%A7%D9%84-%D8%AA%D9%8A"
+    },
+    "discovered-e896baed1b42": {
+      "hash": "aad4964e4b17c49a992f153962895dd45c60e15fbc6979d365629531744e968c",
+      "checkedAt": "2026-08-16T17:26:55.123Z",
+      "status": 200,
+      "finalUrl": "https://www.energyandwater.gov.lb/ar/details/101127/%D9%87%D9%8A%D8%A6%D8%A9-%D8%AA%D9%86%D8%B8%D9%8A%D9%85-%D9%82%D8%B7%D8%A7%D8%B9-%D8%A7%D9%84%D9%83%D9%87%D8%B1%D8%A8%D8%A7-%D8%AA%D8%B9%D9%84%D9%86-%D8%A8%D8%AF-%D8%A7%D9%84%D9%85%D8%B1%D8%AD%D9%84%D8%A9-%D8%A7%D9%84%D8%AA%D8%AC%D8%B1%D9%8A%D8%A8%D9%8A%D8%A9-%D9%84%D9%86%D9%85%D9%88%D8%B0%D8%AC-%D8%B7%D9%84%D8%A8-%D8%A7%D9%84%D8%A5%D8%B0%D9%86-%D9%84%D9%85%D8%B4%D8%A7%D8%B1%D9%8A%D8%B9-%D8%A7%D9%84%D8%B7%D8%A7%D9%82%D8%A9-%D8%A7%D9%84%D9%85%D8%AA%D8%AC%D8%AF%D8%AF%D8%A9-%D8%A7%D9%84%D9%85%D9%88%D8%B2%D8%B9%D8%A9"
+    },
+    "discovered-dc60e1f6dd4b": {
+      "hash": "ca84eb67ec024d71b49739a2f75a61404612a32a699d3db35b8b41224500dee8",
+      "checkedAt": "2026-08-16T17:26:55.124Z",
+      "status": 200,
+      "finalUrl": "https://www.energyandwater.gov.lb/ar/details/101136/%D8%A7%D9%84%D8%B5%D8%AF%D9%8A-%D9%8A%D8%A8%D8%AD%D8%AB-%D9%85%D8%B9-%D8%A7%D9%84%D8%B3%D9%81%D9%8A%D8%B1-%D8%A7%D9%84%D8%A7%D9%85%D8%A7%D8%B1%D8%A7%D8%AA%D9%8A-%D9%85%D8%B4%D8%A7%D8%B1%D9%83%D8%A9-%D9%84%D8%A8%D9%86%D8%A7%D9%86-%D9%81%D9%8A-%D9%85%D8%A4%D8%AA%D9%85%D8%B1-%D8%A7%D9%84%D8%A3%D9%85%D9%85-%D8%A7%D9%84%D9%85%D8%AA%D8%AD%D8%AF%D8%A9-%D9%84%D9%84%D9%85%D9%8A%D8%A7%D9%87"
+    },
+    "discovered-053978fe5288": {
+      "hash": "6ef797d97988f5f7390c2c1b7b7c223214a65a9f5302d8ebed552c2180ebdbb4",
+      "checkedAt": "2026-08-16T17:26:55.126Z",
+      "status": 200,
+      "finalUrl": "https://www.energyandwater.gov.lb/ar/details/101010/%D9%88%D8%B2%D8%A7%D8%B1%D8%A9-%D8%A7%D9%84%D8%B7%D8%A7%D9%82%D8%A9-%D9%88%D8%A7%D9%84%D9%85%D9%8A%D8%A7%D9%87-%D8%AA%D8%B7%D9%84%D9%82-%D8%AD%D9%85%D9%84%D8%A9-%D9%88%D8%B7%D9%86%D9%8A%D8%A9-%D9%84%D8%AA%D8%B1%D8%B4%D9%8A%D8%AF-%D8%A5%D8%B3%D8%AA%D9%87%D9%84%D8%A7%D9%83-%D8%A7%D9%84%D9%85%D9%8A%D8%A7%D9%87"
+    },
+    "discovered-e387ff8f8d16": {
+      "hash": "aca1a8af0b3855fd80e4bfd054fef1047c156b70ba0c952fc80ecc541fab1776",
+      "checkedAt": "2026-08-16T17:26:55.634Z",
+      "status": 200,
+      "finalUrl": "https://www.energyandwater.gov.lb/ar/details/101159/%D9%88%D8%B1%D9%82%D8%A9-%D8%B3%D9%8A%D8%A7%D8%B3%D8%A9-%D9%82%D8%B7%D8%A7%D8%B9-%D8%A7%D9%84%D9%83%D9%87%D8%B1%D8%A8%D8%A7-%D8%AA%D9%86%D8%B8%D9%8A%D9%85-%D8%A7%D9%84%D9%81%D8%B7%D8%A7%D8%B9-%D8%A5%D9%84%D8%A7%D8%B7%D8%A7%D8%B1-%D8%A7%D9%84%D8%A7%D9%86%D8%AA%D9%82%D8%A7%D9%84%D9%8A-%D9%88%D8%A7%D9%84%D9%86%D9%85%D9%88%D8%B0%D8%AC-%D8%B7%D9%88%D9%8A%D9%84-%D8%A7%D9%84%D8%A7%D9%85%D8%AF-21-%D8%AA%D9%85%D9%88%D8%B2-2026"
+    },
+    "discovered-84dfcfba0ee4": {
+      "hash": "3ddcba6acaa749d2629a3ec4bb1c93e2a00cdaeacfec40321909d742c5c1efd3",
+      "checkedAt": "2026-08-16T17:37:15.063Z",
+      "status": 200,
+      "finalUrl": "https://energyandwater.gov.lb/ar/details/101159/%D9%88%D8%B1%D9%82%D8%A9-%D8%B3%D9%8A%D8%A7%D8%B3%D8%A9-%D9%82%D8%B7%D8%A7%D8%B9-%D8%A7%D9%84%D9%83%D9%87%D8%B1%D8%A8%D8%A7-%D8%AA%D9%86%D8%B8%D9%8A%D9%85-%D8%A7%D9%84%D9%81%D8%B7%D8%A7%D8%B9-%D8%A5%D9%84%D8%A7%D8%B7%D8%A7%D8%B1-%D8%A7%D9%84%D8%A7%D9%86%D8%AA%D9%82%D8%A7%D9%84%D9%8A-%D9%88%D8%A7%D9%84%D9%86%D9%85%D9%88%D8%B0%D8%AC-%D8%B7%D9%88%D9%8A%D9%84-%D8%A7%D9%84%D8%A7%D9%85%D8%AF-21-%D8%AA%D9%85%D9%88%D8%B2-2026"
+    },
+    "discovered-f1b3d998de86": {
+      "hash": "0f9e57bc2b303ff8de8fe637d5c74bf6e81e0a0ecf3c61c007efa180747f73f7",
+      "checkedAt": "2026-08-16T17:26:55.643Z",
+      "status": 200,
+      "finalUrl": "https://www.worldbank.org/en/news/press-release/2026/01/27/lebanon-world-bank-approves-us-350-million-financing-for-social-protection-economic-empowerment-and-digital-transformati"
+    },
+    "discovered-898051f02d19": {
+      "hash": "173876cf54e216a7c399eff91ba3825b91a0d077ad42350c42ea39d58fc83425",
+      "checkedAt": "2026-08-16T17:26:55.648Z",
+      "status": 200,
+      "finalUrl": "https://www.iea.org/reports/energy-technology-perspectives-2026"
+    },
+    "discovered-3d09d90fae47": {
+      "hash": "e9b140f36c2b1296691a7b11caf18f7eae0d2a094f6489f851dcb516b64b00b4",
+      "checkedAt": "2026-08-16T17:26:55.652Z",
+      "status": 200,
+      "finalUrl": "https://www.iea.org/reports/global-energy-review-2026"
+    },
+    "discovered-315f216153d5": {
+      "hash": "43f225f5053ca718f9e75d157d0944deb9915bf5508383960c1334ed52fdc855",
+      "checkedAt": "2026-08-16T17:26:55.655Z",
+      "status": 200,
+      "finalUrl": "https://www.iea.org/reports/oil-market-report-april-2026"
+    },
+    "discovered-6dcacc3d9d36": {
+      "hash": "601282e3cbbb24447ec67d7e4f10d431e7379695bd4afe53fc9601e31b6368dd",
+      "checkedAt": "2026-08-16T17:26:55.759Z",
+      "status": 200,
+      "finalUrl": "https://www.iea.org/reports/oil-market-report-august-2026"
+    },
+    "discovered-f8b84c403597": {
+      "hash": "9d2ebbe8c9508472d4010d79910735ea9bc9b55b0d4bd5e3017cb422ea0b0251",
+      "checkedAt": "2026-08-16T17:26:55.773Z",
+      "status": 200,
+      "finalUrl": "https://www.iea.org/reports/oil-market-report-december-2025"
+    },
+    "discovered-77b6ab5ffe4b": {
+      "hash": "1ea4c54443ac157d0e3413c65bd3ad05bdee68fa059c404c2c1facb520dface3",
+      "checkedAt": "2026-08-16T17:26:55.776Z",
+      "status": 200,
+      "finalUrl": "https://www.iea.org/reports/oil-market-report-january-2026"
+    },
+    "discovered-6d487cec4021": {
+      "hash": "647e4ec96d46fa18987f677c509002d63a2e8a989e1746dd30037e23279197ba",
+      "checkedAt": "2026-08-16T17:26:55.784Z",
+      "status": 200,
+      "finalUrl": "https://www.iea.org/reports/oil-market-report-july-2026"
+    },
+    "discovered-00f7655890bc": {
+      "hash": "ba7911326af90f3c3e0f3bfd7fe28a1bd9731c74cee3cbf485e8dd21ff0d6678",
+      "checkedAt": "2026-08-16T17:26:55.806Z",
+      "status": 200,
+      "finalUrl": "https://www.iea.org/reports/oil-market-report-june-2026"
+    },
+    "discovered-200e7932748b": {
+      "hash": "3c517084cfab384737b2287c8e0509c1f7b062a33366895a90ea530f222ab075",
+      "checkedAt": "2026-08-16T17:26:55.837Z",
+      "status": 200,
+      "finalUrl": "https://www.iea.org/reports/oil-market-report-march-2026"
+    },
+    "discovered-b7ffae07b473": {
+      "hash": "eb35d564e9c2bcd996e8e2246c69ba851ea17c8aec74a762824d4910625e9fc6",
+      "checkedAt": "2026-08-16T17:26:55.851Z",
+      "status": 200,
+      "finalUrl": "https://www.iea.org/reports/oil-market-report-may-2026"
+    },
+    "discovered-70af6962d919": {
+      "hash": "3d728d53aa3bc75f61f62a30a16e37de54dbd5063ed20aa0d3b1765df2f79f94",
+      "checkedAt": "2026-08-16T17:26:55.868Z",
+      "status": 200,
+      "finalUrl": "https://www.iea.org/reports/pledges-to-progress-2025"
+    },
+    "discovered-c5da380ba1b0": {
+      "hash": "0a7efdfb9db647a5ea8e116dc7fd0969554ed4f56283a099ab2dfc5725dc098f",
+      "checkedAt": "2026-08-16T17:26:55.883Z",
+      "status": 200,
+      "finalUrl": "https://www.iea.org/reports/sheltering-from-oil-shocks"
+    },
+    "discovered-cca0285cdbb4": {
+      "hash": "00be84bcddd38bda7d9a562f07ed351288c2d7dadc818539df97660311af1d84",
+      "checkedAt": "2026-08-16T17:26:56.227Z",
+      "status": 200,
+      "finalUrl": "https://www.un.org/sites/un2.un.org/files/icao_energy_compact_submission_v1_05-december-2025.pdf"
+    },
+    "discovered-85add04dfffe": {
+      "hash": "7198e64db4f9218d0398336da665443dc658e3baf66e961bfad5ccd61def1fac",
+      "checkedAt": "2026-08-16T17:37:14.547Z",
+      "status": 200,
+      "finalUrl": "https://lp.gov.lb/ContentRecordDetails?Id=36963"
+    },
+    "discovered-0c39a9283789": {
+      "hash": "e78f46843064f3b2fad2cdae5507addd77229664ea80f3951fbc5f694c0cd59d",
+      "checkedAt": "2026-08-16T17:37:14.548Z",
+      "status": 200,
+      "finalUrl": "https://lp.gov.lb/ContentRecordDetails?Id=36962"
+    },
+    "discovered-b4dda245bd72": {
+      "hash": "9afe93dfe8b507b88d9143580e26099afe04a55605a943e81b722f6001508f9b",
+      "checkedAt": "2026-08-16T17:37:14.549Z",
+      "status": 200,
+      "finalUrl": "https://energyandwater.gov.lb/ar/details/101170/%D8%A7%D9%84%D8%B5%D8%AF%D9%8A-%D8%AA%D9%81%D9%82%D8%AF-%D9%85%D9%86%D8%B4-%D8%AA-%D8%A7%D9%84%D9%86%D9%81%D8%B7-%D9%88%D8%A7%D9%84%D8%BA%D8%A7%D8%B2-%D9%81%D9%8A-%D8%A7%D9%84%D8%A8%D8%AF%D8%A7%D9%88%D9%8A-%D9%88%D8%A7%D8%B7-%D9%84%D8%B9-%D8%B9%D9%84%D9%89-%D8%A7%D9%84%D8%AE%D8%B2%D8%A7%D9%86%D8%A7%D8%AA-%D9%88%D8%A3%D8%B9%D9%85%D8%A7%D9%84-%D8%B5%D9%8A%D8%A7%D9%86%D8%A9-%D8%AE%D8%B7-%D8%A7%D9%84%D8%BA%D8%A7%D8%B2-%D8%AA%D8%A3%D9%87%D9%8A%D9%84-%D8%AE%D8%B7-%D8%A7%D9%84%D8%BA%D8%A7%D8%B2-%D8%A5%D9%84%D9%89-%D8%AF%D9%8A%D8%B1-%D8%B9%D9%85%D8%A7%D8%B1-%D9%8A-%D9%86%D8%AC%D8%B2-%D8%AE%D9%84%D8%A7%D9%84-%D8%A3%D8%B3%D8%A7%D8%A8%D9%8A%D8%B9-%D9%88%D8%B9%D9%82%D9%88%D8%AF-%D8%B4%D8%B1%D8%A7-%D8%A7%D9%84%D8%BA%D8%A7%D8%B2-%D9%88%D8%B9%D8%A8%D9%88%D8%B1%D9%87-%D9%81%D9%8A-%D9%85%D8%B1%D8%A7%D8%AD%D9%84%D9%87%D8%A7-%D8%A7%D9%84%D8%A3%D8%AE%D9%8A%D8%B1%D8%A9-%D8%A7%D9%82%D8%AA%D8%B5%D8%A7%D8%AF"
+    },
+    "discovered-09d715f8c452": {
+      "hash": "be7e080795709c78948c763449ff62b4d695b04e5ca0f41acddc82886e482c97",
+      "checkedAt": "2026-08-16T17:37:14.550Z",
+      "status": 200,
+      "finalUrl": "https://energyandwater.gov.lb/ar/details/101168/%D8%A8%D9%8A%D8%A7%D9%86-%D8%B5%D8%A7%D8%AF%D8%B1-%D8%B9%D9%86-%D9%85%D8%A4%D8%B3%D8%B3%D8%A9-%D9%83%D9%87%D8%B1%D8%A8%D8%A7-%D9%84%D8%A8%D9%86%D8%A7%D9%86-%D8%A8%D8%B4%D8%A3%D9%86-%D8%A7%D9%84%D9%85%D9%88%D8%A7%D8%AF-%D8%A7%D9%84%D9%83%D9%85%D9%8A%D8%A7%D8%A6%D9%8A%D8%A9"
+    },
+    "discovered-3e1f90f32c82": {
+      "hash": "c9edca3cdb1cefb75ba064864f72c9cb05421987568e26986b6ff0e3dad0d3e9",
+      "checkedAt": "2026-08-16T17:37:14.551Z",
+      "status": 200,
+      "finalUrl": "https://energyandwater.gov.lb/ar/details/101171/%D8%B5%D8%AF%D8%B1-%D8%B9%D9%86-%D9%85%D9%86%D8%B4-%D8%AA-%D8%A7%D9%84%D9%86%D9%81%D8%B7-%D9%81%D9%8A-%D8%B7%D8%B1%D8%A7%D8%A8%D9%84%D8%B3-%D8%A7%D9%84%D8%A8%D9%8A%D8%A7%D9%86-%D8%A7%D9%84-%D8%AA%D9%8A"
+    },
+    "discovered-ff450ba2f5e0": {
+      "hash": "fca92bfe5321fa329d46c4b0cc0debf046101e8082573e2c6c28c8b8cec5bc1c",
+      "checkedAt": "2026-08-16T17:37:14.552Z",
+      "status": 200,
+      "finalUrl": "https://energyandwater.gov.lb/ar/details/101127/%D9%87%D9%8A%D8%A6%D8%A9-%D8%AA%D9%86%D8%B8%D9%8A%D9%85-%D9%82%D8%B7%D8%A7%D8%B9-%D8%A7%D9%84%D9%83%D9%87%D8%B1%D8%A8%D8%A7-%D8%AA%D8%B9%D9%84%D9%86-%D8%A8%D8%AF-%D8%A7%D9%84%D9%85%D8%B1%D8%AD%D9%84%D8%A9-%D8%A7%D9%84%D8%AA%D8%AC%D8%B1%D9%8A%D8%A8%D9%8A%D8%A9-%D9%84%D9%86%D9%85%D9%88%D8%B0%D8%AC-%D8%B7%D9%84%D8%A8-%D8%A7%D9%84%D8%A5%D8%B0%D9%86-%D9%84%D9%85%D8%B4%D8%A7%D8%B1%D9%8A%D8%B9-%D8%A7%D9%84%D8%B7%D8%A7%D9%82%D8%A9-%D8%A7%D9%84%D9%85%D8%AA%D8%AC%D8%AF%D8%AF%D8%A9-%D8%A7%D9%84%D9%85%D9%88%D8%B2%D8%B9%D8%A9"
+    },
+    "discovered-1eda9b45ff8a": {
+      "hash": "710436eb34696ae2b53faa7d68deaed0fc555475c4f913100c905289df43ef32",
+      "checkedAt": "2026-08-16T17:37:14.998Z",
+      "status": 200,
+      "finalUrl": "https://energyandwater.gov.lb/ar/details/101010/%D9%88%D8%B2%D8%A7%D8%B1%D8%A9-%D8%A7%D9%84%D8%B7%D8%A7%D9%82%D8%A9-%D9%88%D8%A7%D9%84%D9%85%D9%8A%D8%A7%D9%87-%D8%AA%D8%B7%D9%84%D9%82-%D8%AD%D9%85%D9%84%D8%A9-%D9%88%D8%B7%D9%86%D9%8A%D8%A9-%D9%84%D8%AA%D8%B1%D8%B4%D9%8A%D8%AF-%D8%A5%D8%B3%D8%AA%D9%87%D9%84%D8%A7%D9%83-%D8%A7%D9%84%D9%85%D9%8A%D8%A7%D9%87"
+    },
+    "discovered-552ef186c1f4": {
+      "hash": "551f785248325c52d85ca6c395aab5f00aab0ba9b2324b68972b07b2f82a5332",
+      "checkedAt": "2026-08-16T17:37:15.066Z",
+      "status": 200,
+      "finalUrl": "https://www.iea.org/reports/energy-technology-perspectives-2026"
+    },
+    "discovered-fa1cf0894272": {
+      "hash": "2ecf2e6e574812b038f7c379a560893c50ffe52e562449c059b358c2ea684d86",
+      "checkedAt": "2026-08-16T17:37:15.071Z",
+      "status": 200,
+      "finalUrl": "https://www.iea.org/reports/global-energy-review-2026"
+    },
+    "discovered-9eba19588eba": {
+      "hash": "3ee09b078876accffd0f5af2906f1128638cd70c2c2138a381b76c52754b0f71",
+      "checkedAt": "2026-08-16T17:37:15.147Z",
+      "status": 200,
+      "finalUrl": "https://www.iea.org/reports/oil-market-report-april-2026"
+    },
+    "discovered-9d2f3eec8ae2": {
+      "hash": "6d53aedadfce51fb7d233a4fb9310de221afd241ed808a0259abaa1e86b6eb82",
+      "checkedAt": "2026-08-16T17:37:15.224Z",
+      "status": 200,
+      "finalUrl": "https://www.iea.org/reports/oil-market-report-august-2026"
+    },
+    "discovered-77505966a5a3": {
+      "hash": "26db087c134a035c830ff670d4fc14514bf62d536b3d2d0b119d62447fab5ba0",
+      "checkedAt": "2026-08-16T17:37:15.283Z",
+      "status": 200,
+      "finalUrl": "https://www.iea.org/reports/oil-market-report-december-2025"
+    },
+    "discovered-4ff4d4bfdef7": {
+      "hash": "df61cd036ca054dae6a4d13426f077e426f4ed1c0978602777cbac851f645789",
+      "checkedAt": "2026-08-16T17:37:15.291Z",
+      "status": 200,
+      "finalUrl": "https://lcec.org.lb/our-work/partners/RELaw"
+    },
+    "discovered-35bfb90a2ac3": {
+      "hash": "458bf66bb2a0344b5318a905844b7fd8291e6ae8fca8a6d5fae08b899f67fdc7",
+      "checkedAt": "2026-08-16T17:37:15.362Z",
+      "status": 200,
+      "finalUrl": "https://lp.gov.lb/ContentRecordDetails?Id=35944"
+    },
+    "discovered-09f36f68b9f4": {
+      "hash": "c20b0ab26aade63ba37502b2744b8b446a2f81cb29548a0de1be4c18c3aa734c",
+      "checkedAt": "2026-08-16T17:37:15.381Z",
+      "status": 200,
+      "finalUrl": "https://lp.gov.lb/ContentRecordDetails?Id=35951"
+    },
+    "discovered-8f29261b07a7": {
+      "hash": "e5d679dd5fd5ff5625be805a56d84cf2175864928d3203cdeaf625ef285922b1",
+      "checkedAt": "2026-08-16T17:37:15.453Z",
+      "status": 200,
+      "finalUrl": "https://lp.gov.lb/ContentRecordDetails?Id=29297"
+    },
+    "discovered-fc5656e5f5b2": {
+      "hash": "adfd1aff1e2af528c07bbdda7f63425d8106bfae62a7c37d226b6d08374adada",
+      "checkedAt": "2026-08-16T17:37:15.689Z",
+      "status": 200,
+      "finalUrl": "https://lp.gov.lb/ContentRecordDetails?Id=29323"
+    },
+    "discovered-3191dab5d524": {
+      "hash": "34b85039462e6e11239ac7c8e1177c3063b00682e0cbb8bd7428339438620132",
+      "checkedAt": "2026-08-16T17:37:16.282Z",
+      "status": 200,
+      "finalUrl": "https://www.lpa.gov.lb/Library/Assets/Gallery/asdasdas/Laws/%D8%A7%D9%84%D9%85%D9%88%D8%A7%D8%B1%D8%AF%20%D8%A7%D9%84%D8%A8%D8%AA%D8%B1%D9%88%D9%84%D9%8A%D8%A9%20%D9%81%D9%8A%20%D8%A7%D9%84%D9%85%D9%8A%D8%A7%D9%87%20%D8%A7%D9%84%D8%A8%D8%AD%D8%B1%D9%8A%D8%A9%20-%20%D9%82%D8%A7%D9%86%D9%88%D9%86%20132-2010.pdf"
+    },
+    "discovered-1a493af09472": {
+      "hash": "4cd5a66e3711c299a57d3b7c537b561058af632f25bb7a3e4608d02637f1b802",
+      "checkedAt": "2026-08-16T17:37:16.485Z",
+      "status": 200,
+      "finalUrl": "https://www.lpa.gov.lb/Library/Assets/Gallery/asdasdas/Laws/%D8%A7%D9%84%D8%A3%D8%AD%D9%83%D8%A7%D9%85%20%D8%A7%D9%84%D8%B6%D8%B1%D9%8A%D8%A8%D9%8A%D8%A9%20%D8%A7%D9%84%D9%85%D8%AA%D8%B9%D9%84%D9%82%D8%A9%20%D8%A8%D8%A7%D9%84%D8%A3%D9%86%D8%B4%D8%B7%D8%A9%20%D8%A7%D9%84%D8%A8%D8%AA%D8%B1%D9%88%D9%84%D9%8A%D8%A9%20-%20%D9%82%D8%A7%D9%86%D9%88%D9%86%2057%20-2017.pdf"
+    },
+    "discovered-3317cb2f9a19": {
+      "hash": "cc22374663f282db68c222014e991ab06dc2a15a5b7500757e1f91571783f8f7",
+      "checkedAt": "2026-08-16T17:37:17.543Z",
+      "status": 200,
+      "finalUrl": "https://www.lpa.gov.lb/Library/Assets/Gallery/asdasdas/Laws/%D8%AF%D8%B9%D9%85%20%D8%A7%D9%84%D8%B4%D9%81%D8%A7%D9%81%D9%8A%D8%A9%20%D9%81%D9%8A%20%D9%82%D8%B7%D8%A7%D8%B9%20%D8%A7%D9%84%D8%A8%D8%AA%D8%B1%D9%88%D9%84%20-%20%D9%82%D8%A7%D9%86%D9%88%D9%86%2084-2018.pdf"
+    },
+    "discovered-f75c196da731": {
+      "hash": "687d0b8b861115c0fa68efe570371c24015ae71b40e2dfd6d5a785d23d9958b4",
+      "checkedAt": "2026-08-16T17:37:17.577Z",
+      "status": 200,
+      "finalUrl": "https://www.lpa.gov.lb/Library/Assets/Gallery/asdasdas/Laws/Law%20for%20the%20Tax%20Provisions%20Related%20to%20Petroleum%20Activities%20in%20Accordance%20With%20Law%20132%20Dated%2024082010%20(Unofficial%20Translation).pdf"
+    },
+    "discovered-d9a7157e8708": {
+      "hash": "c71adabd1abc6cccb6ecbdd51d5e000b734b72c6c8403dc81aa42b31ca6afa1d",
+      "checkedAt": "2026-08-16T17:37:17.716Z",
+      "status": 200,
+      "finalUrl": "https://www.lpa.gov.lb/Library/Assets/Gallery/asdasdas/Laws/OPRL%20-%20English.pdf"
+    },
+    "discovered-d71900326a8a": {
+      "hash": "8b0bd631057741f9fcc0005aed13f5c6460ca97af792519822eec25181c62e1d",
+      "checkedAt": "2026-08-16T17:37:17.811Z",
+      "status": 200,
+      "finalUrl": "https://energyandwater.gov.lb/ar/details/101163/%D8%A7%D9%84%D8%B7%D8%A7%D9%82%D8%A9-%D8%B3%D8%B9%D8%A7%D8%AF%D8%A9-%D9%8A%D8%AD%D8%B4%D8%AF-%D8%A3%D8%B5%D8%A7%D8%A8%D8%B9-%D8%A7%D9%84%D9%8A%D8%AF%D9%8A%D9%86-%D9%88%D9%8A%D8%AE%D8%AA%D9%84%D9%82-%D8%A5%D8%AC%D8%AA%D9%85%D8%A7%D8%B9%D8%A7-%D9%84%D9%85-%D9%8A%D8%B9%D9%82%D8%AF"
+    }
+  }
+}

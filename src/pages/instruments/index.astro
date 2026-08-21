@@ -1,0 +1,41 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { instruments } from "../../data/atlas";
+import { categoryAr, instrumentAr, jurisdictionAr, statusAr } from "../../data/localization";
+const categories=[...new Set(instruments.map((x)=>x.category))].sort();
+const statuses=[...new Set(instruments.map((x)=>x.status))].sort();
+const kindOf=(item:(typeof instruments)[number])=>item.title.startsWith("Law No.")?"law":item.category==="Institutions"?"institution":item.status==="Project"||item.id==="ins-solar-licenses"?"project":"policy";
+const statusTone=(status:string)=>status==="In force"?"live":status==="Under implementation"||status==="Operational programme"?"progress":status==="Project"?"project":status==="Draft"?"draft":status==="Voluntary commitment"?"commitment":status==="Policy"?"policy":"historic";
+---
+<BaseLayout title="Instruments" description="Lebanon energy laws, regulations, policies, institutions, projects and international commitments.">
+  <header class="page-head"><div><p class="eyebrow" data-en="Legal and policy ledger" data-ar="سجل القوانين والسياسات">Legal and policy ledger</p><h1 data-en="Energy instruments" data-ar="أدوات قطاع الطاقة">Energy instruments</h1><p data-en="Browse the rules and commitments shaping electricity, renewables, climate, petroleum and sector finance." data-ar="تصفّح القواعد والالتزامات التي تشكّل الكهرباء والطاقة المتجددة والمناخ والبترول وتمويل القطاع.">Browse the rules and commitments shaping electricity, renewables, climate, petroleum and sector finance.</p></div><p class="cutoff"><strong><span>{instruments.length}</span> <span data-en="reviewed records" data-ar="سجلاً مراجَعاً">reviewed records</span></strong><br /><span data-en="Each entry links to its source and states why it matters." data-ar="يرتبط كل سجل بمصدره ويوضح أهميته.">Each entry links to its source and states why it matters.</span></p></header>
+  <form class="filters" id="instrument-filters" role="search">
+    <div class="field"><label for="instrument-query" data-en="Search instruments" data-ar="البحث في الأدوات">Search instruments</label><input id="instrument-query" type="search" name="q" data-placeholder-en="Law 318, solar, regulator…" data-placeholder-ar="القانون 318، الطاقة الشمسية، الهيئة…" placeholder="Law 318, solar, regulator…" /></div>
+    <div class="field"><label for="category" data-en="Category" data-ar="المجال">Category</label><select id="category" name="category"><option value="" data-en="All categories" data-ar="كل المجالات">All categories</option>{categories.map((x)=><option value={x} data-en={x} data-ar={categoryAr[x]}>{x}</option>)}</select></div>
+    <div class="field"><label for="status" data-en="Status" data-ar="الحالة">Status</label><select id="status" name="status"><option value="" data-en="All statuses" data-ar="كل الحالات">All statuses</option>{statuses.map((x)=><option value={x} data-en={x} data-ar={statusAr[x]}>{x}</option>)}</select></div>
+    <div class="field"><label for="sort" data-en="Order" data-ar="الترتيب">Order</label><select id="sort" name="sort"><option value="newest" data-en="Newest first" data-ar="الأحدث أولاً">Newest first</option><option value="oldest" data-en="Oldest first" data-ar="الأقدم أولاً">Oldest first</option><option value="title" data-en="Title A-Z" data-ar="حسب العنوان">Title A-Z</option></select></div>
+  </form>
+  <p class="results-count" aria-live="polite"><span id="result-count">{instruments.length}</span> <span data-en="instruments shown" data-ar="أداة معروضة">instruments shown</span></p>
+  <div class="record-list" id="instrument-list">
+    {instruments.map((item)=>{const ar=instrumentAr[item.id];return <article class="record" data-title={`${item.title} ${item.shortTitle} ${item.summary} ${ar?.title} ${ar?.summary}`.toLowerCase()} data-category={item.category} data-status={item.status} data-jurisdiction={item.jurisdiction} data-kind={kindOf(item)} data-year={item.year}><div class="record-year">{item.year}</div><div><h2><a href={`/instruments/${item.slug}/`} data-en={item.title} data-ar={ar?.title}>{item.title}</a></h2><p data-en={item.summary} data-ar={ar?.summary}>{item.summary}</p><div class="meta"><span data-en={item.category} data-ar={categoryAr[item.category]}>{item.category}</span><span data-en={item.jurisdiction} data-ar={jurisdictionAr[item.jurisdiction]}>{item.jurisdiction}</span></div></div><span class="pill status-pill" data-tone={statusTone(item.status)} data-en={item.status} data-ar={statusAr[item.status]}>{item.status}</span></article>})}
+  </div>
+  <p class="empty-state" id="empty" hidden data-en="No instruments match those filters. Try a broader search." data-ar="لا توجد أدوات تطابق عوامل التصفية. جرّب بحثاً أوسع.">No instruments match those filters. Try a broader search.</p>
+  <script>
+    const form=document.querySelector<HTMLFormElement>("#instrument-filters");
+    const list=document.querySelector<HTMLElement>("#instrument-list");
+    const count=document.querySelector<HTMLElement>("#result-count");
+    const empty=document.querySelector<HTMLElement>("#empty");
+    const records=[...document.querySelectorAll<HTMLElement>("#instrument-list .record")];
+    const params=new URLSearchParams(location.search);
+    for (const [key,value] of params) { const field=form?.elements.namedItem(key); if (field instanceof HTMLInputElement || field instanceof HTMLSelectElement) field.value=value; }
+    const apply=()=>{
+      if(!form||!list)return; const data=new FormData(form); const q=String(data.get("q")||"").toLowerCase().trim(); const category=String(data.get("category")||""); const status=String(data.get("status")||""); const sort=String(data.get("sort")||"newest");
+      const kind=params.get("kind")||""; const jurisdiction=params.get("jurisdiction")||"";
+      const shown=records.filter((r)=>(!q||r.dataset.title?.includes(q))&&(!category||r.dataset.category===category)&&(!status||r.dataset.status===status)&&(!kind||r.dataset.kind===kind)&&(!jurisdiction||r.dataset.jurisdiction===jurisdiction));
+      records.forEach((r)=>r.hidden=!shown.includes(r)); shown.sort((a,b)=>sort==="title"?String(a.dataset.title).localeCompare(String(b.dataset.title)):sort==="oldest"?Number(a.dataset.year)-Number(b.dataset.year):Number(b.dataset.year)-Number(a.dataset.year)).forEach((r)=>list.append(r));
+      if(count)count.textContent=String(shown.length); if(empty)empty.hidden=shown.length>0;
+      const next=new URLSearchParams(); for(const [key,value] of data)if(value)next.set(key,String(value)); if(kind)next.set("kind",kind);if(jurisdiction)next.set("jurisdiction",jurisdiction); history.replaceState(null,"",`${location.pathname}${next.size?`?${next}`:""}`);
+    };
+    form?.addEventListener("input",apply); form?.addEventListener("change",apply); apply();
+  </script>
+</BaseLayout>

@@ -1,0 +1,16 @@
+{
+  "name": "Noa Energy Atlas - Lebanon’s Energy Law & Market Briefing",
+  "short_name": "Noa Energy Atlas",
+  "id": "/",
+  "description": "A source-led briefing on Lebanon’s energy law and market.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f5fcfc",
+  "theme_color": "#081820",
+  "icons": [
+    {"src":"/icons/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},
+    {"src":"/icons/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any"},
+    {"src":"/icons/icon-512-maskable.png","sizes":"512x512","type":"image/png","purpose":"maskable"}
+  ]
+}

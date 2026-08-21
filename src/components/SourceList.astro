@@ -1,0 +1,12 @@
+---
+import { resolveSources } from "../data/atlas";
+interface Props { ids: string[]; heading?: string; }
+const { ids, heading = "Primary sources" } = Astro.props;
+const sources = resolveSources(ids);
+---
+<section aria-labelledby={`sources-${ids.join("-")}`}>
+  <h2 id={`sources-${ids.join("-")}`} data-en={heading} data-ar={heading === "Primary sources" ? "المصادر الأساسية" : heading}>{heading}</h2>
+  <ol class="source-list">
+    {sources.map((source) => <li><a href={source.url} rel="external">{source.title} <i class="ph ph-arrow-square-out" aria-hidden="true"></i></a><small>{source.publisher} · {source.publishedAt ? <><span data-en="Published" data-ar="نُشر في">Published</span> <time datetime={source.publishedAt}>{source.publishedAt}</time></> : <span data-en="Publication date not stated" data-ar="تاريخ النشر غير مذكور">Publication date not stated</span>} · {source.language} · <span data-en="Accessed 16 August 2026" data-ar="تم الاطلاع في 16 آب 2026">Accessed 16 August 2026</span></small>{source.note && <small>{source.note}</small>}</li>)}
+  </ol>
+</section>

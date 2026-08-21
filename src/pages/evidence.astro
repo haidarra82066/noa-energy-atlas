@@ -1,0 +1,8 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import RelationshipAtlas from "../components/RelationshipAtlas.astro";
+---
+<BaseLayout title="Relationships" description="An accessible relationship map of Lebanon’s energy laws, policies, institutions, projects and commitments.">
+  <header class="page-head"><div><p class="eyebrow" data-en="Evidence map" data-ar="خريطة الأدلة">Evidence map</p><h1 data-en="How the instruments connect" data-ar="كيف ترتبط الأدوات">How the instruments connect</h1><p data-en="A source-backed view of which instruments enable, govern, finance, operationalize or inform others." data-ar="عرض قائم على المصادر للأدوات التي تمكّن أو تنظّم أو تموّل أو تفعّل أو تسترشد بأدوات أخرى.">A source-backed view of which instruments enable, govern, finance, operationalize or inform others.</p></div><p class="cutoff"><strong data-en="Relationship rule" data-ar="قاعدة العلاقات">Relationship rule</strong><br /><span data-en="Every edge has at least one source. Proximity alone does not imply causation or legal hierarchy." data-ar="لكل علاقة مصدر واحد على الأقل. لا يعني التقارب وحده سببية أو تراتبية قانونية.">Every edge has at least one source. Proximity alone does not imply causation or legal hierarchy.</span></p></header>
+  <RelationshipAtlas />
+</BaseLayout>

@@ -1,0 +1,12 @@
+import { execFileSync } from "node:child_process";
+type Mode="news"|"law";
+const mode=process.argv.includes("--mode")?process.argv[process.argv.indexOf("--mode")+1] as Mode:undefined;
+if(!mode||!["news","law"].includes(mode))throw new Error("Use --mode news or --mode law");
+const changed=execFileSync("git",["status","--porcelain"],{encoding:"utf8"}).split(/\r?\n/).filter(Boolean).map((line)=>line.slice(3).replace(/\\/g,"/"));
+const shared=[/^src\/data\/automated-publications\.json$/, /^public\/deployment-marker\.json$/];
+const news=[/^updates\/research\/news-evidence\.json$/, /^updates\/candidates\/news(?:\.json|-briefing\.md|\.md)$/, /^updates\/pending-state\/news\.json$/, /^updates\/publication-ledger-news\.jsonl$/, /^updates\/memory\/(briefing-history|watchlist|data-gaps)\.md$/];
+const law=[/^updates\/research\/law-evidence\.json$/, /^updates\/candidates\/law(?:\.json|-verification\.json|\.md)$/, /^updates\/pending-state\/law\.json$/, /^updates\/publication-ledger-law\.jsonl$/];
+const allowed=[...shared,...(mode==="news"?news:law)];
+const violations=changed.filter((file)=>!allowed.some((pattern)=>pattern.test(file)));
+if(violations.length)throw new Error(`${mode} workflow changed files outside its allowlist:\n- ${violations.join("\n- ")}`);
+console.log(JSON.stringify({status:"PASS",mode,files:changed}));

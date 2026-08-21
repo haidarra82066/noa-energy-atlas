@@ -1,0 +1,122 @@
+{
+  "version": 2,
+  "mode": "law",
+  "lastSuccessfulRun": "2026-08-16T18:31:06.427Z",
+  "editorialTimezone": "Asia/Beirut",
+  "sources": {
+    "atlas-src-law-318": {
+      "hash": "df61cd036ca054dae6a4d13426f077e426f4ed1c0978602777cbac851f645789",
+      "checkedAt": "2026-08-16T18:31:06.500Z",
+      "status": 200,
+      "finalUrl": "https://lcec.org.lb/index.php/our-work/partners/RELaw"
+    },
+    "atlas-src-nreap": {
+      "hash": "8abda4bcb3580bba4f5bb49d82ffb76a9e26c2e6ddc5089d3503de8031862b99",
+      "checkedAt": "2026-08-16T18:31:06.502Z",
+      "status": 200,
+      "finalUrl": "https://lcec.org.lb/sites/default/files/2025-10/NREAP-of-Lebanon-2025_2030.pdf"
+    },
+    "atlas-src-solar-licenses": {
+      "hash": "47806beb861bbd26a59eaf94a9e3185dfadd8dafb514be75b2e26a4cfcf4ad9b",
+      "checkedAt": "2026-08-16T18:31:06.503Z",
+      "status": 200,
+      "finalUrl": "https://www.lcec.org.lb/node/12857"
+    },
+    "atlas-src-solar-standards": {
+      "hash": "d139a8c643d6d5b6aba3e4256b51ade654a61823022c59933e3278b59ff4b3bd",
+      "checkedAt": "2026-08-16T18:31:06.504Z",
+      "status": 200,
+      "finalUrl": "https://lcec.org.lb/node/2989"
+    },
+    "atlas-src-ee-law-draft": {
+      "hash": "0fcd0143918baf32774463c9b32ca895f3c2c5ef13fa73a01f1b36d1fa54e95f",
+      "checkedAt": "2026-08-16T18:31:06.505Z",
+      "status": 200,
+      "finalUrl": "https://www.lcec.org.lb/our-work/LCEC/EELaw"
+    },
+    "atlas-src-parliament-181": {
+      "hash": "706aa8f0e77bc808e8fe2f787598d51208d25d7c805a1660be40a8a5d7cfd9a9",
+      "checkedAt": "2026-08-16T18:31:06.907Z",
+      "status": 200,
+      "finalUrl": "https://www.lp.gov.lb/backoffice/uploads/files/Laws%20whose%20implementation%20decrees%20have%20not%20been%20issued%20-%20update%20September%202%2C%202021.pdf"
+    },
+    "atlas-src-parliament-129": {
+      "hash": "e905074704bc6b581fe0392383671b3d9b5763ae01abfeb518cf7054e73030ad",
+      "checkedAt": "2026-08-16T18:31:07.147Z",
+      "status": 200,
+      "finalUrl": "https://www.lp.gov.lb/ContentRecordDetails?id=29316"
+    },
+    "atlas-src-lpa-laws": {
+      "hash": "f0874e96524ccc4a5a2d708972a0dad06db4f80256c7f8d960c4dfe8dea03c63",
+      "checkedAt": "2026-08-16T18:31:07.175Z",
+      "status": 200,
+      "finalUrl": "https://www.lpa.gov.lb/english/sector-governance/legislative-framework"
+    },
+    "atlas-src-lpa-register": {
+      "hash": "34de9c7fdf0adc92424ca539042a5ef29f003211095ba1fba5a8ca8694e0fe34",
+      "checkedAt": "2026-08-16T18:31:07.232Z",
+      "status": 200,
+      "finalUrl": "https://www.lpa.gov.lb/arabic/topmenu/petroleum-register/legal-framework"
+    },
+    "atlas-src-lra-mandate": {
+      "hash": "a237ef127490fd33dc44c9ea86d91f9a8a5fd71f5b4be30765f3128754599e43",
+      "checkedAt": "2026-08-16T18:31:07.237Z",
+      "status": 200,
+      "finalUrl": "https://www.litani.gov.lb/en-us/aboutlra/organigram"
+    },
+    "atlas-src-private-generator-rules": {
+      "hash": "878d0ff8cdab7e8d6a4ea9cb45344aaa29929136e49c9060cee28c02c713f1ee",
+      "checkedAt": "2026-08-16T18:31:07.671Z",
+      "status": 200,
+      "finalUrl": "https://economy.gov.lb/en/announcements/regarding-the-necessary-measures-and-procedures-to-be-taken-to-control-the-private-electricity-generators--tariff"
+    },
+    "atlas-src-law-462": {
+      "hash": "e377a6b0357624e1a51e12060f307f8968550be4741d956bd30a3a9aee68c9d0",
+      "checkedAt": "2026-08-16T18:31:07.893Z",
+      "status": 200,
+      "finalUrl": "https://energyandwater.gov.lb/ar/details/99862/%D8%A7%D9%84%D9%82%D8%A7%D9%86%D9%88%D9%86-%D8%B1%D9%82%D9%85-462-%D8%AA%D8%A7%D8%B1%D9%8A%D8%AE-2-9-2002-%D8%AA%D9%86%D8%B8%D9%8A%D9%85-%D9%82%D8%B7%D8%A7%D8%B9-%D8%A7%D9%84%D9%83%D9%87%D8%B1%D8%A8%D8%A7%D8%A1"
+    },
+    "atlas-src-era-framework": {
+      "hash": "c6cd11498d924d69b3ec7c2bbf00522278579e47de82f3d3f69624dcd06ceaeb",
+      "checkedAt": "2026-08-16T18:31:07.948Z",
+      "status": 200,
+      "finalUrl": "https://www.energyandwater.gov.lb/ar/details/101160/%D9%85%D8%AC%D9%84%D8%B3-%D8%A7%D9%84%D9%88%D8%B2%D8%B1%D8%A7%D8%A1-%D9%8A%D9%82%D8%B1-%D9%88%D8%B1%D9%82%D8%A9-%D8%A7%D9%84%D8%A5%D8%B7%D8%A7%D8%B1-%D8%A7%D9%84%D8%AA%D9%86%D9%81%D9%8A%D8%B0%D9%8A-%D9%84%D9%84%D9%87%D9%8A%D8%A6%D8%A9-%D8%A7%D9%84%D9%86%D8%A7%D8%B8%D9%85%D8%A9-%D9%84%D9%82%D8%B7%D8%A7%D8%B9-%D8%A7%D9%84%D9%83%D9%87%D8%B1%D8%A8%D8%A7%D8%A1"
+    },
+    "atlas-src-policy-2026": {
+      "hash": "3ddcba6acaa749d2629a3ec4bb1c93e2a00cdaeacfec40321909d742c5c1efd3",
+      "checkedAt": "2026-08-16T18:31:08.510Z",
+      "status": 200,
+      "finalUrl": "https://www.energyandwater.gov.lb/ar/details/101159/%D9%88%D8%B2%D8%A7%D8%B1%D8%A9-%D8%A7%D9%84%D8%B7%D8%A7%D9%82%D8%A9-%D9%88%D8%A7%D9%84%D9%85%D9%8A%D8%A7%D9%87-%D8%AA%D8%B7%D9%84%D9%82-%D9%88%D8%B1%D9%82%D8%A9-%D8%B3%D9%8A%D8%A7%D8%B3%D8%A9-%D9%82%D8%B7%D8%A7%D8%B9-%D8%A7%D9%84%D9%83%D9%87%D8%B1%D8%A8%D8%A7%D8%A1"
+    },
+    "atlas-src-neeap-2011": {
+      "hash": "2f8290875dc0948be5467e5fa7354db3ea9b08942bff220cbd3eeea53651eae0",
+      "checkedAt": "2026-08-16T18:31:08.551Z",
+      "status": 200,
+      "finalUrl": "https://lcec.org.lb/sites/default/files/2021-02/NEEAP%202011%202015.pdf"
+    },
+    "atlas-src-neeap-2016": {
+      "hash": "4fbd0e492c3ecc4016aee89d817c823a876d0c4d9cdf5e272d49fcc77e546b75",
+      "checkedAt": "2026-08-16T18:31:08.669Z",
+      "status": 200,
+      "finalUrl": "https://lcec.org.lb/sites/default/files/2021-02/NEEAP%202016%202020.pdf"
+    },
+    "atlas-src-env-law-444": {
+      "hash": "9761eb0f9f3c3fcbb69319124d9c54dc06cf3ec8b279f4c5bbc3c19a4116afc9",
+      "checkedAt": "2026-08-16T18:31:08.697Z",
+      "status": 200,
+      "finalUrl": "https://moe.gov.lb/%D8%A7%D9%84%D9%88%D8%B2%D8%A7%D8%B1%D8%A9/%D8%A7%D9%84%D9%82%D9%88%D8%A7%D9%86%D9%8A%D9%86-%D9%88%D8%A7%D9%84%D8%A7%D9%86%D8%B8%D9%85%D8%A9/%D8%A7%D9%84%D9%82%D9%88%D8%A7%D9%86%D9%8A%D9%86/%D9%82%D8%A7%D9%86%D9%88%D9%86-%D8%B1%D9%82%D9%85-444-%D8%AD%D9%85%D8%A7%D9%8A%D8%A9-%D8%A7%D9%84%D8%A8%D9%8A%D9%8A%D8%A9.aspx?lang=ar-LB"
+    },
+    "atlas-src-era-appointment": {
+      "hash": "0cb98630d94282773c0017056790fd1500651ff90c86656aa91dac4161781906",
+      "checkedAt": "2026-08-16T18:31:08.960Z",
+      "status": 200,
+      "finalUrl": "https://pcm.gov.lb/arabic/subpg.aspx?pageid=26256"
+    },
+    "atlas-src-energy-compact": {
+      "hash": "3dc8f83feeb3235fac2e5150e8a140c0abdbe0b7584156932b4fccd5f6639b2e",
+      "checkedAt": "2026-08-16T18:31:09.619Z",
+      "status": 200,
+      "finalUrl": "https://www.un.org/en/energycompacts/page/registry"
+    }
+  }
+}

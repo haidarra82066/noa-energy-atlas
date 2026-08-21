@@ -1,0 +1,979 @@
+{
+  "researchCutoff": "Sunday, 16 August 2026 at 21:31:06 EEST",
+  "publication": "review-only",
+  "protocolVersion": 3,
+  "records": [
+    {
+      "id": "ins-law-462",
+      "title": "Law No. 462/2002 — Regulation of the Electricity Sector",
+      "legalStatus": "In force",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-law-462",
+          "title": "Law No. 462/2002 — Regulation of the Electricity Sector",
+          "publisher": "Ministry of Energy and Water",
+          "url": "https://energyandwater.gov.lb/ar/details/99862/%D8%A7%D9%84%D9%82%D8%A7%D9%86%D9%88%D9%86-%D8%B1%D9%82%D9%85-462-%D8%AA%D8%A7%D8%B1%D9%8A%D8%AE-2-9-2002-%D8%AA%D9%86%D8%B8%D9%8A%D9%85-%D9%82%D8%B7%D8%A7%D8%B9-%D8%A7%D9%84%D9%83%D9%87%D8%B1%D8%A8%D8%A7%D8%A1",
+          "kind": "law"
+        }
+      ],
+      "officialSourceCount": 1,
+      "retrievedOfficialSourceCount": 1,
+      "semanticPdfSources": [],
+      "amendmentStatusCheckRequired": true,
+      "implementationStatusCheckRequired": true,
+      "disposition": "ready-for-expert-review",
+      "blockers": []
+    },
+    {
+      "id": "ins-law-181",
+      "title": "Law No. 181/2011 — Accelerated Electricity Works Programme",
+      "legalStatus": "Historic law",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-parliament-181",
+          "title": "Laws without completed implementing decrees — Law 181/2011 entry",
+          "publisher": "Lebanese Parliament",
+          "url": "https://www.lp.gov.lb/backoffice/uploads/files/Laws%20whose%20implementation%20decrees%20have%20not%20been%20issued%20-%20update%20September%202%2C%202021.pdf",
+          "kind": "law"
+        },
+        {
+          "id": "src-era-appointment",
+          "title": "Cabinet appoints the Electricity Regulatory Authority",
+          "publisher": "Presidency of the Council of Ministers",
+          "url": "https://pcm.gov.lb/arabic/subpg.aspx?pageid=26256",
+          "kind": "regulator"
+        }
+      ],
+      "officialSourceCount": 2,
+      "retrievedOfficialSourceCount": 2,
+      "semanticPdfSources": [
+        {
+          "url": "https://www.lp.gov.lb/backoffice/uploads/files/Laws%20whose%20implementation%20decrees%20have%20not%20been%20issued%20-%20update%20September%202%2C%202021.pdf",
+          "pageCount": 90,
+          "textLength": 144910,
+          "sha256": "706aa8f0e77bc808e8fe2f787598d51208d25d7c805a1660be40a8a5d7cfd9a9"
+        }
+      ],
+      "amendmentStatusCheckRequired": false,
+      "implementationStatusCheckRequired": true,
+      "disposition": "ready-for-expert-review",
+      "blockers": []
+    },
+    {
+      "id": "ins-law-288",
+      "title": "Law No. 288/2014 — Temporary Generation-Permit Authority",
+      "legalStatus": "Expired",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-parliament-129",
+          "title": "Parliamentary proceedings on the extension of Law 288/2014",
+          "publisher": "Lebanese Parliament",
+          "url": "https://www.lp.gov.lb/ContentRecordDetails?id=29316",
+          "kind": "law"
+        },
+        {
+          "id": "src-nreap",
+          "title": "National Renewable Energy Action Plan 2025–2030",
+          "publisher": "Lebanese Center for Energy Conservation",
+          "url": "https://lcec.org.lb/sites/default/files/2025-10/NREAP-of-Lebanon-2025_2030.pdf",
+          "kind": "policy"
+        }
+      ],
+      "officialSourceCount": 2,
+      "retrievedOfficialSourceCount": 2,
+      "semanticPdfSources": [
+        {
+          "url": "https://lcec.org.lb/sites/default/files/2025-10/NREAP-of-Lebanon-2025_2030.pdf",
+          "pageCount": 88,
+          "textLength": 196911,
+          "sha256": "8abda4bcb3580bba4f5bb49d82ffb76a9e26c2e6ddc5089d3503de8031862b99"
+        }
+      ],
+      "amendmentStatusCheckRequired": false,
+      "implementationStatusCheckRequired": true,
+      "disposition": "ready-for-expert-review",
+      "blockers": []
+    },
+    {
+      "id": "ins-law-54",
+      "title": "Law No. 54/2015 — Extension of Temporary Generation-Permit Authority",
+      "legalStatus": "Expired",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-parliament-129",
+          "title": "Parliamentary proceedings on the extension of Law 288/2014",
+          "publisher": "Lebanese Parliament",
+          "url": "https://www.lp.gov.lb/ContentRecordDetails?id=29316",
+          "kind": "law"
+        },
+        {
+          "id": "src-nreap",
+          "title": "National Renewable Energy Action Plan 2025–2030",
+          "publisher": "Lebanese Center for Energy Conservation",
+          "url": "https://lcec.org.lb/sites/default/files/2025-10/NREAP-of-Lebanon-2025_2030.pdf",
+          "kind": "policy"
+        }
+      ],
+      "officialSourceCount": 2,
+      "retrievedOfficialSourceCount": 2,
+      "semanticPdfSources": [
+        {
+          "url": "https://lcec.org.lb/sites/default/files/2025-10/NREAP-of-Lebanon-2025_2030.pdf",
+          "pageCount": 88,
+          "textLength": 196911,
+          "sha256": "8abda4bcb3580bba4f5bb49d82ffb76a9e26c2e6ddc5089d3503de8031862b99"
+        }
+      ],
+      "amendmentStatusCheckRequired": false,
+      "implementationStatusCheckRequired": true,
+      "disposition": "ready-for-expert-review",
+      "blockers": []
+    },
+    {
+      "id": "ins-law-129",
+      "title": "Law No. 129/2019 — Reactivation and Extension of Law 288/2014",
+      "legalStatus": "Expired",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-parliament-129",
+          "title": "Parliamentary proceedings on the extension of Law 288/2014",
+          "publisher": "Lebanese Parliament",
+          "url": "https://www.lp.gov.lb/ContentRecordDetails?id=29316",
+          "kind": "law"
+        },
+        {
+          "id": "src-nreap",
+          "title": "National Renewable Energy Action Plan 2025–2030",
+          "publisher": "Lebanese Center for Energy Conservation",
+          "url": "https://lcec.org.lb/sites/default/files/2025-10/NREAP-of-Lebanon-2025_2030.pdf",
+          "kind": "policy"
+        },
+        {
+          "id": "src-solar-licenses",
+          "title": "Cabinet approves 11 solar photovoltaic licences",
+          "publisher": "Lebanese Center for Energy Conservation",
+          "url": "https://www.lcec.org.lb/node/12857",
+          "kind": "regulator"
+        }
+      ],
+      "officialSourceCount": 3,
+      "retrievedOfficialSourceCount": 3,
+      "semanticPdfSources": [
+        {
+          "url": "https://lcec.org.lb/sites/default/files/2025-10/NREAP-of-Lebanon-2025_2030.pdf",
+          "pageCount": 88,
+          "textLength": 196911,
+          "sha256": "8abda4bcb3580bba4f5bb49d82ffb76a9e26c2e6ddc5089d3503de8031862b99"
+        }
+      ],
+      "amendmentStatusCheckRequired": false,
+      "implementationStatusCheckRequired": true,
+      "disposition": "ready-for-expert-review",
+      "blockers": []
+    },
+    {
+      "id": "ins-law-318",
+      "title": "Law No. 318/2023 — Distributed Renewable Energy",
+      "legalStatus": "Under implementation",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-law-318",
+          "title": "Distributed Renewable Energy Law — Law No. 318/2023",
+          "publisher": "Lebanese Center for Energy Conservation",
+          "url": "https://lcec.org.lb/index.php/our-work/partners/RELaw",
+          "kind": "law"
+        },
+        {
+          "id": "src-law318-tender",
+          "title": "Operationalization of Law 318/2023 under the ERA and EDL",
+          "publisher": "United Nations Development Programme",
+          "url": "https://www.ungm.org/Public/Notice/296620",
+          "kind": "project"
+        }
+      ],
+      "officialSourceCount": 2,
+      "retrievedOfficialSourceCount": 1,
+      "semanticPdfSources": [],
+      "amendmentStatusCheckRequired": true,
+      "implementationStatusCheckRequired": true,
+      "disposition": "ready-for-expert-review",
+      "blockers": []
+    },
+    {
+      "id": "ins-era",
+      "title": "Electricity Regulatory Authority",
+      "legalStatus": "Under implementation",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-era-appointment",
+          "title": "Cabinet appoints the Electricity Regulatory Authority",
+          "publisher": "Presidency of the Council of Ministers",
+          "url": "https://pcm.gov.lb/arabic/subpg.aspx?pageid=26256",
+          "kind": "regulator"
+        },
+        {
+          "id": "src-era-framework",
+          "title": "Cabinet adopts the Electricity Regulatory Authority execution framework",
+          "publisher": "Ministry of Energy and Water",
+          "url": "https://www.energyandwater.gov.lb/ar/details/101160/%D9%85%D8%AC%D9%84%D8%B3-%D8%A7%D9%84%D9%88%D8%B2%D8%B1%D8%A7%D8%A1-%D9%8A%D9%82%D8%B1-%D9%88%D8%B1%D9%82%D8%A9-%D8%A7%D9%84%D8%A5%D8%B7%D8%A7%D8%B1-%D8%A7%D9%84%D8%AA%D9%86%D9%81%D9%8A%D8%B0%D9%8A-%D9%84%D9%84%D9%87%D9%8A%D8%A6%D8%A9-%D8%A7%D9%84%D9%86%D8%A7%D8%B8%D9%85%D8%A9-%D9%84%D9%82%D8%B7%D8%A7%D8%B9-%D8%A7%D9%84%D9%83%D9%87%D8%B1%D8%A8%D8%A7%D8%A1",
+          "kind": "regulator"
+        }
+      ],
+      "officialSourceCount": 2,
+      "retrievedOfficialSourceCount": 2,
+      "semanticPdfSources": [],
+      "amendmentStatusCheckRequired": true,
+      "implementationStatusCheckRequired": true,
+      "disposition": "ready-for-expert-review",
+      "blockers": []
+    },
+    {
+      "id": "ins-policy-2026",
+      "title": "Electricity Sector Policy Paper 2026",
+      "legalStatus": "Policy",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-policy-2026",
+          "title": "Policy Paper for the Electricity Sector",
+          "publisher": "Ministry of Energy and Water",
+          "url": "https://www.energyandwater.gov.lb/ar/details/101159/%D9%88%D8%B2%D8%A7%D8%B1%D8%A9-%D8%A7%D9%84%D8%B7%D8%A7%D9%82%D8%A9-%D9%88%D8%A7%D9%84%D9%85%D9%8A%D8%A7%D9%87-%D8%AA%D8%B7%D9%84%D9%82-%D9%88%D8%B1%D9%82%D8%A9-%D8%B3%D9%8A%D8%A7%D8%B3%D8%A9-%D9%82%D8%B7%D8%A7%D8%B9-%D8%A7%D9%84%D9%83%D9%87%D8%B1%D8%A8%D8%A7%D8%A1",
+          "kind": "policy"
+        },
+        {
+          "id": "src-era-framework",
+          "title": "Cabinet adopts the Electricity Regulatory Authority execution framework",
+          "publisher": "Ministry of Energy and Water",
+          "url": "https://www.energyandwater.gov.lb/ar/details/101160/%D9%85%D8%AC%D9%84%D8%B3-%D8%A7%D9%84%D9%88%D8%B2%D8%B1%D8%A7%D8%A1-%D9%8A%D9%82%D8%B1-%D9%88%D8%B1%D9%82%D8%A9-%D8%A7%D9%84%D8%A5%D8%B7%D8%A7%D8%B1-%D8%A7%D9%84%D8%AA%D9%86%D9%81%D9%8A%D8%B0%D9%8A-%D9%84%D9%84%D9%87%D9%8A%D8%A6%D8%A9-%D8%A7%D9%84%D9%86%D8%A7%D8%B8%D9%85%D8%A9-%D9%84%D9%82%D8%B7%D8%A7%D8%B9-%D8%A7%D9%84%D9%83%D9%87%D8%B1%D8%A8%D8%A7%D8%A1",
+          "kind": "regulator"
+        }
+      ],
+      "officialSourceCount": 2,
+      "retrievedOfficialSourceCount": 2,
+      "semanticPdfSources": [],
+      "amendmentStatusCheckRequired": false,
+      "implementationStatusCheckRequired": true,
+      "disposition": "ready-for-expert-review",
+      "blockers": []
+    },
+    {
+      "id": "ins-nreap",
+      "title": "National Renewable Energy Action Plan 2025–2030",
+      "legalStatus": "Policy",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-nreap",
+          "title": "National Renewable Energy Action Plan 2025–2030",
+          "publisher": "Lebanese Center for Energy Conservation",
+          "url": "https://lcec.org.lb/sites/default/files/2025-10/NREAP-of-Lebanon-2025_2030.pdf",
+          "kind": "policy"
+        }
+      ],
+      "officialSourceCount": 1,
+      "retrievedOfficialSourceCount": 1,
+      "semanticPdfSources": [
+        {
+          "url": "https://lcec.org.lb/sites/default/files/2025-10/NREAP-of-Lebanon-2025_2030.pdf",
+          "pageCount": 88,
+          "textLength": 196911,
+          "sha256": "8abda4bcb3580bba4f5bb49d82ffb76a9e26c2e6ddc5089d3503de8031862b99"
+        }
+      ],
+      "amendmentStatusCheckRequired": false,
+      "implementationStatusCheckRequired": true,
+      "disposition": "ready-for-expert-review",
+      "blockers": []
+    },
+    {
+      "id": "ins-ndc3",
+      "title": "Lebanon’s Third Nationally Determined Contribution",
+      "legalStatus": "Policy",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-ndc3",
+          "title": "Lebanon’s Third Nationally Determined Contribution",
+          "publisher": "UNFCCC",
+          "url": "https://unfccc.int/documents/650167",
+          "kind": "policy"
+        }
+      ],
+      "officialSourceCount": 1,
+      "retrievedOfficialSourceCount": 0,
+      "semanticPdfSources": [],
+      "amendmentStatusCheckRequired": false,
+      "implementationStatusCheckRequired": true,
+      "disposition": "blocked-pending-expert-verification",
+      "blockers": [
+        "authoritative source not retrieved in this run"
+      ]
+    },
+    {
+      "id": "ins-ltleds",
+      "title": "Long-Term Low-Emission Development Strategy",
+      "legalStatus": "Policy",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-ltleds",
+          "title": "Lebanon Long-Term Low-Emission Development Strategy",
+          "publisher": "UNFCCC",
+          "url": "https://unfccc.int/documents/647272",
+          "kind": "policy"
+        }
+      ],
+      "officialSourceCount": 1,
+      "retrievedOfficialSourceCount": 0,
+      "semanticPdfSources": [],
+      "amendmentStatusCheckRequired": false,
+      "implementationStatusCheckRequired": true,
+      "disposition": "blocked-pending-expert-verification",
+      "blockers": [
+        "authoritative source not retrieved in this run"
+      ]
+    },
+    {
+      "id": "ins-energy-compact",
+      "title": "SDG7 Energy Compact of the Republic of Lebanon",
+      "legalStatus": "Voluntary commitment",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-energy-compact",
+          "title": "SDG7 Energy Compact of the Republic of Lebanon",
+          "publisher": "United Nations",
+          "url": "https://www.un.org/en/energycompacts/page/registry",
+          "kind": "policy"
+        }
+      ],
+      "officialSourceCount": 1,
+      "retrievedOfficialSourceCount": 1,
+      "semanticPdfSources": [],
+      "amendmentStatusCheckRequired": false,
+      "implementationStatusCheckRequired": true,
+      "disposition": "ready-for-expert-review",
+      "blockers": []
+    },
+    {
+      "id": "ins-lresrp",
+      "title": "Lebanon Renewable Energy and System Reinforcement Project",
+      "legalStatus": "Project",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-worldbank-project",
+          "title": "Lebanon Renewable Energy and System Reinforcement Project",
+          "publisher": "World Bank",
+          "url": "https://documents1.worldbank.org/curated/en/099091124181525582/pdf/BOSIB-c260299b-4517-48c7-a0c1-b95eb42d17a7.pdf",
+          "kind": "project"
+        }
+      ],
+      "officialSourceCount": 1,
+      "retrievedOfficialSourceCount": 0,
+      "semanticPdfSources": [],
+      "amendmentStatusCheckRequired": false,
+      "implementationStatusCheckRequired": true,
+      "disposition": "blocked-pending-expert-verification",
+      "blockers": [
+        "authoritative source not retrieved in this run"
+      ]
+    },
+    {
+      "id": "ins-opr-law",
+      "title": "Law No. 132/2010 — Offshore Petroleum Resources",
+      "legalStatus": "In force",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-lpa-laws",
+          "title": "Legislative Framework",
+          "publisher": "Lebanese Petroleum Administration",
+          "url": "https://www.lpa.gov.lb/english/sector-governance/legislative-framework",
+          "kind": "law"
+        }
+      ],
+      "officialSourceCount": 1,
+      "retrievedOfficialSourceCount": 1,
+      "semanticPdfSources": [],
+      "amendmentStatusCheckRequired": true,
+      "implementationStatusCheckRequired": true,
+      "disposition": "ready-for-expert-review",
+      "blockers": []
+    },
+    {
+      "id": "ins-petroleum-tax",
+      "title": "Law No. 57/2017 — Petroleum Tax Provisions",
+      "legalStatus": "In force",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-lpa-laws",
+          "title": "Legislative Framework",
+          "publisher": "Lebanese Petroleum Administration",
+          "url": "https://www.lpa.gov.lb/english/sector-governance/legislative-framework",
+          "kind": "law"
+        }
+      ],
+      "officialSourceCount": 1,
+      "retrievedOfficialSourceCount": 1,
+      "semanticPdfSources": [],
+      "amendmentStatusCheckRequired": true,
+      "implementationStatusCheckRequired": true,
+      "disposition": "ready-for-expert-review",
+      "blockers": []
+    },
+    {
+      "id": "ins-petroleum-transparency",
+      "title": "Law No. 84/2018 — Transparency in the Petroleum Sector",
+      "legalStatus": "In force",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-lpa-laws",
+          "title": "Legislative Framework",
+          "publisher": "Lebanese Petroleum Administration",
+          "url": "https://www.lpa.gov.lb/english/sector-governance/legislative-framework",
+          "kind": "law"
+        }
+      ],
+      "officialSourceCount": 1,
+      "retrievedOfficialSourceCount": 1,
+      "semanticPdfSources": [],
+      "amendmentStatusCheckRequired": true,
+      "implementationStatusCheckRequired": true,
+      "disposition": "ready-for-expert-review",
+      "blockers": []
+    },
+    {
+      "id": "ins-solar-licenses",
+      "title": "Eleven Utility-Scale Solar PV Licences",
+      "legalStatus": "Under implementation",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-solar-licenses",
+          "title": "Cabinet approves 11 solar photovoltaic licences",
+          "publisher": "Lebanese Center for Energy Conservation",
+          "url": "https://www.lcec.org.lb/node/12857",
+          "kind": "regulator"
+        }
+      ],
+      "officialSourceCount": 1,
+      "retrievedOfficialSourceCount": 1,
+      "semanticPdfSources": [],
+      "amendmentStatusCheckRequired": true,
+      "implementationStatusCheckRequired": true,
+      "disposition": "ready-for-expert-review",
+      "blockers": []
+    },
+    {
+      "id": "ins-edl-decree-4517",
+      "title": "Decree No. 4517/1972 — Électricité du Liban Public-Establishment Framework",
+      "legalStatus": "In force",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-nreap",
+          "title": "National Renewable Energy Action Plan 2025–2030",
+          "publisher": "Lebanese Center for Energy Conservation",
+          "url": "https://lcec.org.lb/sites/default/files/2025-10/NREAP-of-Lebanon-2025_2030.pdf",
+          "kind": "policy"
+        },
+        {
+          "id": "src-edl-crp",
+          "title": "Cost Recovery Plan Addendum",
+          "publisher": "Électricité du Liban",
+          "url": "https://www.edl.gov.lb/media/Cost%20Recovery%20Plan%20%28CRP%29%20Addendum%20%28December%202025%29.pdf",
+          "kind": "official-data"
+        }
+      ],
+      "officialSourceCount": 2,
+      "retrievedOfficialSourceCount": 1,
+      "semanticPdfSources": [
+        {
+          "url": "https://lcec.org.lb/sites/default/files/2025-10/NREAP-of-Lebanon-2025_2030.pdf",
+          "pageCount": 88,
+          "textLength": 196911,
+          "sha256": "8abda4bcb3580bba4f5bb49d82ffb76a9e26c2e6ddc5089d3503de8031862b99"
+        }
+      ],
+      "amendmentStatusCheckRequired": true,
+      "implementationStatusCheckRequired": true,
+      "disposition": "ready-for-expert-review",
+      "blockers": []
+    },
+    {
+      "id": "ins-law-775",
+      "title": "Law No. 775/2006 — Temporary Generation-Licensing Authority",
+      "legalStatus": "Expired",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-nreap",
+          "title": "National Renewable Energy Action Plan 2025–2030",
+          "publisher": "Lebanese Center for Energy Conservation",
+          "url": "https://lcec.org.lb/sites/default/files/2025-10/NREAP-of-Lebanon-2025_2030.pdf",
+          "kind": "policy"
+        }
+      ],
+      "officialSourceCount": 1,
+      "retrievedOfficialSourceCount": 1,
+      "semanticPdfSources": [
+        {
+          "url": "https://lcec.org.lb/sites/default/files/2025-10/NREAP-of-Lebanon-2025_2030.pdf",
+          "pageCount": 88,
+          "textLength": 196911,
+          "sha256": "8abda4bcb3580bba4f5bb49d82ffb76a9e26c2e6ddc5089d3503de8031862b99"
+        }
+      ],
+      "amendmentStatusCheckRequired": false,
+      "implementationStatusCheckRequired": true,
+      "disposition": "ready-for-expert-review",
+      "blockers": []
+    },
+    {
+      "id": "ins-edl-net-metering",
+      "title": "Électricité du Liban Net-Metering Mechanism",
+      "legalStatus": "Operational programme",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-edl-net-metering",
+          "title": "نظام التعداد الصافي — Net Metering",
+          "publisher": "Électricité du Liban",
+          "url": "https://www.edl.gov.lb/decisions.php?did=4",
+          "kind": "regulator"
+        },
+        {
+          "id": "src-nreap",
+          "title": "National Renewable Energy Action Plan 2025–2030",
+          "publisher": "Lebanese Center for Energy Conservation",
+          "url": "https://lcec.org.lb/sites/default/files/2025-10/NREAP-of-Lebanon-2025_2030.pdf",
+          "kind": "policy"
+        }
+      ],
+      "officialSourceCount": 2,
+      "retrievedOfficialSourceCount": 1,
+      "semanticPdfSources": [
+        {
+          "url": "https://lcec.org.lb/sites/default/files/2025-10/NREAP-of-Lebanon-2025_2030.pdf",
+          "pageCount": 88,
+          "textLength": 196911,
+          "sha256": "8abda4bcb3580bba4f5bb49d82ffb76a9e26c2e6ddc5089d3503de8031862b99"
+        }
+      ],
+      "amendmentStatusCheckRequired": true,
+      "implementationStatusCheckRequired": true,
+      "disposition": "ready-for-expert-review",
+      "blockers": []
+    },
+    {
+      "id": "ins-solar-standards-6997",
+      "title": "Decree No. 6997/2020 — Mandatory Solar Thermal and PV Standards",
+      "legalStatus": "In force",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-solar-standards",
+          "title": "Decree No. 6997/2020 — Mandatory Solar Standards",
+          "publisher": "Lebanese Center for Energy Conservation",
+          "url": "https://lcec.org.lb/node/2989",
+          "kind": "law"
+        }
+      ],
+      "officialSourceCount": 1,
+      "retrievedOfficialSourceCount": 1,
+      "semanticPdfSources": [],
+      "amendmentStatusCheckRequired": true,
+      "implementationStatusCheckRequired": true,
+      "disposition": "ready-for-expert-review",
+      "blockers": []
+    },
+    {
+      "id": "ins-neeap",
+      "title": "National Energy Efficiency Action Plans 2011–2015 and 2016–2020",
+      "legalStatus": "Superseded",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-neeap-2011",
+          "title": "National Energy Efficiency Action Plan 2011–2015",
+          "publisher": "Ministry of Energy and Water / Lebanese Center for Energy Conservation",
+          "url": "https://lcec.org.lb/sites/default/files/2021-02/NEEAP%202011%202015.pdf",
+          "kind": "policy"
+        },
+        {
+          "id": "src-neeap-2016",
+          "title": "Second National Energy Efficiency Action Plan 2016–2020",
+          "publisher": "Ministry of Energy and Water / Lebanese Center for Energy Conservation",
+          "url": "https://lcec.org.lb/sites/default/files/2021-02/NEEAP%202016%202020.pdf",
+          "kind": "policy"
+        }
+      ],
+      "officialSourceCount": 2,
+      "retrievedOfficialSourceCount": 2,
+      "semanticPdfSources": [
+        {
+          "url": "https://lcec.org.lb/sites/default/files/2021-02/NEEAP%202011%202015.pdf",
+          "pageCount": 58,
+          "textLength": 108384,
+          "sha256": "2f8290875dc0948be5467e5fa7354db3ea9b08942bff220cbd3eeea53651eae0"
+        },
+        {
+          "url": "https://lcec.org.lb/sites/default/files/2021-02/NEEAP%202016%202020.pdf",
+          "pageCount": 172,
+          "textLength": 250988,
+          "sha256": "4fbd0e492c3ecc4016aee89d817c823a876d0c4d9cdf5e272d49fcc77e546b75"
+        }
+      ],
+      "amendmentStatusCheckRequired": false,
+      "implementationStatusCheckRequired": true,
+      "disposition": "ready-for-expert-review",
+      "blockers": []
+    },
+    {
+      "id": "ins-energy-conservation-draft",
+      "title": "Draft Energy Conservation Law",
+      "legalStatus": "Draft",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-ee-law-draft",
+          "title": "Energy Efficiency Law — legislative development record",
+          "publisher": "Lebanese Center for Energy Conservation",
+          "url": "https://www.lcec.org.lb/our-work/LCEC/EELaw",
+          "kind": "policy"
+        },
+        {
+          "id": "src-neeap-2016",
+          "title": "Second National Energy Efficiency Action Plan 2016–2020",
+          "publisher": "Ministry of Energy and Water / Lebanese Center for Energy Conservation",
+          "url": "https://lcec.org.lb/sites/default/files/2021-02/NEEAP%202016%202020.pdf",
+          "kind": "policy"
+        }
+      ],
+      "officialSourceCount": 2,
+      "retrievedOfficialSourceCount": 2,
+      "semanticPdfSources": [
+        {
+          "url": "https://lcec.org.lb/sites/default/files/2021-02/NEEAP%202016%202020.pdf",
+          "pageCount": 172,
+          "textLength": 250988,
+          "sha256": "4fbd0e492c3ecc4016aee89d817c823a876d0c4d9cdf5e272d49fcc77e546b75"
+        }
+      ],
+      "amendmentStatusCheckRequired": true,
+      "implementationStatusCheckRequired": true,
+      "disposition": "ready-for-expert-review",
+      "blockers": []
+    },
+    {
+      "id": "ins-env-law-444",
+      "title": "Law No. 444/2002 — Environmental Protection",
+      "legalStatus": "In force",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-env-law-444",
+          "title": "قانون رقم 444/2002 — حماية البيئة",
+          "publisher": "Ministry of Environment",
+          "url": "https://moe.gov.lb/%D8%A7%D9%84%D9%88%D8%B2%D8%A7%D8%B1%D8%A9/%D8%A7%D9%84%D9%82%D9%88%D8%A7%D9%86%D9%8A%D9%86-%D9%88%D8%A7%D9%84%D8%A7%D9%86%D8%B8%D9%85%D8%A9/%D8%A7%D9%84%D9%82%D9%88%D8%A7%D9%86%D9%8A%D9%86/%D9%82%D8%A7%D9%86%D9%88%D9%86-%D8%B1%D9%82%D9%85-444-%D8%AD%D9%85%D8%A7%D9%8A%D8%A9-%D8%A7%D9%84%D8%A8%D9%8A%D9%8A%D8%A9.aspx?lang=ar-LB",
+          "kind": "law"
+        }
+      ],
+      "officialSourceCount": 1,
+      "retrievedOfficialSourceCount": 1,
+      "semanticPdfSources": [],
+      "amendmentStatusCheckRequired": true,
+      "implementationStatusCheckRequired": true,
+      "disposition": "ready-for-expert-review",
+      "blockers": []
+    },
+    {
+      "id": "ins-sea-8213",
+      "title": "Decree No. 8213/2012 — Strategic Environmental Assessment",
+      "legalStatus": "In force",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-environmental-assessment",
+          "title": "Strategic Environmental Assessment of Lebanon’s Renewable Energy Sector — legal framework chapter",
+          "publisher": "Ministry of Environment",
+          "url": "https://climatechange.moe.gov.lb/viewfile.aspx?id=249",
+          "kind": "official-data"
+        },
+        {
+          "id": "src-env-law-444",
+          "title": "قانون رقم 444/2002 — حماية البيئة",
+          "publisher": "Ministry of Environment",
+          "url": "https://moe.gov.lb/%D8%A7%D9%84%D9%88%D8%B2%D8%A7%D8%B1%D8%A9/%D8%A7%D9%84%D9%82%D9%88%D8%A7%D9%86%D9%8A%D9%86-%D9%88%D8%A7%D9%84%D8%A7%D9%86%D8%B8%D9%85%D8%A9/%D8%A7%D9%84%D9%82%D9%88%D8%A7%D9%86%D9%8A%D9%86/%D9%82%D8%A7%D9%86%D9%88%D9%86-%D8%B1%D9%82%D9%85-444-%D8%AD%D9%85%D8%A7%D9%8A%D8%A9-%D8%A7%D9%84%D8%A8%D9%8A%D9%8A%D8%A9.aspx?lang=ar-LB",
+          "kind": "law"
+        }
+      ],
+      "officialSourceCount": 2,
+      "retrievedOfficialSourceCount": 1,
+      "semanticPdfSources": [],
+      "amendmentStatusCheckRequired": true,
+      "implementationStatusCheckRequired": true,
+      "disposition": "ready-for-expert-review",
+      "blockers": []
+    },
+    {
+      "id": "ins-eia-8633",
+      "title": "Decree No. 8633/2012 — Environmental Impact Assessment",
+      "legalStatus": "In force",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-environmental-assessment",
+          "title": "Strategic Environmental Assessment of Lebanon’s Renewable Energy Sector — legal framework chapter",
+          "publisher": "Ministry of Environment",
+          "url": "https://climatechange.moe.gov.lb/viewfile.aspx?id=249",
+          "kind": "official-data"
+        },
+        {
+          "id": "src-env-law-444",
+          "title": "قانون رقم 444/2002 — حماية البيئة",
+          "publisher": "Ministry of Environment",
+          "url": "https://moe.gov.lb/%D8%A7%D9%84%D9%88%D8%B2%D8%A7%D8%B1%D8%A9/%D8%A7%D9%84%D9%82%D9%88%D8%A7%D9%86%D9%8A%D9%86-%D9%88%D8%A7%D9%84%D8%A7%D9%86%D8%B8%D9%85%D8%A9/%D8%A7%D9%84%D9%82%D9%88%D8%A7%D9%86%D9%8A%D9%86/%D9%82%D8%A7%D9%86%D9%88%D9%86-%D8%B1%D9%82%D9%85-444-%D8%AD%D9%85%D8%A7%D9%8A%D8%A9-%D8%A7%D9%84%D8%A8%D9%8A%D9%8A%D8%A9.aspx?lang=ar-LB",
+          "kind": "law"
+        }
+      ],
+      "officialSourceCount": 2,
+      "retrievedOfficialSourceCount": 1,
+      "semanticPdfSources": [],
+      "amendmentStatusCheckRequired": true,
+      "implementationStatusCheckRequired": true,
+      "disposition": "ready-for-expert-review",
+      "blockers": []
+    },
+    {
+      "id": "ins-lpa-decree-7968",
+      "title": "Decree No. 7968/2012 — Lebanese Petroleum Administration",
+      "legalStatus": "In force",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-lpa-laws",
+          "title": "Legislative Framework",
+          "publisher": "Lebanese Petroleum Administration",
+          "url": "https://www.lpa.gov.lb/english/sector-governance/legislative-framework",
+          "kind": "law"
+        }
+      ],
+      "officialSourceCount": 1,
+      "retrievedOfficialSourceCount": 1,
+      "semanticPdfSources": [],
+      "amendmentStatusCheckRequired": true,
+      "implementationStatusCheckRequired": true,
+      "disposition": "ready-for-expert-review",
+      "blockers": []
+    },
+    {
+      "id": "ins-petroleum-regulations",
+      "title": "Decree No. 10289/2013 — Petroleum Activities Regulations",
+      "legalStatus": "In force",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-lpa-laws",
+          "title": "Legislative Framework",
+          "publisher": "Lebanese Petroleum Administration",
+          "url": "https://www.lpa.gov.lb/english/sector-governance/legislative-framework",
+          "kind": "law"
+        }
+      ],
+      "officialSourceCount": 1,
+      "retrievedOfficialSourceCount": 1,
+      "semanticPdfSources": [],
+      "amendmentStatusCheckRequired": true,
+      "implementationStatusCheckRequired": true,
+      "disposition": "ready-for-expert-review",
+      "blockers": []
+    },
+    {
+      "id": "ins-offshore-licensing-package",
+      "title": "Offshore Blocks, Tender Protocol and Model EPA — Decrees 42/2017 and 43/2017 as amended",
+      "legalStatus": "In force",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-lpa-laws",
+          "title": "Legislative Framework",
+          "publisher": "Lebanese Petroleum Administration",
+          "url": "https://www.lpa.gov.lb/english/sector-governance/legislative-framework",
+          "kind": "law"
+        }
+      ],
+      "officialSourceCount": 1,
+      "retrievedOfficialSourceCount": 1,
+      "semanticPdfSources": [],
+      "amendmentStatusCheckRequired": true,
+      "implementationStatusCheckRequired": true,
+      "disposition": "ready-for-expert-review",
+      "blockers": []
+    },
+    {
+      "id": "ins-petroleum-register",
+      "title": "Decree No. 9471/2022 — Petroleum Register",
+      "legalStatus": "In force",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-lpa-register",
+          "title": "Petroleum Register — legal framework and public records",
+          "publisher": "Lebanese Petroleum Administration",
+          "url": "https://www.lpa.gov.lb/arabic/topmenu/petroleum-register/legal-framework",
+          "kind": "regulator"
+        },
+        {
+          "id": "src-lpa-laws",
+          "title": "Legislative Framework",
+          "publisher": "Lebanese Petroleum Administration",
+          "url": "https://www.lpa.gov.lb/english/sector-governance/legislative-framework",
+          "kind": "law"
+        }
+      ],
+      "officialSourceCount": 2,
+      "retrievedOfficialSourceCount": 2,
+      "semanticPdfSources": [],
+      "amendmentStatusCheckRequired": true,
+      "implementationStatusCheckRequired": true,
+      "disposition": "ready-for-expert-review",
+      "blockers": []
+    },
+    {
+      "id": "ins-private-generator-rules",
+      "title": "Private-Generator Metering and Tariff Decisions",
+      "legalStatus": "In force",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-private-generator-rules",
+          "title": "Measures to control private-generator tariffs and compulsory metering",
+          "publisher": "Ministry of Economy and Trade",
+          "url": "https://economy.gov.lb/en/announcements/regarding-the-necessary-measures-and-procedures-to-be-taken-to-control-the-private-electricity-generators--tariff",
+          "kind": "regulator"
+        }
+      ],
+      "officialSourceCount": 1,
+      "retrievedOfficialSourceCount": 1,
+      "semanticPdfSources": [],
+      "amendmentStatusCheckRequired": true,
+      "implementationStatusCheckRequired": true,
+      "disposition": "ready-for-expert-review",
+      "blockers": []
+    },
+    {
+      "id": "ins-wind-licenses",
+      "title": "Akkar Wind-Farm Permits and PPA Process",
+      "legalStatus": "Under implementation",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-wind-licences",
+          "title": "Call for proposals for approximately 200 MW of wind power",
+          "publisher": "Ministry of Energy and Water / Lebanese Center for Energy Conservation",
+          "url": "https://www.lcec.org.lb/sites/default/files/2021-01/EOI%20-%20WR2.pdf",
+          "kind": "project"
+        },
+        {
+          "id": "src-nreap",
+          "title": "National Renewable Energy Action Plan 2025–2030",
+          "publisher": "Lebanese Center for Energy Conservation",
+          "url": "https://lcec.org.lb/sites/default/files/2025-10/NREAP-of-Lebanon-2025_2030.pdf",
+          "kind": "policy"
+        }
+      ],
+      "officialSourceCount": 2,
+      "retrievedOfficialSourceCount": 1,
+      "semanticPdfSources": [
+        {
+          "url": "https://lcec.org.lb/sites/default/files/2025-10/NREAP-of-Lebanon-2025_2030.pdf",
+          "pageCount": 88,
+          "textLength": 196911,
+          "sha256": "8abda4bcb3580bba4f5bb49d82ffb76a9e26c2e6ddc5089d3503de8031862b99"
+        }
+      ],
+      "amendmentStatusCheckRequired": true,
+      "implementationStatusCheckRequired": true,
+      "disposition": "ready-for-expert-review",
+      "blockers": []
+    },
+    {
+      "id": "ins-edl-crp",
+      "title": "Électricité du Liban Cost Recovery Plan Addendum 2025",
+      "legalStatus": "Policy",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-edl-crp",
+          "title": "Cost Recovery Plan Addendum",
+          "publisher": "Électricité du Liban",
+          "url": "https://www.edl.gov.lb/media/Cost%20Recovery%20Plan%20%28CRP%29%20Addendum%20%28December%202025%29.pdf",
+          "kind": "official-data"
+        },
+        {
+          "id": "src-worldbank-project",
+          "title": "Lebanon Renewable Energy and System Reinforcement Project",
+          "publisher": "World Bank",
+          "url": "https://documents1.worldbank.org/curated/en/099091124181525582/pdf/BOSIB-c260299b-4517-48c7-a0c1-b95eb42d17a7.pdf",
+          "kind": "project"
+        }
+      ],
+      "officialSourceCount": 2,
+      "retrievedOfficialSourceCount": 0,
+      "semanticPdfSources": [],
+      "amendmentStatusCheckRequired": false,
+      "implementationStatusCheckRequired": true,
+      "disposition": "blocked-pending-expert-verification",
+      "blockers": [
+        "authoritative source not retrieved in this run"
+      ]
+    },
+    {
+      "id": "ins-lra",
+      "title": "Litani River Authority Hydropower Mandate",
+      "legalStatus": "In force",
+      "lastReviewed": "2026-08-16",
+      "sourceRecords": [
+        {
+          "id": "src-lra-mandate",
+          "title": "National Litani River Authority — statutory objectives and mandate",
+          "publisher": "Litani River Authority",
+          "url": "https://www.litani.gov.lb/en-us/aboutlra/organigram",
+          "kind": "regulator"
+        },
+        {
+          "id": "src-lra-resrp",
+          "title": "LRA hydropower rehabilitation under the Renewable Energy and System Reinforcement Project",
+          "publisher": "Litani River Authority",
+          "url": "https://www.litani.gov.lb/en-us/aboutlra/worldbankagreement",
+          "kind": "project"
+        },
+        {
+          "id": "src-worldbank-project",
+          "title": "Lebanon Renewable Energy and System Reinforcement Project",
+          "publisher": "World Bank",
+          "url": "https://documents1.worldbank.org/curated/en/099091124181525582/pdf/BOSIB-c260299b-4517-48c7-a0c1-b95eb42d17a7.pdf",
+          "kind": "project"
+        }
+      ],
+      "officialSourceCount": 3,
+      "retrievedOfficialSourceCount": 1,
+      "semanticPdfSources": [],
+      "amendmentStatusCheckRequired": true,
+      "implementationStatusCheckRequired": true,
+      "disposition": "ready-for-expert-review",
+      "blockers": []
+    }
+  ]
+}

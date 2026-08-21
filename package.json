@@ -1,0 +1,39 @@
+{
+  "name": "noa-energy-atlas",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "npm run validate:content && astro check && astro build && node scripts/postbuild.mjs",
+    "preview": "astro preview",
+    "check": "astro check",
+    "validate:content": "tsx scripts/validate-content.ts",
+    "update:laws": "tsx scripts/run-update-agent.ts --mode law --cadence on-demand",
+    "update:news": "tsx scripts/run-update-agent.ts --mode news --cadence twice-weekly",
+    "update:daily": "tsx scripts/run-update-agent.ts --mode news --cadence daily",
+    "update:on-demand": "tsx scripts/run-update-agent.ts --mode news --cadence on-demand",
+    "publish:news": "tsx scripts/auto-publish.ts --mode news",
+    "publish:laws": "tsx scripts/auto-publish.ts --mode law",
+    "smoke:production": "node scripts/smoke-production.mjs https://noa-energy-atlas.netlify.app",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "audit:links": "tsx scripts/check-links.ts"
+  },
+  "dependencies": {
+    "@phosphor-icons/web": "^2.1.2",
+    "astro": "^7.2.2",
+    "pdfjs-dist": "^6.2.108",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@types/node": "^26.2.0",
+    "tsx": "^4.20.4",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  },
+  "engines": {
+    "node": ">=22.19.0"
+  }
+}

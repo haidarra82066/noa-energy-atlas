@@ -1,0 +1,43 @@
+@font-face {
+  font-family: "Phosphor";
+  src: url("@phosphor-icons/web/regular/Phosphor.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+.ph {
+  font-family: "Phosphor" !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  font-feature-settings: "liga";
+  font-variant-ligatures: discretionary-ligatures;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ph.ph-arrow-square-out::before { content: "\e5de"; }
+.ph.ph-arrows-out::before { content: "\e0a2"; }
+.ph.ph-books::before { content: "\e758"; }
+.ph.ph-chart-line-up::before { content: "\e156"; }
+.ph.ph-circles-three::before { content: "\e192"; }
+.ph.ph-download-simple::before { content: "\e20c"; }
+.ph.ph-graph::before { content: "\eb58"; }
+.ph.ph-house::before { content: "\e2c2"; }
+.ph.ph-list::before { content: "\e2f0"; }
+.ph.ph-magnifying-glass::before { content: "\e30c"; }
+.ph.ph-minus::before { content: "\e32a"; }
+.ph.ph-moon::before { content: "\e330"; }
+.ph.ph-newspaper::before { content: "\e344"; }
+.ph.ph-plus::before { content: "\e3d4"; }
+.ph.ph-scales::before { content: "\e750"; }
+.ph.ph-sliders-horizontal::before { content: "\e434"; }
+.ph.ph-sparkle::before { content: "\e6a2"; }
+.ph.ph-stack::before { content: "\e466"; }
+.ph.ph-sun::before { content: "\e472"; }
+.ph.ph-translate::before { content: "\e4a2"; }
+.ph.ph-x::before { content: "\e4f6"; }

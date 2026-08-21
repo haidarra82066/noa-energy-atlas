@@ -1,0 +1,222 @@
+---
+import "../styles/global.css";
+import "../styles/icons.css";
+import NoaPanel from "../components/NoaPanel.astro";
+import { CONTENT_CUTOFF, instruments } from "../data/atlas";
+import { categoryAr } from "../data/localization";
+
+interface Props {
+  title: string;
+  description: string;
+  path?: string;
+  image?: string;
+  immersive?: boolean;
+}
+const { title, description, path = Astro.url.pathname, image = "/social-card.svg", immersive = false } = Astro.props;
+const canonical = new URL(path, Astro.site);
+const pageTitle = title === "Noa Energy Atlas" ? title : `${title} · Noa Energy Atlas`;
+const categories = ["Electricity", "Renewables", "Climate", "Petroleum", "Finance", "Institutions"] as const;
+const categoryCounts = new Map(categories.map((category) => [category, instruments.filter((item) => item.category === category).length]));
+const secondaryNav = [
+  ["/instruments/", "All laws & instruments", "كل القوانين والأدوات", "ph-stack"],
+  ["/about/", "About", "حول الأطلس", "ph-house"]
+] as const;
+const isCurrent = (href: string) => href === "/" ? path === "/" : path.startsWith(href);
+const graphCurrent = path === "/" || path.startsWith("/evidence/");
+const cutoffDate = new Date(`${CONTENT_CUTOFF}T12:00:00Z`);
+const cutoffEn = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(cutoffDate);
+const cutoffAr = new Intl.DateTimeFormat("ar-LB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(cutoffDate);
+---
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f5fcfc" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={canonical} />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="/icons/icon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-180.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Noa Energy Atlas" />
+    <link rel="alternate" type="application/rss+xml" title="Noa Energy Atlas updates" href="/feed.xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(image, Astro.site)} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>{pageTitle}</title>
+  </head>
+  <body class:list={["app-shell", immersive && "is-immersive"]} data-path={path}>
+    <a class="skip-link" href="#main-content" data-en="Skip to content" data-ar="الانتقال إلى المحتوى">Skip to content</a>
+
+    <header class="mobile-bar">
+      <button class="nav-toggle" type="button" aria-controls="atlas-sidebar" aria-expanded="false" data-aria-en="Open navigation" data-aria-ar="فتح قائمة التنقل"><i class="ph ph-list" aria-hidden="true"></i></button>
+      <a class="mobile-brand" href="/" aria-label="Noa Energy Atlas"><span class="brand-mark brand-noa" aria-hidden="true"><img src="/icons/icon-192.png" alt="" width="192" height="192" /></span><strong>Noa Energy Atlas</strong></a>
+      <div class="mobile-actions">
+        <button class="mobile-lang language-toggle" type="button" data-aria-en="Switch to Arabic" data-aria-ar="التبديل إلى الإنجليزية"><i class="ph ph-translate" aria-hidden="true"></i><span class="locale-label">AR</span></button>
+        <button class="mobile-theme theme-toggle" type="button" data-aria-en="Switch to dark theme" data-aria-ar="التبديل إلى المظهر الداكن"><i class="ph ph-moon" aria-hidden="true"></i><span class="visually-hidden theme-label">Dark theme</span></button>
+      </div>
+    </header>
+
+    <aside class="atlas-sidebar" id="atlas-sidebar" aria-label="Atlas navigation" data-aria-en="Atlas navigation" data-aria-ar="التنقل في الأطلس">
+      <div class="sidebar-scroll">
+        <a class="brand" href="/" aria-label="Noa Energy Atlas home">
+          <span class="brand-mark brand-noa" aria-hidden="true"><img src="/icons/icon-192.png" alt="" width="192" height="192" /></span>
+          <span><span class="brand-name">Noa Energy Atlas</span><span class="brand-kicker"><span data-en="Lebanon · verified energy intelligence" data-ar="لبنان · معلومات طاقوية موثقة">Lebanon · verified energy intelligence</span></span></span>
+        </a>
+
+        <form class="sidebar-search" action="/search/" role="search">
+          <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
+          <label class="visually-hidden" for="atlas-query" data-en="Search laws and instruments" data-ar="البحث في القوانين والأدوات">Search laws and instruments</label>
+          <input id="atlas-query" name="q" type="search" data-placeholder-en="Search laws and instruments…" data-placeholder-ar="ابحث في القوانين والأدوات…" placeholder="Search laws and instruments…" autocomplete="off" />
+          <kbd aria-hidden="true">/</kbd>
+        </form>
+        <div class="atlas-results" id="atlas-results" hidden></div>
+
+        <section class="sidebar-section" aria-labelledby="level-label">
+          <h2 id="level-label" data-en="Scope" data-ar="النطاق">Scope</h2>
+          <div class="scope-grid">
+            <a href="/?scope=Lebanon" data-graph-scope="Lebanon" aria-pressed="false"><span>LB</span><span data-en="Lebanon" data-ar="لبنان">Lebanon</span></a>
+            <a href="/?scope=International" data-graph-scope="International" aria-pressed="false"><i class="ph ph-circles-three" aria-hidden="true"></i><span data-en="International" data-ar="دولي">International</span></a>
+          </div>
+        </section>
+
+        <section class="sidebar-section" aria-labelledby="kind-label">
+          <h2 id="kind-label" data-en="Instrument type" data-ar="نوع الأداة">Instrument type</h2>
+          <div class="kind-grid">
+            <a href="/?kind=law" data-graph-kind="law" aria-pressed="false"><i class="ph ph-scales" aria-hidden="true"></i><span data-en="Law" data-ar="قانون">Law</span></a>
+            <a href="/?kind=policy" data-graph-kind="policy" aria-pressed="false"><i class="ph ph-newspaper" aria-hidden="true"></i><span data-en="Policy" data-ar="سياسة">Policy</span></a>
+            <a href="/?kind=institution" data-graph-kind="institution" aria-pressed="false"><i class="ph ph-house" aria-hidden="true"></i><span data-en="Institution" data-ar="مؤسسة">Institution</span></a>
+            <a href="/?kind=project" data-graph-kind="project" aria-pressed="false"><i class="ph ph-chart-line-up" aria-hidden="true"></i><span data-en="Project" data-ar="مشروع">Project</span></a>
+          </div>
+        </section>
+
+        <section class="sidebar-section taxonomy" aria-labelledby="taxonomy-label">
+          <h2 id="taxonomy-label" data-en="Fields" data-ar="المجالات">Fields</h2>
+          <nav aria-label="Instrument fields" data-aria-en="Instrument fields" data-aria-ar="مجالات الأدوات">
+            {categories.map((category) => <div class="taxonomy-row" style={`--cat:var(--cat-${category.toLowerCase()})`}><a href={`/?category=${encodeURIComponent(category)}`} data-graph-filter={category}><span class="cat-dot" aria-hidden="true"></span><span data-en={category} data-ar={categoryAr[category]}>{category}</span><span class="cat-count">{categoryCounts.get(category)}</span></a><button type="button" data-graph-focus={category} data-aria-en={`Focus ${category}`} data-aria-ar={`تركيز ${categoryAr[category]}`} aria-label={`Focus ${category}`}><i class="ph ph-target" aria-hidden="true"></i></button></div>)}
+          </nav>
+        </section>
+
+        <section class="sidebar-legend" aria-label="Relationship legend" data-aria-en="Relationship legend" data-aria-ar="مفتاح العلاقات">
+          <span><i data-tone="implementation"></i><span data-en="Implementation" data-ar="تنفيذ">Implementation</span></span>
+          <span><i data-tone="amendment"></i><span data-en="Amendment" data-ar="تعديل">Amendment</span></span>
+          <span><i data-tone="reference"></i><span data-en="Policy / finance" data-ar="سياسة / تمويل">Policy / finance</span></span>
+        </section>
+        <button class="clear-map" type="button" data-graph-clear><i class="ph ph-arrow-counter-clockwise" aria-hidden="true"></i><span data-en="Reset map" data-ar="إعادة ضبط الخريطة">Reset map</span></button>
+
+        <nav class="secondary-nav" aria-label="Reference sections" data-aria-en="Reference sections" data-aria-ar="أقسام المرجع">
+          {secondaryNav.map(([href, en, ar, icon]) => <a href={href} aria-current={isCurrent(href) ? "page" : undefined}><i class={`ph ${icon}`} aria-hidden="true"></i><span data-en={en} data-ar={ar}>{en}</span></a>)}
+        </nav>
+
+        <p class="noa-routine"><span class="signal-dot" aria-hidden="true"></span><span><strong data-en="Noa’s review rhythm" data-ar="وتيرة مراجعة نوا">Noa’s review rhythm</strong><span data-en="Legal records 1st & 15th · updates Tuesday & Friday" data-ar="السجلات القانونية في ١ و١٥ · التحديثات الثلاثاء والجمعة">Legal records 1st & 15th · updates Tuesday & Friday</span></span></p>
+      </div>
+    </aside>
+    <button class="sidebar-scrim" type="button" aria-label="Close navigation" hidden></button>
+
+    <nav class="view-switcher" aria-label="Primary views" data-aria-en="Primary views" data-aria-ar="العروض الأساسية">
+      <a href="/" aria-current={graphCurrent ? "page" : undefined}><i class="ph ph-brain" aria-hidden="true"></i><span data-en="Law map" data-ar="خريطة القوانين">Law map</span></a>
+      <a href="/updates/" aria-current={isCurrent("/updates/") ? "page" : undefined}><i class="ph ph-newspaper" aria-hidden="true"></i><span data-en="Energy briefing" data-ar="إحاطة الطاقة">Energy briefing</span></a>
+      <span class="view-stand"><span class="live-dot" aria-hidden="true"></span><span data-en="Reviewed 16.08.2026" data-ar="مراجَع في 16.08.2026">Reviewed 16.08.2026</span></span>
+      <button class="language-toggle view-action has-label" type="button" data-aria-en="Switch to Arabic" data-aria-ar="التبديل إلى الإنجليزية" title="Arabic / English"><i class="ph ph-translate" aria-hidden="true"></i><span class="locale-label">AR</span></button>
+      <button class="theme-toggle view-action" type="button" data-aria-en="Switch to dark theme" data-aria-ar="التبديل إلى المظهر الداكن"><i class="ph ph-moon" aria-hidden="true"></i><span class="visually-hidden theme-label">Dark theme</span></button>
+    </nav>
+
+    <main id="main-content" tabindex="-1" class:list={[immersive && "immersive-main"]}>
+      <div class:list={["main-inner", immersive && "immersive-inner"]}><slot /></div>
+    </main>
+
+    {!immersive && <footer class="site-footer">
+      <div class="footer-inner">
+        <div><strong>Noa Energy Atlas</strong><p data-en="An independent, source-led briefing on Lebanon’s energy law, institutions and market." data-ar="إحاطة مستقلة قائمة على المصادر حول قانون الطاقة ومؤسساته وسوقه في لبنان.">An independent, source-led briefing on Lebanon’s energy law, institutions and market.</p></div>
+        <div><strong>Noa</strong><p><span data-en="Content reviewed through" data-ar="المحتوى مراجَع حتى">Content reviewed through</span> <time datetime={CONTENT_CUTOFF} data-en={cutoffEn} data-ar={cutoffAr}>{cutoffEn}</time>.</p></div>
+        <div><a href="/feed.xml">RSS</a> · <a href="/offline/" data-en="Offline" data-ar="دون اتصال">Offline</a> · <button class="footer-install" id="install-button" type="button" hidden><i class="ph ph-download-simple" aria-hidden="true"></i><span data-en="Install" data-ar="تثبيت">Install</span></button></div>
+      </div>
+    </footer>}
+
+    <NoaPanel />
+
+    <script>
+      const root = document.documentElement;
+      const readPreference = (key: string) => { try { return localStorage.getItem(key); } catch { return null; } };
+      const writePreference = (key: string, value: string) => { try { localStorage.setItem(key, value); } catch { /* The controls still work when storage is unavailable. */ } };
+      const savedTheme = readPreference("noa-theme");
+      root.dataset.theme = savedTheme === "dark" || savedTheme === "light" ? savedTheme : (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+
+      const themeButtons = [...document.querySelectorAll<HTMLButtonElement>(".theme-toggle")];
+      const updateThemeButtons = () => {
+        const dark = root.dataset.theme === "dark";
+        themeButtons.forEach((button) => {
+          const icon = button.querySelector("i");
+          if (icon) icon.className = `ph ${dark ? "ph-sun" : "ph-moon"}`;
+          button.setAttribute("aria-pressed", String(dark));
+          button.setAttribute("aria-label", dark ? (root.lang === "ar" ? "التبديل إلى المظهر الفاتح" : "Switch to light theme") : (root.lang === "ar" ? "التبديل إلى المظهر الداكن" : "Switch to dark theme"));
+          const label = button.querySelector<HTMLElement>(".theme-label");
+          if (label) label.textContent = dark ? (root.lang === "ar" ? "المظهر الفاتح" : "Light theme") : (root.lang === "ar" ? "المظهر الداكن" : "Dark theme");
+        });
+        const themeMeta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+        if (themeMeta) themeMeta.content = dark ? "#081820" : "#f5fcfc";
+      };
+      themeButtons.forEach((button) => button.addEventListener("click", () => {
+        const dark = root.dataset.theme === "dark";
+        root.dataset.theme = dark ? "light" : "dark";
+        writePreference("noa-theme", root.dataset.theme);
+        updateThemeButtons();
+      }));
+      updateThemeButtons();
+
+      const applyLocale = (locale: "en" | "ar") => {
+        const arabic = locale === "ar";
+        root.lang = locale;
+        root.dir = arabic ? "rtl" : "ltr";
+        root.dataset.locale = locale;
+        document.querySelectorAll<HTMLElement>("[data-en][data-ar]").forEach((element) => {
+          element.textContent = arabic ? element.dataset.ar || "" : element.dataset.en || "";
+        });
+        document.querySelectorAll<HTMLElement>("[data-placeholder-en][data-placeholder-ar]").forEach((element) => {
+          if (element instanceof HTMLInputElement) element.placeholder = arabic ? element.dataset.placeholderAr || "" : element.dataset.placeholderEn || "";
+        });
+        document.querySelectorAll<HTMLElement>("[data-aria-en][data-aria-ar]").forEach((element) => {
+          element.setAttribute("aria-label", arabic ? element.dataset.ariaAr || "" : element.dataset.ariaEn || "");
+        });
+        document.querySelectorAll<HTMLElement>(".locale-label").forEach((element) => { element.textContent = arabic ? "EN" : "AR"; });
+        document.querySelectorAll<HTMLButtonElement>(".language-toggle").forEach((button) => button.setAttribute("aria-pressed", String(arabic)));
+        writePreference("noa-locale", locale);
+        updateThemeButtons();
+        dispatchEvent(new CustomEvent("noa:locale", { detail: { locale } }));
+      };
+      const locale = readPreference("noa-locale") === "ar" ? "ar" : "en";
+      applyLocale(locale);
+      document.querySelectorAll<HTMLButtonElement>(".language-toggle").forEach((button) => button.addEventListener("click", () => applyLocale(root.lang === "ar" ? "en" : "ar")));
+
+      const navButton = document.querySelector<HTMLButtonElement>(".nav-toggle");
+      const sidebar = document.querySelector<HTMLElement>("#atlas-sidebar");
+      const scrim = document.querySelector<HTMLButtonElement>(".sidebar-scrim");
+      const setNavigation = (open: boolean) => {
+        navButton?.setAttribute("aria-expanded", String(open));
+        if (sidebar) sidebar.dataset.open = String(open);
+        if (scrim) scrim.hidden = !open;
+        document.body.dataset.navOpen = String(open);
+      };
+      navButton?.addEventListener("click", () => setNavigation(navButton.getAttribute("aria-expanded") !== "true"));
+      scrim?.addEventListener("click", () => setNavigation(false));
+      addEventListener("keydown", (event) => { if (event.key === "Escape" && sidebar?.dataset.open === "true") setNavigation(false); });
+
+      const atlasQuery = document.querySelector<HTMLInputElement>("#atlas-query");
+      addEventListener("keydown", (event) => {
+        if (event.key === "/" && document.activeElement !== atlasQuery) { event.preventDefault(); atlasQuery?.focus(); }
+      });
+
+      if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("/sw.js"));
+      let installPrompt: Event | undefined;
+      const installButton = document.querySelector<HTMLButtonElement>("#install-button");
+      addEventListener("beforeinstallprompt", (event) => { event.preventDefault(); installPrompt = event; if (installButton) installButton.hidden = false; });
+      installButton?.addEventListener("click", () => { if (installPrompt && "prompt" in installPrompt) (installPrompt as Event & {prompt:()=>void}).prompt(); });
+    </script>
+  </body>
+</html>

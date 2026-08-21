@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { instruments, relationships, resolveSources } from "../data/atlas";
+import { instrumentAr, relationshipAr } from "../data/localization";
+const byId = new Map(instruments.map((item) => [item.id, item]));
+---
+<BaseLayout title="Relationship ledger" description="Accessible evidence ledger for the documented relationships in Lebanon's energy-law knowledge graph.">
+  <section class="prose relationship-ledger-page" aria-labelledby="relationship-ledger-title">
+    <header class="page-head">
+      <div>
+        <p class="eyebrow" data-en="Knowledge graph evidence" data-ar="أدلة خريطة المعرفة">Knowledge graph evidence</p>
+        <h1 id="relationship-ledger-title" data-en="Relationship ledger" data-ar="سجل العلاقات">Relationship ledger</h1>
+        <p data-en="A keyboard-accessible ledger of every documented connection in the legal map, with direct links to each record and its controlling evidence." data-ar="سجل قابل للوصول بلوحة المفاتيح لكل رابط موثّق في الخريطة القانونية، مع روابط مباشرة إلى كل سجل ودليله الأساسي.">A keyboard-accessible ledger of every documented connection in the legal map, with direct links to each record and its controlling evidence.</p>
+      </div>
+      <p class="cutoff"><strong>{relationships.length}</strong><br /><span data-en="verified relationships" data-ar="علاقة موثّقة">verified relationships</span></p>
+    </header>
+    <div class="table-scroll">
+      <table class="relationship-table">
+        <caption class="visually-hidden" data-en="Documented relationships between Lebanon energy-law records" data-ar="العلاقات الموثّقة بين سجلات قانون الطاقة في لبنان">Documented relationships between Lebanon energy-law records</caption>
+        <thead><tr><th scope="col" data-en="From" data-ar="من">From</th><th scope="col" data-en="Relationship" data-ar="العلاقة">Relationship</th><th scope="col" data-en="To" data-ar="إلى">To</th><th scope="col" data-en="Evidence" data-ar="الدليل">Evidence</th></tr></thead>
+        <tbody>{relationships.map((rel) => {
+          const from = byId.get(rel.from); const to = byId.get(rel.to); const evidence = resolveSources(rel.sourceIds);
+          return <tr>
+            <td><a href={`/instruments/${from?.slug}/`} data-en={from?.shortTitle} data-ar={instrumentAr[rel.from]?.shortTitle}>{from?.shortTitle}</a></td>
+            <td data-en={rel.label} data-ar={relationshipAr[rel.id]}>{rel.label}</td>
+            <td><a href={`/instruments/${to?.slug}/`} data-en={to?.shortTitle} data-ar={instrumentAr[rel.to]?.shortTitle}>{to?.shortTitle}</a></td>
+            <td>{evidence.map((source, index) => <><a href={source.url} rel="external">{source.publisher}</a>{index < evidence.length - 1 && <span>, </span>}</>)}</td>
+          </tr>;
+        })}</tbody>
+      </table>
+    </div>
+  </section>
+</BaseLayout>

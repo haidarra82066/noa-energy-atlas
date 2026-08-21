@@ -1,0 +1,70 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { news, resolveSources, instrumentById } from "../data/atlas";
+import { instrumentAr, newsAr } from "../data/localization";
+const filters=[
+  {key:"all",en:"All",ar:"الكل"},
+  {key:"regulation",en:"Law & regulation",ar:"القانون والتنظيم"},
+  {key:"electricity",en:"Electricity",ar:"الكهرباء"},
+  {key:"climate",en:"Climate",ar:"المناخ"},
+  {key:"finance",en:"Finance & investment",ar:"التمويل والاستثمار"},
+  {key:"research",en:"Research",ar:"البحوث"}
+];
+const cardTone=(tags:string[])=>tags.includes("regulation")?"regulation":tags.includes("climate")?"climate":tags.includes("finance")||tags.includes("investment")?"finance":tags.includes("research")?"research":"electricity";
+const tagAr:Record<string,string>={regulation:"تنظيم",policy:"سياسة",climate:"مناخ","distributed-energy":"طاقة موزعة",investment:"استثمار",institutions:"مؤسسات",finance:"تمويل",electricity:"كهرباء",research:"بحوث",procurement:"شراء",transparency:"شفافية",grid:"شبكة"};
+const formatDate=(date:string,locale:string,month:"long"|"short"="short")=>new Intl.DateTimeFormat(locale,{day:"numeric",month,year:"numeric",timeZone:"UTC"}).format(new Date(`${date}T12:00:00Z`));
+const updatedDate=news[0]?.date||"2026-08-16";
+---
+<BaseLayout title="Energy briefing" description="Dated, source-linked developments in Lebanon's energy law, regulation, institutions and market.">
+  <section class="briefing-shell" aria-labelledby="briefing-title">
+    <header class="briefing-head">
+      <span class="noa-avatar briefing-avatar" aria-hidden="true"><img src="/assets/noa-phoenix-editorial-idle.webp" alt="" width="1280" height="1280" /></span>
+      <div><span class="briefing-edition" data-en="Noa energy briefing" data-ar="إحاطة نوا للطاقة">Noa energy briefing</span><h1 id="briefing-title" data-en="What changed, and why it matters" data-ar="ما الذي تغيّر، ولماذا يهم؟">What changed, and why it matters</h1><p data-en="Consequential developments across Lebanon's energy system, connected to the laws, institutions and source records behind them." data-ar="أهم التطورات في منظومة الطاقة اللبنانية، مرتبطة بالقوانين والمؤسسات والسجلات الأصلية التي تقف خلفها.">Consequential developments across Lebanon's energy system, connected to the laws, institutions and source records behind them.</p></div>
+    </header>
+    <div class="briefing-meta">
+      <span><i class="ph ph-calendar-blank" aria-hidden="true"></i><span data-en="Updated" data-ar="آخر تحديث">Updated</span> <strong data-en={formatDate(updatedDate,"en-GB","long")} data-ar={formatDate(updatedDate,"ar-LB","long")}>{formatDate(updatedDate,"en-GB","long")}</strong></span>
+      <span><i class="ph ph-arrows-clockwise" aria-hidden="true"></i><span data-en="Rhythm" data-ar="الوتيرة">Rhythm</span> <strong data-en="Tuesday and Friday" data-ar="الثلاثاء والجمعة">Tuesday and Friday</strong></span>
+      <span><span class="signal-dot" aria-hidden="true"></span><strong data-en="Sources checked by Noa" data-ar="المصادر مدققة من نوا">Sources checked by Noa</strong></span>
+    </div>
+    <div class="briefing-filters" aria-label="Filter updates" data-aria-en="Filter updates" data-aria-ar="تصفية التحديثات">
+      {filters.map((filter,index)=><button class:list={[index===0&&"is-active"]} type="button" data-news-filter={filter.key} aria-pressed={index===0?"true":"false"}><span data-en={filter.en} data-ar={filter.ar}>{filter.en}</span></button>)}
+    </div>
+    <p class="briefing-count" aria-live="polite"><strong id="briefing-count">{news.length}</strong> <span data-en="briefing notes" data-ar="مذكرات إحاطة">briefing notes</span></p>
+
+    <div class="briefing-list" id="briefing-list">
+      {news.map((item,index)=>{const ar=newsAr[item.id];const sources=resolveSources(item.sourceIds);const affected=item.instrumentIds.flatMap((id)=>{const instrument=instrumentById.get(id);return instrument?[instrument]:[]});const tone=cardTone(item.tags);const primaryTag=item.tags[0]!;const dateEn=formatDate(item.date,"en-GB");const dateAr=formatDate(item.date,"ar-LB");return <details class="briefing-card" id={item.slug} data-news-tags={item.tags.join(" ")} style={`--news-tone:var(--news-${tone})`} open={index===0}>
+        <summary>
+          <div class="briefing-card-top"><span class="briefing-topic" data-en={primaryTag} data-ar={tagAr[primaryTag]||primaryTag}>{primaryTag}</span><time datetime={item.date} data-en={dateEn} data-ar={dateAr}>{dateEn}</time>{index<2&&<span class="briefing-new" data-en="Latest" data-ar="الأحدث">Latest</span>}</div>
+          <h2 data-en={item.title} data-ar={ar?.title}>{item.title}</h2>
+          <p data-en={item.summary} data-ar={ar?.summary}>{item.summary}</p>
+          <span class="briefing-more"><span data-en="Open analysis" data-ar="فتح التحليل">Open analysis</span><i class="ph ph-caret-down" aria-hidden="true"></i></span>
+        </summary>
+        <div class="briefing-card-body">
+          <div class="briefing-analysis">
+            <h3 data-en="What changed" data-ar="ما الذي تغيّر؟">What changed</h3>
+            <ul>
+              <li data-en={item.summary} data-ar={ar?.summary}>{item.summary}</li>
+              {affected.length>0&&<li><span data-en="Directly connected to" data-ar="مرتبط مباشرة بـ">Directly connected to</span> {affected.map((instrument,i)=><>{i>0&&<span> · </span>}<a href={`/instruments/${instrument.slug}/`} data-en={instrument.shortTitle} data-ar={instrumentAr[instrument.id]?.shortTitle}>{instrument.shortTitle}</a></>)}</li>}
+              <li><span data-en="Primary record date" data-ar="تاريخ السجل الأساسي">Primary record date</span>: <time datetime={item.date} data-en={dateEn} data-ar={dateAr}>{dateEn}</time>.</li>
+            </ul>
+          </div>
+          <aside class="briefing-why"><strong data-en="Why it matters" data-ar="لماذا يهم">Why it matters</strong><p data-en={item.significance} data-ar={ar?.significance}>{item.significance}</p></aside>
+          <div class="briefing-sources">
+            {sources.map((source)=><a href={source.url} rel="external"><i class="ph ph-arrow-square-out" aria-hidden="true"></i><span><strong>{source.publisher}</strong><small data-en={source.title} data-ar={source.title}>{source.title}</small></span></a>)}
+          </div>
+        </div>
+      </details>})}
+    </div>
+  </section>
+
+  <script>
+    const cards=[...document.querySelectorAll<HTMLElement>(".briefing-card")];
+    const total=document.querySelector<HTMLElement>("#briefing-count");
+    document.querySelectorAll<HTMLButtonElement>("[data-news-filter]").forEach((button)=>button.addEventListener("click",()=>{
+      const filter=button.dataset.newsFilter||"all";let shown=0;
+      document.querySelectorAll<HTMLButtonElement>("[data-news-filter]").forEach((candidate)=>{const on=candidate===button;candidate.classList.toggle("is-active",on);candidate.setAttribute("aria-pressed",String(on))});
+      cards.forEach((card)=>{const visible=filter==="all"||card.dataset.newsTags?.includes(filter);card.hidden=!visible;if(visible)shown++});
+      if(total)total.textContent=String(shown);
+    }));
+  </script>
+</BaseLayout>

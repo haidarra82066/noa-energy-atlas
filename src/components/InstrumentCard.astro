@@ -1,0 +1,15 @@
+---
+import type { Instrument } from "../data/schema";
+import { categoryAr, instrumentAr, statusAr } from "../data/localization";
+interface Props { instrument: Instrument; compact?: boolean; }
+const { instrument, compact = false } = Astro.props;
+const tone = instrument.status === "In force" ? "live" : instrument.status === "Under implementation" || instrument.status === "Operational programme" ? "progress" : instrument.status === "Project" ? "project" : instrument.status === "Draft" ? "draft" : instrument.status === "Voluntary commitment" ? "commitment" : instrument.status === "Policy" ? "policy" : "historic";
+const ar = instrumentAr[instrument.id];
+---
+<article class="card">
+  <a class="card-link" href={`/instruments/${instrument.slug}/`}>
+    <div class="meta"><span>{instrument.year}</span><span data-en={instrument.category} data-ar={categoryAr[instrument.category]}>{instrument.category}</span><span class="pill status-pill" data-tone={tone} data-en={instrument.status} data-ar={statusAr[instrument.status]}>{instrument.status}</span></div>
+    <h3 data-en={instrument.shortTitle} data-ar={ar?.shortTitle}>{instrument.shortTitle}</h3>
+    <p data-en={compact ? instrument.summary : instrument.whyItMatters} data-ar={compact ? ar?.summary : ar?.whyItMatters}>{compact ? instrument.summary : instrument.whyItMatters}</p>
+  </a>
+</article>

@@ -1,0 +1,117 @@
+name: Publish verified energy briefing
+on:
+  schedule:
+    - cron: "23 5,6 * * 2,5"
+  workflow_dispatch:
+permissions: { contents: write, actions: read }
+concurrency: { group: noa-news-intelligence, cancel-in-progress: false }
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    concurrency: { group: noa-production-publication, cancel-in-progress: false }
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22.19.0, cache: npm, cache-dependency-path: package-lock.json }
+      - run: npm ci
+      - name: Check Tuesday/Friday Beirut window
+        id: gate
+        shell: bash
+        env: { FORCE_RUN: "${{ github.event_name == 'workflow_dispatch' }}" }
+        run: |
+          force=""; if [ "$FORCE_RUN" = "true" ]; then force="--force"; fi
+          npx tsx scripts/schedule-guard.ts --mode news $force --github-output "$GITHUB_OUTPUT"
+      - name: Verify scoped credentials
+        if: steps.gate.outputs.should_run == 'true'
+        shell: bash
+        env:
+          AI_API_KEY: ${{ secrets.INTELLIGENCE_API_KEY }}
+          AI_MODEL: ${{ secrets.INTELLIGENCE_MODEL }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          test -n "$AI_API_KEY" || { echo "INTELLIGENCE_API_KEY is missing"; exit 1; }
+          test -n "$AI_MODEL" || { echo "INTELLIGENCE_MODEL is missing"; exit 1; }
+          test -n "$NETLIFY_AUTH_TOKEN" || { echo "NETLIFY_AUTH_TOKEN is missing"; exit 1; }
+          test -n "$NETLIFY_SITE_ID" || { echo "NETLIFY_SITE_ID is missing"; exit 1; }
+          test "$NETLIFY_SITE_ID" = "ffdfa234-6474-4155-af51-7e08c6b6c3b9" || { echo "Refusing an unrelated Netlify site"; exit 1; }
+      - name: Research a bounded 3-5 day evidence window
+        if: steps.gate.outputs.should_run == 'true'
+        shell: bash
+        env:
+          AI_BASE_URL: ${{ secrets.INTELLIGENCE_BASE_URL }}
+          AI_MODEL: ${{ secrets.INTELLIGENCE_MODEL }}
+          AI_API_KEY: ${{ secrets.INTELLIGENCE_API_KEY }}
+          INTELLIGENCE_FETCH_CONCURRENCY: "6"
+        run: |
+          for attempt in 1 2; do npm run update:news && break; if [ "$attempt" = "2" ]; then exit 1; fi; sleep 20; done
+          npx tsx scripts/check-critical-sources.ts --mode news
+      - name: Integrate only deterministic High-confidence records
+        if: steps.gate.outputs.should_run == 'true'
+        id: integrate
+        run: |
+          npx tsx scripts/auto-publish.ts --mode news --github-output "$GITHUB_OUTPUT"
+          npx tsx scripts/check-update-scope.ts --mode news
+      - name: Validate complete release artifact
+        if: steps.gate.outputs.should_run == 'true'
+        run: npm run validate:content && npm test && npm audit --omit=dev --audit-level=high && npm run build
+      - name: Create local immutable release commit
+        if: steps.gate.outputs.should_run == 'true' && steps.integrate.outputs.public_changed == 'true'
+        shell: bash
+        run: |
+          git config user.name "noa-atlas-publisher"
+          git config user.email "noa-atlas-publisher@users.noreply.github.com"
+          git checkout -b "automation/news-release-${{ github.run_id }}"
+          git add updates/research/news-evidence.json updates/candidates/news.json updates/candidates/news-briefing.md updates/candidates/news.md updates/pending-state/news.json updates/publication-ledger-news.jsonl updates/memory/briefing-history.md updates/memory/watchlist.md updates/memory/data-gaps.md src/data/automated-publications.json public/deployment-marker.json
+          git commit -m "feat(intelligence): verified news release ${{ steps.integrate.outputs.publication_id }}"
+      - name: Capture current production deploy for rollback
+        if: steps.gate.outputs.should_run == 'true' && steps.integrate.outputs.public_changed == 'true'
+        id: previous
+        shell: bash
+        env: { NETLIFY_AUTH_TOKEN: "${{ secrets.NETLIFY_AUTH_TOKEN }}", NETLIFY_SITE_ID: "${{ secrets.NETLIFY_SITE_ID }}" }
+        run: |
+          id=$(curl -fsS -H "Authorization: Bearer $NETLIFY_AUTH_TOKEN" "https://api.netlify.com/api/v1/sites/$NETLIFY_SITE_ID/deploys?per_page=1" | jq -r '.[0].id')
+          test -n "$id" && test "$id" != "null"
+          echo "deploy_id=$id" >> "$GITHUB_OUTPUT"
+      - name: Atomically deploy built artifact
+        if: steps.gate.outputs.should_run == 'true' && steps.integrate.outputs.public_changed == 'true'
+        id: deploy
+        env: { NETLIFY_AUTH_TOKEN: "${{ secrets.NETLIFY_AUTH_TOKEN }}", NETLIFY_SITE_ID: "${{ secrets.NETLIFY_SITE_ID }}" }
+        run: npx --yes netlify-cli deploy --prod --dir=dist --site="$NETLIFY_SITE_ID" --auth="$NETLIFY_AUTH_TOKEN" --message="Verified news ${{ steps.integrate.outputs.publication_id }}"
+      - name: Smoke-test exact public marker
+        if: steps.gate.outputs.should_run == 'true' && steps.integrate.outputs.public_changed == 'true'
+        env: { PUBLICATION_ID: "${{ steps.integrate.outputs.publication_id }}", SMOKE_TIMEOUT_MS: "240000" }
+        run: node scripts/smoke-production.mjs https://noa-energy-atlas.netlify.app "$PUBLICATION_ID"
+      - name: Advance state and publish release commit only after smoke success
+        if: steps.gate.outputs.should_run == 'true' && steps.integrate.outputs.public_changed == 'true'
+        run: |
+          npx tsx scripts/promote-update-state.ts --mode news
+          git add updates/state/news.json updates/pending-state/news.json
+          git commit --amend --no-edit
+          git push origin HEAD:main
+      - name: Commit successful no-op state without deploying
+        if: steps.gate.outputs.should_run == 'true' && steps.integrate.outputs.public_changed != 'true'
+        shell: bash
+        run: |
+          npx tsx scripts/promote-update-state.ts --mode news
+          git config user.name "noa-atlas-publisher"; git config user.email "noa-atlas-publisher@users.noreply.github.com"
+          git add updates/research/news-evidence.json updates/candidates/news.json updates/candidates/news-briefing.md updates/candidates/news.md updates/pending-state/news.json updates/state/news.json updates/publication-ledger-news.jsonl updates/memory/briefing-history.md updates/memory/watchlist.md updates/memory/data-gaps.md
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "chore(intelligence): successful news no-op ${{ steps.gate.outputs.local_date }}"
+          git push origin HEAD:main
+      - name: Roll back if any post-deploy gate fails
+        if: failure() && steps.deploy.outcome == 'success'
+        env: { NETLIFY_AUTH_TOKEN: "${{ secrets.NETLIFY_AUTH_TOKEN }}", NETLIFY_SITE_ID: "${{ secrets.NETLIFY_SITE_ID }}", PREVIOUS_DEPLOY_ID: "${{ steps.previous.outputs.deploy_id }}" }
+        run: |
+          curl -fsS -X POST -H "Authorization: Bearer $NETLIFY_AUTH_TOKEN" "https://api.netlify.com/api/v1/sites/$NETLIFY_SITE_ID/deploys/$PREVIOUS_DEPLOY_ID/restore"
+      - name: Publication summary
+        if: always() && steps.gate.outputs.should_run == 'true'
+        run: |
+          echo "News run ${{ job.status }}; published ${{ steps.integrate.outputs.published_count || '0' }}; publication ${{ steps.integrate.outputs.publication_id || 'no-op' }}" >> "$GITHUB_STEP_SUMMARY"
+      - name: Preserve failure evidence
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with: { name: "news-publication-failure-${{ github.run_id }}", path: "updates/research/news-evidence.json\nupdates/candidates/news.json\nupdates/candidates/news.md", if-no-files-found: ignore, retention-days: 14 }
