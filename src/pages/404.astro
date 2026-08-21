@@ -1,7 +1,8 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+const basePath=import.meta.env.BASE_URL.replace(/\/$/,"");
 ---
 <BaseLayout title="Page not found" description="The requested Noa Energy Atlas page was not found.">
   <header class="page-head"><div><p class="eyebrow">404</p><h1 data-en="That record is not here." data-ar="هذا السجل غير موجود هنا.">That record is not here.</h1><p data-en="The URL may have changed or the item may not yet be in the public ledger." data-ar="قد يكون الرابط قد تغيّر، أو لم تُدرج المادة بعد في السجل العام.">The URL may have changed or the item may not yet be in the public ledger.</p></div></header>
-  <p><a href="/" data-en="Return to the knowledge graph" data-ar="العودة إلى خريطة المعرفة">Return to the knowledge graph</a> <span data-en="or" data-ar="أو">or</span> <a href="/search/" data-en="search the Atlas" data-ar="ابحث في الأطلس">search the Atlas</a>.</p>
+  <p><a href={`${basePath}/`} data-en="Return to the knowledge graph" data-ar="العودة إلى خريطة المعرفة">Return to the knowledge graph</a> <span data-en="or" data-ar="أو">or</span> <a href={`${basePath}/search/`} data-en="search the Atlas" data-ar="ابحث في الأطلس">search the Atlas</a>.</p>
 </BaseLayout>

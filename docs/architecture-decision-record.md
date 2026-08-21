@@ -8,7 +8,7 @@
 
 **Why:** legal and market reference pages benefit from stable URLs, inspectable HTML, low bandwidth, simple hosting and strong cache behaviour. The content needs relational validation but not a database at this scale. Static generation also creates a narrow security surface and permits an offline cache.
 
-**Consequences:** every accepted publication rebuilds the site. Scheduled monitors write a separate typed automated ledger that Astro consumes directly; state-only no-op commits skip Netlify builds. If the ledger outgrows the repository, the schemas remain a migration contract for a database or headless CMS.
+**Consequences:** every accepted publication rebuilds the site. Scheduled monitors write a separate typed automated ledger that Astro consumes directly; state-only no-op commits skip GitHub Pages deployment. If the ledger outgrows the repository, the schemas remain a migration contract for a database or headless CMS.
 
 ## ADR-002: Relationship SVG plus table
 

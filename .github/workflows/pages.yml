@@ -1,0 +1,54 @@
+name: Deploy Noa Energy Atlas to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: noa-production-publication
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.event_name == 'workflow_dispatch' || !contains(github.event.head_commit.message, '[skip pages]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out the verified source
+        uses: actions/checkout@v6
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.19.0
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Validate, test, audit and build
+        env:
+          URL: https://haidarra82066.github.io
+          BASE_PATH: /noa-energy-atlas
+        run: npm run validate:content && npm test && npm audit --omit=dev --audit-level=high && npm run build
+      - name: Upload immutable Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+      - name: Smoke-test public deployment
+        env:
+          PUBLICATION_ID: design-system-20260821
+          SMOKE_TIMEOUT_MS: "240000"
+        run: node scripts/smoke-production.mjs https://haidarra82066.github.io/noa-energy-atlas "$PUBLICATION_ID"

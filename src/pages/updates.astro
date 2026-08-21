@@ -12,13 +12,14 @@ const filters=[
 ];
 const cardTone=(tags:string[])=>tags.includes("regulation")?"regulation":tags.includes("climate")?"climate":tags.includes("finance")||tags.includes("investment")?"finance":tags.includes("research")?"research":"electricity";
 const tagAr:Record<string,string>={regulation:"تنظيم",policy:"سياسة",climate:"مناخ","distributed-energy":"طاقة موزعة",investment:"استثمار",institutions:"مؤسسات",finance:"تمويل",electricity:"كهرباء",research:"بحوث",procurement:"شراء",transparency:"شفافية",grid:"شبكة"};
+const basePath=import.meta.env.BASE_URL.replace(/\/$/,"");
 const formatDate=(date:string,locale:string,month:"long"|"short"="short")=>new Intl.DateTimeFormat(locale,{day:"numeric",month,year:"numeric",timeZone:"UTC"}).format(new Date(`${date}T12:00:00Z`));
 const updatedDate=news[0]?.date||"2026-08-16";
 ---
 <BaseLayout title="Energy briefing" description="Dated, source-linked developments in Lebanon's energy law, regulation, institutions and market.">
   <section class="briefing-shell" aria-labelledby="briefing-title">
     <header class="briefing-head">
-      <span class="noa-avatar briefing-avatar" aria-hidden="true"><img src="/assets/noa-phoenix-editorial-idle.webp" alt="" width="1280" height="1280" /></span>
+      <span class="noa-avatar briefing-avatar" aria-hidden="true"><img src={`${basePath}/assets/noa-phoenix-editorial-idle.webp`} alt="" width="1280" height="1280" /></span>
       <div><span class="briefing-edition" data-en="Noa energy briefing" data-ar="إحاطة نوا للطاقة">Noa energy briefing</span><h1 id="briefing-title" data-en="What changed, and why it matters" data-ar="ما الذي تغيّر، ولماذا يهم؟">What changed, and why it matters</h1><p data-en="Consequential developments across Lebanon's energy system, connected to the laws, institutions and source records behind them." data-ar="أهم التطورات في منظومة الطاقة اللبنانية، مرتبطة بالقوانين والمؤسسات والسجلات الأصلية التي تقف خلفها.">Consequential developments across Lebanon's energy system, connected to the laws, institutions and source records behind them.</p></div>
     </header>
     <div class="briefing-meta">
@@ -44,7 +45,7 @@ const updatedDate=news[0]?.date||"2026-08-16";
             <h3 data-en="What changed" data-ar="ما الذي تغيّر؟">What changed</h3>
             <ul>
               <li data-en={item.summary} data-ar={ar?.summary}>{item.summary}</li>
-              {affected.length>0&&<li><span data-en="Directly connected to" data-ar="مرتبط مباشرة بـ">Directly connected to</span> {affected.map((instrument,i)=><>{i>0&&<span> · </span>}<a href={`/instruments/${instrument.slug}/`} data-en={instrument.shortTitle} data-ar={instrumentAr[instrument.id]?.shortTitle}>{instrument.shortTitle}</a></>)}</li>}
+              {affected.length>0&&<li><span data-en="Directly connected to" data-ar="مرتبط مباشرة بـ">Directly connected to</span> {affected.map((instrument,i)=><>{i>0&&<span> · </span>}<a href={`${basePath}/instruments/${instrument.slug}/`} data-en={instrument.shortTitle} data-ar={instrumentAr[instrument.id]?.shortTitle}>{instrument.shortTitle}</a></>)}</li>}
               <li><span data-en="Primary record date" data-ar="تاريخ السجل الأساسي">Primary record date</span>: <time datetime={item.date} data-en={dateEn} data-ar={dateAr}>{dateEn}</time>.</li>
             </ul>
           </div>

@@ -38,7 +38,7 @@ The reference graph is effectively inaccessible to keyboard and screen-reader us
 
 ### Operations and security
 
-Noa Energy Atlas uses isolated repository-native jobs, strict deterministic evidence gates, direct typed-ledger integration, an atomic Netlify deploy, and public smoke verification. It does not depend on a chat or a human-review-only pull request. Netlify headers add a restrictive content-security policy, framing protection, referrer policy and a minimal permissions policy.
+Noa Energy Atlas uses isolated repository-native jobs, strict deterministic evidence gates, direct typed-ledger integration, immutable GitHub Pages artifacts, automatic rollback, and public smoke verification. It does not depend on a chat or a human-review-only pull request.
 
 ## Decision
 

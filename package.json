@@ -15,7 +15,7 @@
     "update:on-demand": "tsx scripts/run-update-agent.ts --mode news --cadence on-demand",
     "publish:news": "tsx scripts/auto-publish.ts --mode news",
     "publish:laws": "tsx scripts/auto-publish.ts --mode law",
-    "smoke:production": "node scripts/smoke-production.mjs https://noa-energy-atlas.netlify.app",
+    "smoke:production": "node scripts/smoke-production.mjs https://haidarra82066.github.io/noa-energy-atlas",
     "test": "vitest run",
     "test:watch": "vitest",
     "audit:links": "tsx scripts/check-links.ts"

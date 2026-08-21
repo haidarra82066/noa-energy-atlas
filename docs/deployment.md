@@ -1,8 +1,6 @@
 # Deployment guide
 
-The public production origin is `https://noa-energy-atlas.netlify.app`. The linked existing Netlify site ID is `ffdfa234-6474-4155-af51-7e08c6b6c3b9`; do not create a duplicate site.
-
-The site is connected to `https://github.com/haidarra82066/noa-energy-atlas`, branch `main`, for ordinary continuous deployment. Scheduled intelligence workflows use a two-phase manual artifact deployment and exact-marker smoke check, then push a `[skip netlify]` commit after success to avoid a second racing build.
+The public production URL is `https://haidarra82066.github.io/noa-energy-atlas/`. GitHub Pages is built from the public repository `https://github.com/haidarra82066/noa-energy-atlas` by `.github/workflows/pages.yml`; no external hosting account or deploy token is required.
 
 Local release verification uses Node 22.19 or later:
 
@@ -11,15 +9,17 @@ npm ci
 npm run validate:content
 npm test
 npm audit --omit=dev --audit-level=high
+$env:URL='https://haidarra82066.github.io'
+$env:BASE_PATH='/noa-energy-atlas'
 npm run build
-node scripts/verify-ui.mjs http://127.0.0.1:4323
 ```
 
-`dist/` is the immutable static artifact. `scripts/postbuild.mjs` verifies critical outputs. A production deploy is atomic:
+`dist/` is the immutable static artifact. `scripts/postbuild.mjs` verifies critical outputs. The workflow then uploads `dist/` using `actions/upload-pages-artifact`, deploys it with `actions/deploy-pages`, and verifies the public marker:
 
 ```text
-npx netlify-cli deploy --prod --dir=dist --site=ffdfa234-6474-4155-af51-7e08c6b6c3b9
-node scripts/smoke-production.mjs https://noa-energy-atlas.netlify.app <publication-id>
+node scripts/smoke-production.mjs https://haidarra82066.github.io/noa-energy-atlas <publication-id>
 ```
 
-The production site is publicly readable. Team login, SSO protection, and password protection must remain disabled. Repository-native publication, required secrets, schedules, fail-closed validation, rollback, and monitoring are documented in `docs/automation.md`.
+The Pages site is publicly readable. Team login, SSO protection, and password protection do not apply. The project path `/noa-energy-atlas` is set through `BASE_PATH`; navigation, canonical URLs, the service worker, icons, RSS, sitemap, and PWA manifest all preserve that prefix.
+
+For rollback, open the failed GitHub Actions run and inspect the automatic rollback step. Scheduled intelligence runs upload both the candidate artifact and a prebuilt artifact from the prior `main` revision; any post-deploy failure restores and smoke-tests the latter. Repository-native schedules, strict validation, secrets, source hierarchy, and escalation are documented in `docs/automation.md`.

@@ -10,7 +10,7 @@ try {
   ({ chromium } = require("C:\\Users\\haida\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\node_modules\\playwright"));
 }
 
-const baseUrl = process.argv[2] ?? "http://127.0.0.1:4322";
+const baseUrl = (process.argv[2] ?? "http://127.0.0.1:4322").replace(/\/$/, "");
 const outputDir = new URL("../qa-screenshots/", import.meta.url);
 await mkdir(outputDir, { recursive: true });
 
@@ -36,15 +36,15 @@ async function inspectPage(page, label) {
   expect((await page.locator(".vite-error-overlay, [data-nextjs-dialog]").count()) === 0, `${label}: framework error overlay found`);
   expect((await page.locator(".secondary-nav").innerText()).includes("Source register") === false, `${label}: Source register remains in side navigation`);
   expect((await page.locator(".secondary-nav").innerText()).includes("Methodology") === false, `${label}: Methodology remains in side navigation`);
-  expect((await page.locator('img[src="/assets/noa-phoenix-editorial-idle.webp"]').count()) > 0, `${label}: Noa phoenix is missing`);
-  expect(await page.locator('img[src="/assets/noa-phoenix-editorial-idle.webp"]').first().evaluate((img) => img.complete && img.naturalWidth > 0), `${label}: Noa idle image failed to load`);
-  expect(await page.locator('img[src="/assets/noa-phoenix-editorial-listening.webp"]').evaluate((img) => img.complete && img.naturalWidth > 0), `${label}: Noa listening image failed to load`);
+  expect((await page.locator('img[src$="/assets/noa-phoenix-editorial-idle.webp"]').count()) > 0, `${label}: Noa phoenix is missing`);
+  expect(await page.locator('img[src$="/assets/noa-phoenix-editorial-idle.webp"]').first().evaluate((img) => img.complete && img.naturalWidth > 0), `${label}: Noa idle image failed to load`);
+  expect(await page.locator('img[src$="/assets/noa-phoenix-editorial-listening.webp"]').evaluate((img) => img.complete && img.naturalWidth > 0), `${label}: Noa listening image failed to load`);
   expect((await page.locator(".graph-node").count()) === 34, `${label}: expected 34 knowledge-graph records`);
   expect((await page.title()).includes("Noa Energy Atlas"), `${label}: public application name is wrong`);
-  expect((await page.locator('link[rel="icon"][href="/icons/icon-32.png"]').count()) === 1, `${label}: Noa browser-tab icon is missing`);
-  expect((await page.locator('link[rel="apple-touch-icon"][href="/icons/icon-180.png"]').count()) === 1, `${label}: Apple touch icon is missing`);
-  expect((await page.locator('.brand-noa img[src="/icons/icon-192.png"]').count()) >= 1, `${label}: Noa is not displayed beside the product name`);
-  expect((await page.locator('.graph-ledger-link[href="/relationships/"]').count()) === 1, `${label}: accessible relationship ledger entry point is missing`);
+  expect((await page.locator('link[rel="icon"][href$="/icons/icon-32.png"]').count()) === 1, `${label}: Noa browser-tab icon is missing`);
+  expect((await page.locator('link[rel="apple-touch-icon"][href$="/icons/icon-180.png"]').count()) === 1, `${label}: Apple touch icon is missing`);
+  expect((await page.locator('.brand-noa img[src$="/icons/icon-192.png"]').count()) >= 1, `${label}: Noa is not displayed beside the product name`);
+  expect((await page.locator('.graph-ledger-link[href$="/relationships/"]').count()) === 1, `${label}: accessible relationship ledger entry point is missing`);
   expect((await page.locator(".relationship-alternative").count()) === 0, `${label}: clipped duplicate relationship ledger remains in the tab order`);
   await page.locator(".graph-ledger-link").focus();
   await page.keyboard.press("Tab");
@@ -69,7 +69,7 @@ async function inspectPage(page, label) {
   expect(await page.locator("#graph-inspector").evaluate((element) => element.inert === false), `${label}: open legal dossier is still inert`);
   expect((await page.locator("#inspector-engineering").innerText()).length > 20, `${label}: engineering lens is empty`);
   expect((await page.locator("#inspector-economics").innerText()).length > 20, `${label}: economics lens is empty`);
-  expect((await page.locator("#inspector-open").getAttribute("href"))?.startsWith("/instruments/") === true, `${label}: full legal record link is broken`);
+  expect((await page.locator("#inspector-open").getAttribute("href"))?.includes("/instruments/") === true, `${label}: full legal record link is broken`);
   await page.waitForTimeout(900);
   await page.locator(".inspector-close").click();
   expect(await page.locator("#graph-inspector").evaluate((element) => element.inert === true), `${label}: closed legal dossier did not become inert`);
@@ -125,10 +125,17 @@ async function inspectPage(page, label) {
   await page.screenshot({ path: fileURLToPath(new URL(`../qa-screenshots/${label}-relationships.png`, import.meta.url)), fullPage: true });
   expect(errors.length === 0, `${label}: browser errors: ${errors.join(" | ")}`);
 
-  const manifest = await page.evaluate(async () => await (await fetch("/manifest.webmanifest")).json());
+  const manifest = await page.evaluate(async () => {
+    const manifestUrl = document.querySelector('link[rel="manifest"]')?.href;
+    if (!manifestUrl) throw new Error("Manifest link missing");
+    return await (await fetch(manifestUrl)).json();
+  });
   expect(manifest.short_name === "Noa Energy Atlas", `${label}: PWA short name is wrong`);
-  expect(manifest.icons.some((icon) => icon.src === "/icons/icon-512-maskable.png" && icon.purpose === "maskable"), `${label}: maskable PWA icon is missing`);
-  for (const icon of manifest.icons) expect(await page.evaluate(async (src) => (await fetch(src)).ok, icon.src), `${label}: PWA icon failed to load: ${icon.src}`);
+  expect(manifest.icons.some((icon) => icon.src.endsWith("icons/icon-512-maskable.png") && icon.purpose === "maskable"), `${label}: maskable PWA icon is missing`);
+  for (const icon of manifest.icons) expect(await page.evaluate(async (src) => {
+    const manifestUrl = document.querySelector('link[rel="manifest"]')?.href;
+    return Boolean(manifestUrl) && (await fetch(new URL(src, manifestUrl))).ok;
+  }, icon.src), `${label}: PWA icon failed to load: ${icon.src}`);
 
   const widthState = await page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, client: document.documentElement.clientWidth }));
   expect(widthState.scroll <= widthState.client + 1, `${label}: horizontal overflow (${widthState.scroll}px > ${widthState.client}px)`);
