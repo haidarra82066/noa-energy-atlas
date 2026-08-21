@@ -21,10 +21,10 @@ const byId = new Map(instruments.map((item) => [item.id, item]));
         <tbody>{relationships.map((rel) => {
           const from = byId.get(rel.from); const to = byId.get(rel.to); const evidence = resolveSources(rel.sourceIds);
           return <tr>
-            <td><a href={`/instruments/${from?.slug}/`} data-en={from?.shortTitle} data-ar={instrumentAr[rel.from]?.shortTitle}>{from?.shortTitle}</a></td>
-            <td data-en={rel.label} data-ar={relationshipAr[rel.id]}>{rel.label}</td>
-            <td><a href={`/instruments/${to?.slug}/`} data-en={to?.shortTitle} data-ar={instrumentAr[rel.to]?.shortTitle}>{to?.shortTitle}</a></td>
-            <td>{evidence.map((source, index) => <><a href={source.url} rel="external">{source.publisher}</a>{index < evidence.length - 1 && <span>, </span>}</>)}</td>
+            <td data-label="From" data-label-ar="من"><a href={`/instruments/${from?.slug}/`} data-en={from?.shortTitle} data-ar={instrumentAr[rel.from]?.shortTitle}>{from?.shortTitle}</a></td>
+            <td data-label="Relationship" data-label-ar="العلاقة" data-en={rel.label} data-ar={relationshipAr[rel.id]}>{rel.label}</td>
+            <td data-label="To" data-label-ar="إلى"><a href={`/instruments/${to?.slug}/`} data-en={to?.shortTitle} data-ar={instrumentAr[rel.to]?.shortTitle}>{to?.shortTitle}</a></td>
+            <td data-label="Evidence" data-label-ar="الدليل">{evidence.map((source, index) => <><a href={source.url} rel="external">{source.publisher}</a>{index < evidence.length - 1 && <span>, </span>}</>)}</td>
           </tr>;
         })}</tbody>
       </table>

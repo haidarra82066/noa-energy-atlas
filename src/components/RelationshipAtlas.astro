@@ -112,12 +112,6 @@ const connectedFor = (id:string) => relationships.filter((rel) => rel.from === i
     </aside>
   </div>
 
-  <details class="relationship-alternative">
-    <summary><span data-en="Accessible relationship ledger" data-ar="سجل العلاقات الميسّر">Accessible relationship ledger</span><span>{relationships.length}</span></summary>
-    <div class="table-scroll"><table class="relationship-table"><caption class="visually-hidden">Documented relationships between energy-law records</caption><thead><tr><th scope="col" data-en="From" data-ar="من">From</th><th scope="col" data-en="Relationship" data-ar="العلاقة">Relationship</th><th scope="col" data-en="To" data-ar="إلى">To</th><th scope="col" data-en="Evidence" data-ar="الدليل">Evidence</th></tr></thead><tbody>
-      {relationships.map((rel)=>{const from=instruments.find((item)=>item.id===rel.from);const to=instruments.find((item)=>item.id===rel.to);const source=resolveSources(rel.sourceIds)[0];return <tr><td><a href={`/instruments/${from?.slug}/`} data-en={from?.shortTitle} data-ar={instrumentAr[rel.from]?.shortTitle}>{from?.shortTitle}</a></td><td data-en={rel.label} data-ar={relationshipAr[rel.id]}>{rel.label}</td><td><a href={`/instruments/${to?.slug}/`} data-en={to?.shortTitle} data-ar={instrumentAr[rel.to]?.shortTitle}>{to?.shortTitle}</a></td><td>{source&&<a href={source.url} rel="external"><span data-en="Primary source" data-ar="المصدر الأساسي">Primary source</span></a>}</td></tr>})}
-    </tbody></table></div>
-  </details>
 </section>
 
 <script>

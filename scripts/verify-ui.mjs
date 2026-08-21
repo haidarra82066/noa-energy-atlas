@@ -45,6 +45,11 @@ async function inspectPage(page, label) {
   expect((await page.locator('link[rel="apple-touch-icon"][href="/icons/icon-180.png"]').count()) === 1, `${label}: Apple touch icon is missing`);
   expect((await page.locator('.brand-noa img[src="/icons/icon-192.png"]').count()) >= 1, `${label}: Noa is not displayed beside the product name`);
   expect((await page.locator('.graph-ledger-link[href="/relationships/"]').count()) === 1, `${label}: accessible relationship ledger entry point is missing`);
+  expect((await page.locator(".relationship-alternative").count()) === 0, `${label}: clipped duplicate relationship ledger remains in the tab order`);
+  await page.locator(".graph-ledger-link").focus();
+  await page.keyboard.press("Tab");
+  const graphFocusState = await page.evaluate(() => ({ tag: document.activeElement?.tagName, id: document.activeElement?.id, className: document.activeElement?.getAttribute("class"), visible: Boolean(document.activeElement?.getClientRects().length), inDuplicate: Boolean(document.activeElement?.closest(".relationship-alternative")) }));
+  expect(graphFocusState.tag !== "BODY" && graphFocusState.visible && !graphFocusState.inDuplicate, `${label}: focus did not move from the ledger link to the next visible control (${JSON.stringify(graphFocusState)})`);
   expect(await page.locator("#graph-inspector").evaluate((element) => element.inert === true), `${label}: closed legal dossier remains in the tab order`);
   expect(await page.locator("#noa-panel").evaluate((element) => element.inert === true), `${label}: closed Noa panel remains in the tab order`);
   await page.screenshot({ path: fileURLToPath(new URL(`../qa-screenshots/${label}-graph.png`, import.meta.url)), fullPage: false });
@@ -116,6 +121,7 @@ async function inspectPage(page, label) {
   await page.screenshot({ path: fileURLToPath(new URL(`../qa-screenshots/${label}.png`, import.meta.url)), fullPage: true });
   await page.goto(`${baseUrl}/relationships/`, { waitUntil: "networkidle" });
   expect((await page.locator(".relationship-table tbody tr").count()) === 38, `${label}: relationship ledger is incomplete`);
+  expect((await page.locator('.relationship-table td[data-label][data-label-ar]').count()) === 152, `${label}: relationship ledger cells lack responsive bilingual labels`);
   await page.screenshot({ path: fileURLToPath(new URL(`../qa-screenshots/${label}-relationships.png`, import.meta.url)), fullPage: true });
   expect(errors.length === 0, `${label}: browser errors: ${errors.join(" | ")}`);
 
@@ -171,6 +177,9 @@ await mobile.goto(`${baseUrl}/updates/`, { waitUntil: "networkidle" });
 const mobileFilterSizes = await mobile.locator(".briefing-filter").evaluateAll((items) => items.map((item) => item.getBoundingClientRect().height));
 expect(mobileFilterSizes.every((height) => height >= 40), `mobile: one or more update filters are too small (${JSON.stringify(mobileFilterSizes)})`);
 await mobile.screenshot({ path: fileURLToPath(new URL("../qa-screenshots/mobile-updates-arabic.png", import.meta.url)), fullPage: true });
+await mobile.goto(`${baseUrl}/relationships/`, { waitUntil: "networkidle" });
+expect((await mobile.locator('.relationship-table td[data-label][data-label-ar]').count()) === 152, "mobile: relationship ledger cells are not bilingually labelled");
+await mobile.screenshot({ path: fileURLToPath(new URL("../qa-screenshots/mobile-relationships-arabic.png", import.meta.url)), fullPage: true });
 await mobile.goto(`${baseUrl}/instruments/`, { waitUntil: "networkidle" });
 const statusSizes = await mobile.locator(".status-pill").evaluateAll((items) => items.slice(0, 8).map((item) => ({ width: item.getBoundingClientRect().width, height: item.getBoundingClientRect().height })));
 expect(statusSizes.every(({ height }) => height <= 40), `mobile: one or more status badges are oversized (${JSON.stringify(statusSizes)})`);
