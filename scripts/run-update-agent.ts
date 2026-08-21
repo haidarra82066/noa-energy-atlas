@@ -457,6 +457,7 @@ async function main() {
   await writeFile(resolve(`updates/pending-state/${mode}.json`), `${JSON.stringify(nextState, null, 2)}\n`);
 
   let briefing: IntelligenceBriefing | null = null;
+  let analysisFailure: Error | null = null;
   let analysisMessage = "Structured analysis was not run because no analysis provider is configured. Automatic publication is blocked for this run.";
   if (mode === "news") {
     try {
@@ -484,9 +485,10 @@ async function main() {
         await writeFile(resolve("updates/candidates/news-briefing.md"), briefingToMarkdown(briefing));
         await appendMemory(briefing);
         analysisMessage = `${briefing.candidates.length} normalized publication candidate(s) passed validation.`;
-      }
+      } else analysisFailure = new Error(analysisMessage);
     } catch (error) {
       analysisMessage = error instanceof Error ? error.message : String(error);
+      analysisFailure = error instanceof Error ? error : new Error(String(error));
     }
   }
   if(mode==="law"){
@@ -507,8 +509,8 @@ async function main() {
         if(errors.length)throw new Error(`Legal briefing rejected:\n- ${errors.join("\n- ")}`);
         await writeFile(resolve("updates/candidates/law.json"),`${JSON.stringify(legalBriefing,null,2)}\n`);
         analysisMessage=`${legalBriefing.candidates.length} high-confidence legal publication candidate(s) passed controlling-source validation.`;
-      }
-    }catch(error){analysisMessage=error instanceof Error?error.message:String(error)}
+      } else analysisFailure = new Error(analysisMessage);
+    }catch(error){analysisMessage=error instanceof Error?error.message:String(error);analysisFailure=error instanceof Error?error:new Error(String(error))}
   }
 
   const candidateMarkdown = [
@@ -538,6 +540,7 @@ async function main() {
     ""
   ].join("\n");
   await writeFile(resolve(`updates/candidates/${mode}.md`), candidateMarkdown);
+  if (analysisFailure) throw new Error(`${mode === "news" ? "News" : "Legal"} structured analysis failed: ${analysisFailure.message}`);
   console.log(JSON.stringify({ mode, cadence, cutoff, coverage, attempted: evidence.length, successful: successful.length, changed: material.length, briefingCandidates: briefing?.candidates.length ?? 0 }, null, 2));
 }
 

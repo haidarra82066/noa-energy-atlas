@@ -3,7 +3,7 @@ on:
   schedule:
     - cron: "23 5,6 * * 2,5"
   workflow_dispatch:
-permissions: { contents: write, actions: read, models: read }
+permissions: { contents: write, actions: read }
 concurrency: { group: noa-news-intelligence, cancel-in-progress: false }
 
 jobs:
@@ -28,9 +28,13 @@ jobs:
         if: steps.gate.outputs.should_run == 'true'
         shell: bash
         env:
+          AI_API_KEY: ${{ secrets.INTELLIGENCE_API_KEY }}
+          AI_MODEL: ${{ vars.INTELLIGENCE_MODEL }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         run: |
+          test -n "$AI_API_KEY" || { echo "INTELLIGENCE_API_KEY is missing"; exit 1; }
+          test -n "$AI_MODEL" || { echo "INTELLIGENCE_MODEL repository variable is missing"; exit 1; }
           test -n "$NETLIFY_AUTH_TOKEN" || { echo "NETLIFY_AUTH_TOKEN is missing"; exit 1; }
           test -n "$NETLIFY_SITE_ID" || { echo "NETLIFY_SITE_ID is missing"; exit 1; }
           test "$NETLIFY_SITE_ID" = "ffdfa234-6474-4155-af51-7e08c6b6c3b9" || { echo "Refusing an unrelated Netlify site"; exit 1; }
@@ -38,9 +42,9 @@ jobs:
         if: steps.gate.outputs.should_run == 'true'
         shell: bash
         env:
-          AI_BASE_URL: https://models.github.ai/inference
-          AI_MODEL: openai/gpt-4o
-          AI_API_KEY: ${{ github.token }}
+          AI_BASE_URL: ${{ vars.INTELLIGENCE_BASE_URL }}
+          AI_MODEL: ${{ vars.INTELLIGENCE_MODEL }}
+          AI_API_KEY: ${{ secrets.INTELLIGENCE_API_KEY }}
           INTELLIGENCE_FETCH_CONCURRENCY: "6"
         run: |
           for attempt in 1 2; do npm run update:news && break; if [ "$attempt" = "2" ]; then exit 1; fi; sleep 20; done

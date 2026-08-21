@@ -45,10 +45,11 @@ A candidate that misses any condition is logged as rejected. Zero accepted candi
 
 Required GitHub Actions secrets:
 
+- `INTELLIGENCE_API_KEY`
 - `NETLIFY_AUTH_TOKEN`
 - `NETLIFY_SITE_ID` set to the existing Noa Energy Atlas site ID `ffdfa234-6474-4155-af51-7e08c6b6c3b9`
 
-Structured analysis uses the job-scoped `${{ github.token }}` with `models: read`, GitHub Models' OpenAI-compatible inference endpoint, and `openai/gpt-4o`. The token exists only for the fresh job and is not persisted. A different provider can be configured later through the documented `AI_BASE_URL`, `AI_MODEL`, and `AI_API_KEY` environment contract without changing publication logic.
+Required repository variables are `INTELLIGENCE_BASE_URL` and `INTELLIGENCE_MODEL`. The provider must expose an OpenAI-compatible `/chat/completions` endpoint with structured JSON output. Provider absence, retirement, outage, invalid output, or schema mismatch fails the research step before integration; it cannot be interpreted as a quiet period.
 
 Secrets are read only by the job that needs them and are never written to evidence, artifacts, the client bundle, logs, or version control. The workflow token has only `contents: write` and `actions: read`; pull-request, issue, package, and administration permissions are absent. The repository must allow GitHub Actions to write contents to `main`, and scheduled workflows must be enabled.
 
