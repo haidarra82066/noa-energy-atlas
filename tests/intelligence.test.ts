@@ -11,6 +11,7 @@ import { computeCoverageStart, dateInBeirut, discoverRelevantLinks, isLikelyBloc
 import automatedPublications from "../src/data/automated-publications.json";
 import { automatedPublicationSchema } from "../scripts/auto-publication-schema";
 import { isScheduledWindow } from "../scripts/schedule-policy";
+import { isAllowedUpdateFile } from "../scripts/update-scope-policy";
 
 const candidate = normalizedNewsCandidateSchema.parse({
   id: "candidate-era-secondary-rules",
@@ -124,6 +125,14 @@ describe("Lebanon energy intelligence contract", () => {
     expect(isScheduledWindow("news", { weekday: "Wed", day: 28, hour: 8 })).toBe(false);
     expect(isScheduledWindow("law", { weekday: "Fri", day: 1, hour: 13 })).toBe(false);
     expect(isScheduledWindow("law", { weekday: "Fri", day: 1, hour: 8 })).toBe(true);
+  });
+
+  /** Restricts cloud-authored releases to news publication files. */
+  it("rejects legal and workflow files from a news release", () => {
+    expect(isAllowedUpdateFile("news", "updates/research/news-evidence.json")).toBe(true);
+    expect(isAllowedUpdateFile("news", "src/data/automated-publications.json")).toBe(true);
+    expect(isAllowedUpdateFile("news", "updates/research/law-evidence.json")).toBe(false);
+    expect(isAllowedUpdateFile("news", ".github/workflows/news-update.yml")).toBe(false);
   });
 
   it("validates the isolated automated production ledger",()=>{
