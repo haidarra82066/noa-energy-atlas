@@ -10,6 +10,7 @@ import {
 import { computeCoverageStart, dateInBeirut, discoverRelevantLinks, isLikelyBlockPage, normalizeState, normalizeTextForFingerprint, stripHtml } from "../scripts/intelligence-core";
 import automatedPublications from "../src/data/automated-publications.json";
 import { automatedPublicationSchema } from "../scripts/auto-publication-schema";
+import { isScheduledWindow } from "../scripts/schedule-policy";
 
 const candidate = normalizedNewsCandidateSchema.parse({
   id: "candidate-era-secondary-rules",
@@ -114,6 +115,15 @@ describe("Lebanon energy intelligence contract", () => {
     expect(computeCoverageStart(now, "on-demand", "2026-01-01T00:00:00Z")).toBe("2026-08-11");
     expect(computeCoverageStart(now, "on-demand", null, 30)).toBe("2026-08-11");
     expect(normalizeState({ source: "abc" }, "news").sources.source?.hash).toBe("abc");
+  });
+
+  /** Accepts delayed news starts without changing the legal publication window. */
+  it("keeps Tuesday and Friday news runs eligible for the full Beirut editorial date", () => {
+    expect(isScheduledWindow("news", { weekday: "Fri", day: 30, hour: 13 })).toBe(true);
+    expect(isScheduledWindow("news", { weekday: "Fri", day: 30, hour: 7 })).toBe(false);
+    expect(isScheduledWindow("news", { weekday: "Wed", day: 28, hour: 8 })).toBe(false);
+    expect(isScheduledWindow("law", { weekday: "Fri", day: 1, hour: 13 })).toBe(false);
+    expect(isScheduledWindow("law", { weekday: "Fri", day: 1, hour: 8 })).toBe(true);
   });
 
   it("validates the isolated automated production ledger",()=>{
