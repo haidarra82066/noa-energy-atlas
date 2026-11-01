@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import "../styles/map.css";
 import "../styles/icons.css";
 import NoaPanel from "../components/NoaPanel.astro";
 import { CONTENT_CUTOFF, instruments } from "../data/atlas";
@@ -21,11 +22,21 @@ const pageTitle = title === "Noa Energy Atlas" ? title : `${title} · Noa Energy
 const categories = ["Electricity", "Renewables", "Climate", "Petroleum", "Finance", "Institutions"] as const;
 const categoryCounts = new Map(categories.map((category) => [category, instruments.filter((item) => item.category === category).length]));
 const secondaryNav = [
+  ["/", "Law map", "خريطة القوانين", "ph-graph"],
   ["/instruments/", "All laws & instruments", "كل القوانين والأدوات", "ph-stack"],
+  ["/updates/", "Energy briefing", "إحاطة الطاقة", "ph-newspaper"],
+  ["/market/", "Market briefing", "إحاطة السوق", "ph-chart-line-up"],
   ["/about/", "About", "حول الأطلس", "ph-house"]
 ] as const;
 const isCurrent = (href: string) => href === "/" ? routePath === "/" : routePath.startsWith(href);
 const graphCurrent = routePath === "/" || routePath.startsWith("/evidence/");
+const currentSection = secondaryNav.find(([href]) => isCurrent(href));
+const referenceSections: Record<string, [string, string]> = {
+  relationships: ["Relationship ledger", "سجل العلاقات"], evidence: ["Law map", "خريطة القوانين"],
+  sources: ["Source register", "سجل المصادر"], methodology: ["Methodology", "المنهجية"],
+  search: ["Search", "البحث"], offline: ["Offline", "دون اتصال"]
+};
+const [sectionEn, sectionAr] = currentSection ? [currentSection[1], currentSection[2]] : referenceSections[routePath.split("/")[1] || ""] || [title, title];
 const cutoffDate = new Date(`${CONTENT_CUTOFF}T12:00:00Z`);
 const cutoffEn = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(cutoffDate);
 const cutoffAr = new Intl.DateTimeFormat("ar-LB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(cutoffDate);
@@ -73,13 +84,16 @@ const cutoffAr = new Intl.DateTimeFormat("ar-LB", { day: "numeric", month: "long
           <span><span class="brand-name">Noa Energy Atlas</span><span class="brand-kicker"><span data-en="Lebanon · verified energy intelligence" data-ar="لبنان · معلومات طاقوية موثقة">Lebanon · verified energy intelligence</span></span></span>
         </a>
 
-        <form class="sidebar-search" action={withBase("/search/")} role="search">
+        <nav class="secondary-nav" aria-label="Explore the atlas" data-aria-en="Explore the atlas" data-aria-ar="استكشف الأطلس">
+          {secondaryNav.map(([href, en, ar, icon]) => <a href={withBase(href)} aria-current={(href === "/" ? graphCurrent : isCurrent(href)) ? "page" : undefined}><i class={`ph ${icon}`} aria-hidden="true"></i><span data-en={en} data-ar={ar}>{en}</span></a>)}
+        </nav>
+        {!graphCurrent && <form class="sidebar-search" action={withBase("/search/")} role="search">
           <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
           <label class="visually-hidden" for="atlas-query" data-en="Search laws and instruments" data-ar="البحث في القوانين والأدوات">Search laws and instruments</label>
           <input id="atlas-query" name="q" type="search" data-placeholder-en="Search laws and instruments…" data-placeholder-ar="ابحث في القوانين والأدوات…" placeholder="Search laws and instruments…" autocomplete="off" />
           <kbd aria-hidden="true">/</kbd>
-        </form>
-        <div class="atlas-results" id="atlas-results" hidden></div>
+        </form>}
+        <div class="rail-filter-title"><i class="ph ph-sliders-horizontal" aria-hidden="true"></i><span data-en="Map filters" data-ar="عوامل تصفية الخريطة">Map filters</span></div>
 
         <section class="sidebar-section" aria-labelledby="level-label">
           <h2 id="level-label" data-en="Scope" data-ar="النطاق">Scope</h2>
@@ -111,24 +125,26 @@ const cutoffAr = new Intl.DateTimeFormat("ar-LB", { day: "numeric", month: "long
           <span><i data-tone="amendment"></i><span data-en="Amendment" data-ar="تعديل">Amendment</span></span>
           <span><i data-tone="reference"></i><span data-en="Policy / finance" data-ar="سياسة / تمويل">Policy / finance</span></span>
         </section>
-        <button class="clear-map" type="button" data-graph-clear><i class="ph ph-arrow-counter-clockwise" aria-hidden="true"></i><span data-en="Reset map" data-ar="إعادة ضبط الخريطة">Reset map</span></button>
-
-        <nav class="secondary-nav" aria-label="Reference sections" data-aria-en="Reference sections" data-aria-ar="أقسام المرجع">
-          {secondaryNav.map(([href, en, ar, icon]) => <a href={withBase(href)} aria-current={isCurrent(href) ? "page" : undefined}><i class={`ph ${icon}`} aria-hidden="true"></i><span data-en={en} data-ar={ar}>{en}</span></a>)}
-        </nav>
+        {graphCurrent && <button class="clear-map" type="button" data-graph-clear><i class="ph ph-arrow-counter-clockwise" aria-hidden="true"></i><span data-en="Reset map" data-ar="إعادة ضبط الخريطة">Reset map</span></button>}
 
         <p class="noa-routine"><span class="signal-dot" aria-hidden="true"></span><span><strong data-en="Noa’s review rhythm" data-ar="وتيرة مراجعة نوا">Noa’s review rhythm</strong><span data-en="Legal records 1st & 15th · updates Tuesday & Friday" data-ar="السجلات القانونية في ١ و١٥ · التحديثات الثلاثاء والجمعة">Legal records 1st & 15th · updates Tuesday & Friday</span></span></p>
       </div>
+      <button class="noa-launcher" id="noa-open" type="button" aria-controls="noa-panel" aria-expanded="false" data-aria-en="Open Noa's atlas note" data-aria-ar="فتح ملاحظة نوا">
+        <span class="noa-avatar" aria-hidden="true"><img src={withBase("/assets/noa-phoenix-editorial-idle.webp")} alt="" width="1280" height="1280" /></span>
+        <span><strong>Noa</strong><small data-en="Atlas watch" data-ar="مراقبة الأطلس">Atlas watch</small></span>
+        <i class="ph ph-newspaper" aria-hidden="true"></i>
+      </button>
     </aside>
     <button class="sidebar-scrim" type="button" aria-label="Close navigation" hidden></button>
 
-    <nav class="view-switcher" aria-label="Primary views" data-aria-en="Primary views" data-aria-ar="العروض الأساسية">
-      <a href={withBase("/")} aria-current={graphCurrent ? "page" : undefined}><i class="ph ph-brain" aria-hidden="true"></i><span data-en="Law map" data-ar="خريطة القوانين">Law map</span></a>
-      <a href={withBase("/updates/")} aria-current={isCurrent("/updates/") ? "page" : undefined}><i class="ph ph-newspaper" aria-hidden="true"></i><span data-en="Energy briefing" data-ar="إحاطة الطاقة">Energy briefing</span></a>
-      <span class="view-stand"><span class="live-dot" aria-hidden="true"></span><span data-en="Reviewed 16.08.2026" data-ar="مراجَع في 16.08.2026">Reviewed 16.08.2026</span></span>
+    <div class="view-switcher">
+      <nav class="atlas-crumb" aria-label="Breadcrumb" data-aria-en="Breadcrumb" data-aria-ar="مسار التنقل">
+        <a href={withBase("/")} data-en="Atlas" data-ar="الأطلس">Atlas</a><span aria-hidden="true">/</span><strong data-en={sectionEn} data-ar={sectionAr}>{sectionEn}</strong>
+      </nav>
+      <span class="view-stand"><span class="signal-dot" aria-hidden="true"></span><time datetime={CONTENT_CUTOFF} data-en={`Reviewed ${cutoffEn}`} data-ar={`مراجَع في ${cutoffAr}`}>Reviewed {cutoffEn}</time></span>
       <button class="language-toggle view-action has-label" type="button" data-aria-en="Switch to Arabic" data-aria-ar="التبديل إلى الإنجليزية" title="Arabic / English"><i class="ph ph-translate" aria-hidden="true"></i><span class="locale-label">AR</span></button>
       <button class="theme-toggle view-action" type="button" data-aria-en="Switch to dark theme" data-aria-ar="التبديل إلى المظهر الداكن"><i class="ph ph-moon" aria-hidden="true"></i><span class="visually-hidden theme-label">Dark theme</span></button>
-    </nav>
+    </div>
 
     <main id="main-content" tabindex="-1" class:list={[immersive && "immersive-main"]}>
       <div class:list={["main-inner", immersive && "immersive-inner"]}><slot /></div>
@@ -205,14 +221,30 @@ const cutoffAr = new Intl.DateTimeFormat("ar-LB", { day: "numeric", month: "long
         if (sidebar) sidebar.dataset.open = String(open);
         if (scrim) scrim.hidden = !open;
         document.body.dataset.navOpen = String(open);
+        if (sidebar) sidebar.inert = !open && mobileNav.matches;
+        if (open) sidebar?.querySelector<HTMLElement>("a")?.focus();
       };
+      const mobileNav = matchMedia("(max-width: 62rem)");
+      setNavigation(false);
+      mobileNav.addEventListener("change", () => setNavigation(false));
       navButton?.addEventListener("click", () => setNavigation(navButton.getAttribute("aria-expanded") !== "true"));
-      scrim?.addEventListener("click", () => setNavigation(false));
-      addEventListener("keydown", (event) => { if (event.key === "Escape" && sidebar?.dataset.open === "true") setNavigation(false); });
+      function dismissNavigation() {
+        setNavigation(false);
+        navButton?.focus();
+      }
+      scrim?.addEventListener("click", dismissNavigation);
+      sidebar?.addEventListener("click", event => {
+        if (mobileNav.matches && sidebar.dataset.open === "true" && event.target instanceof Element && event.target.closest("[data-graph-filter], [data-graph-scope], [data-graph-kind], [data-graph-focus], [data-graph-clear]")) dismissNavigation();
+      });
+      addEventListener("keydown", (event) => { if (event.key === "Escape" && sidebar?.dataset.open === "true") dismissNavigation(); });
 
       const atlasQuery = document.querySelector<HTMLInputElement>("#atlas-query");
       addEventListener("keydown", (event) => {
-        if (event.key === "/" && document.activeElement !== atlasQuery) { event.preventDefault(); atlasQuery?.focus(); }
+        if (event.key !== "/" || event.ctrlKey || event.altKey || event.metaKey || !atlasQuery) return;
+        if (event.target instanceof HTMLElement && (event.target.isContentEditable || event.target.closest("input, textarea, select"))) return;
+        event.preventDefault();
+        if (mobileNav.matches && sidebar?.contains(atlasQuery)) setNavigation(true);
+        atlasQuery.focus();
       });
 
       if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register(`${document.body.dataset.base || ""}/sw.js`));

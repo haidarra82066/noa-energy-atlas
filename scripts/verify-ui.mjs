@@ -54,6 +54,9 @@ async function inspectPage(page, label) {
   expect(await page.locator("#noa-panel").evaluate((element) => element.inert === true), `${label}: closed Noa panel remains in the tab order`);
   await page.screenshot({ path: fileURLToPath(new URL(`../qa-screenshots/${label}-graph.png`, import.meta.url)), fullPage: false });
 
+  // The overview opens first. Record mode preserves the detailed graph interactions.
+  expect(await page.locator(".sector-port:visible").count() === 6, `${label}: sector overview is incomplete`);
+  await page.locator('[data-map-mode="records"]').click();
   const initialView = await page.locator("#knowledge-graph").getAttribute("viewBox");
   await page.locator('[data-graph-action="zoom-in"]').click();
   await page.waitForTimeout(500);
@@ -88,9 +91,9 @@ async function inspectPage(page, label) {
   expect(Boolean(await movableNode.getAttribute("transform")), `${label}: graph bubble could not be moved`);
   expect((await connectedEdge.locator(".graph-edge").getAttribute("d")) !== edgeBeforeMove, `${label}: neuron link did not follow the moved bubble`);
   expect((await page.locator("#graph-inspector").getAttribute("data-open")) !== "true", `${label}: dragging a bubble accidentally opened its dossier`);
-  await page.locator('[data-graph-filter="Petroleum"]').click();
+  await page.locator('.taxonomy [data-graph-filter="Petroleum"]').click();
   expect(Number(await page.locator("#visible-node-count").innerText()) > 0 && Number(await page.locator("#visible-node-count").innerText()) < 34, `${label}: category filter did not narrow the map`);
-  await page.locator("[data-graph-clear]").click();
+  await page.locator(".atlas-sidebar [data-graph-clear]").click();
   expect((await page.locator("#visible-node-count").innerText()) === "34", `${label}: clear-map control did not restore all records`);
   await page.locator(".noa-launcher").click();
   expect((await page.locator(".noa-panel").getAttribute("data-open")) === "true", `${label}: Noa panel did not open`);
@@ -144,6 +147,14 @@ async function inspectPage(page, label) {
 const desktop = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
 await inspectPage(desktop, "desktop-updates-arabic-dark");
 
+// Searching by a law's familiar short title should open the dossier under the configured site path.
+await desktop.goto(`${baseUrl}/search/?q=Law%20462`);
+const dossierUrl = `${baseUrl}/instruments/law-462-electricity-regulation/`;
+const result = desktop.locator("#search-results .record:not([hidden]) a").filter({hasText:/462/});
+const dossierLink = result.and(desktop.locator(`a[href="${new URL(dossierUrl).pathname}"]`));
+await dossierLink.click();
+expect(desktop.url() === dossierUrl, "search: short-title lookup did not open the dossier under the site path");
+
 const mobile = await browser.newPage({ viewport: { width: 375, height: 812 } });
 await mobile.goto(`${baseUrl}/`, { waitUntil: "networkidle" });
 expect((await mobile.locator("#knowledge-graph").getAttribute("preserveAspectRatio")) === "xMidYMid meet", "mobile: graph does not use fit-all framing");
@@ -156,8 +167,17 @@ await mobile.locator(".mobile-theme").click();
 expect((await mobile.locator("html").getAttribute("data-theme")) !== mobileThemeBefore, "mobile: theme control did not change theme");
 await mobile.locator(".nav-toggle").click();
 expect((await mobile.locator(".nav-toggle").getAttribute("aria-expanded")) === "true", "mobile: navigation did not open");
-await mobile.locator(".sidebar-scrim").click({ force: true });
+await mobile.locator(".sidebar-scrim").click();
 expect((await mobile.locator(".nav-toggle").getAttribute("aria-expanded")) === "false", "mobile: navigation did not close");
+// A selected phone sector must expose readable record targets and a reloadable URL.
+await mobile.locator('.sector-port[data-graph-filter="Electricity"]').click();
+const sectorNode = mobile.locator('.graph-node[data-category="Electricity"]').first();
+expect(new URL(mobile.url()).searchParams.get("category") === "Electricity", "mobile: sector selection is missing from the URL");
+expect((await sectorNode.boundingBox())?.height >= 44, "mobile: focused record is too small to select");
+await mobile.reload({ waitUntil: "networkidle" });
+expect(await sectorNode.isVisible(), "mobile: reloading lost the selected sector");
+await mobile.locator('[data-map-mode="sectors"]').click();
+await mobile.locator('[data-map-mode="records"]').click();
 await mobile.locator('[data-graph-action="zoom-out"]').click();
 await mobile.waitForTimeout(500);
 const zoomedOutWidth = Number((await mobile.locator("#knowledge-graph").getAttribute("viewBox")).split(" ")[2]);
@@ -195,6 +215,8 @@ await mobile.screenshot({ path: fileURLToPath(new URL("../qa-screenshots/mobile-
 
 const landscape = await browser.newPage({ viewport: { width: 812, height: 375 }, reducedMotion: "reduce" });
 await landscape.goto(`${baseUrl}/`, { waitUntil: "networkidle" });
+expect(await landscape.locator(".sector-map").isVisible(), "landscape: sector overview is missing");
+await landscape.locator('[data-map-mode="records"]').click();
 const landscapeWidth = await landscape.evaluate(() => ({ scroll: document.documentElement.scrollWidth, client: document.documentElement.clientWidth }));
 expect(landscapeWidth.scroll <= landscapeWidth.client + 1, `landscape: horizontal overflow (${landscapeWidth.scroll}px > ${landscapeWidth.client}px)`);
 expect(await landscape.locator("#knowledge-graph").isVisible(), "landscape: knowledge graph is not visible");

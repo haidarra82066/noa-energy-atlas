@@ -38,7 +38,7 @@ const updatedDate=news[0]?.date||"2026-08-16";
           <div class="briefing-card-top"><span class="briefing-topic" data-en={primaryTag} data-ar={tagAr[primaryTag]||primaryTag}>{primaryTag}</span><time datetime={item.date} data-en={dateEn} data-ar={dateAr}>{dateEn}</time>{index<2&&<span class="briefing-new" data-en="Latest" data-ar="الأحدث">Latest</span>}</div>
           <h2 data-en={item.title} data-ar={ar?.title}>{item.title}</h2>
           <p data-en={item.summary} data-ar={ar?.summary}>{item.summary}</p>
-          <span class="briefing-more"><span data-en="Open analysis" data-ar="فتح التحليل">Open analysis</span><i class="ph ph-caret-down" aria-hidden="true"></i></span>
+          <span class="briefing-more"><span class="open-label" data-en="Read analysis" data-ar="اقرأ التحليل">Read analysis</span><span class="close-label" data-en="Close analysis" data-ar="إغلاق التحليل">Close analysis</span><i class="ph ph-caret-down" aria-hidden="true"></i></span>
         </summary>
         <div class="briefing-card-body">
           <div class="briefing-analysis">

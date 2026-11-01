@@ -1,0 +1,69 @@
+---
+import { instruments, relationships } from "../data/atlas";
+import { categoryAr } from "../data/localization";
+
+const sectors = [
+  {name:"Institutions", x:17, y:24, mobileX:24, mobileY:13, icon:"ph-bank"},
+  {name:"Electricity", x:50, y:40, mobileX:72, mobileY:23, icon:"ph-lightning"},
+  {name:"Climate", x:82, y:18, mobileX:25, mobileY:47, icon:"ph-cloud-sun"},
+  {name:"Finance", x:17, y:73, mobileX:72, mobileY:56, icon:"ph-chart-line-up"},
+  {name:"Renewables", x:52, y:80, mobileX:25, mobileY:82, icon:"ph-wind"},
+  {name:"Petroleum", x:84, y:70, mobileX:73, mobileY:87, icon:"ph-drop"}
+] as const;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const categoryById = new Map(instruments.map(record => [record.id, record.category]));
+const links = sectors.flatMap((from, i) => sectors.slice(i + 1).flatMap(to => {
+  const weight = relationships.filter(({from: a, to: b}) => {
+    const pair = [categoryById.get(a), categoryById.get(b)];
+    return pair.includes(from.name) && pair.includes(to.name);
+  }).length;
+  return weight ? [{from, to, weight}] : [];
+}));
+---
+<div class="sector-map" id="sector-map">
+  <svg class="field-contours" viewBox="0 0 1100 520" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    {Array.from({length: 28}, (_, i) => <path d={`M ${680 + i * 8} -40 C ${655 + i * 8} 85, ${940 + i * 5} 57, ${920 + i * 8} 168 S ${752 + i * 7} 326, ${837 + i * 7} 421 S ${1040 + i * 6} 488, ${985 + i * 8} 575`} />)}
+  </svg>
+  <div class="sector-drawing">
+    {(["wide", "compact"] as const).map(size =>
+      <svg viewBox="0 0 100 100" preserveAspectRatio="none" class={`sector-wires sector-wires--${size}`} aria-hidden="true">
+        {links.map(({from, to, weight}) => {
+          const [x1, y1, x2, y2] = size === "wide" ? [from.x, from.y, to.x, to.y] : [from.mobileX, from.mobileY, to.mobileX, to.mobileY];
+          const middle = (x1 + x2) / 2;
+          const longColumn = size === "compact" && Math.abs(x1 - x2) < 5 && Math.abs(y1 - y2) > 48;
+          const outerX = x1 < 50 ? -1 : 101;
+          const path = longColumn
+            ? `M ${x1} ${y1} C ${outerX} ${y1}, ${outerX} ${y2}, ${x2} ${y2}`
+            : `M ${x1} ${y1} C ${middle} ${y1}, ${middle} ${y2}, ${x2} ${y2}`;
+          return <path data-sectors={`${from.name} ${to.name}`} d={path} style={`--weight:${1 + Math.min(weight, 8) * .35}px`} />;
+        })}
+      </svg>
+    )}
+    {sectors.map(sector => {
+      const count = instruments.filter(item => item.category === sector.name).length;
+      return <a class="sector-port" data-graph-filter={sector.name} href={`${base}/?category=${sector.name}`}
+        style={`--x:${sector.x}%;--y:${sector.y}%;--mx:${sector.mobileX}%;--my:${sector.mobileY}%;--sector:var(--cat-${sector.name.toLowerCase()})`}>
+        <span class="sector-socket" aria-hidden="true"><i class={`ph ${sector.icon}`}></i></span>
+        <span class="sector-caption"><strong data-en={sector.name} data-ar={categoryAr[sector.name]}>{sector.name}</strong>
+          <small data-en={`${count} records`} data-ar={`${count.toLocaleString("ar-LB")} سجلات`}>{count} records</small></span>
+      </a>;
+    })}
+  </div>
+</div>
+<script>
+  const diagram = document.querySelector<HTMLElement>(".sector-drawing");
+  const wires = diagram?.querySelectorAll<SVGPathElement>("[data-sectors]");
+  function highlight(target: EventTarget | null) {
+    const port = target instanceof Element ? target.closest<HTMLElement>(".sector-port") : null;
+    const name = port?.dataset.graphFilter;
+    wires?.forEach(wire => {
+      const touches = name && wire.dataset.sectors?.split(" ").includes(name);
+      wire.classList.toggle("is-traced", Boolean(touches));
+      wire.classList.toggle("is-muted", Boolean(name && !touches));
+    });
+  }
+  diagram?.addEventListener("pointerover", event => highlight(event.target));
+  diagram?.addEventListener("pointerleave", () => highlight(document.activeElement));
+  diagram?.addEventListener("focusin", event => highlight(event.target));
+  diagram?.addEventListener("focusout", event => highlight(event.relatedTarget));
+</script>

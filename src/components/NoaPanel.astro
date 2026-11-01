@@ -5,12 +5,6 @@ const latest = news.slice(0, 2);
 const basePath=import.meta.env.BASE_URL.replace(/\/$/,"");
 const withBase=(target:string)=>`${basePath}${target}`;
 ---
-<button class="noa-launcher" id="noa-open" type="button" aria-controls="noa-panel" aria-expanded="false" data-aria-en="Open Noa's atlas note" data-aria-ar="فتح ملاحظة نوا">
-  <span class="noa-avatar" aria-hidden="true"><img src={withBase("/assets/noa-phoenix-editorial-idle.webp")} alt="" width="1280" height="1280" /></span>
-  <span><strong>Noa</strong><small data-en="Atlas watch" data-ar="مراقبة الأطلس">Atlas watch</small></span>
-  <span class="live-dot" aria-hidden="true"></span>
-</button>
-
 <aside class="noa-panel" id="noa-panel" role="dialog" aria-modal="false" aria-labelledby="noa-title" aria-hidden="true" data-open="false" inert>
   <button class="icon-button noa-close" id="noa-close" type="button" data-aria-en="Close Noa's note" data-aria-ar="إغلاق ملاحظة نوا"><i class="ph ph-x" aria-hidden="true"></i></button>
   <span class="noa-avatar noa-panel-avatar" aria-hidden="true"><img class="noa-idle" src={withBase("/assets/noa-phoenix-editorial-idle.webp")} alt="" width="1280" height="1280" /><img class="noa-listening" src={withBase("/assets/noa-phoenix-editorial-listening.webp")} alt="" width="1280" height="1280" /></span>

@@ -41,3 +41,15 @@
 .ph.ph-sun::before { content: "\e472"; }
 .ph.ph-translate::before { content: "\e4a2"; }
 .ph.ph-x::before { content: "\e4f6"; }
+.ph.ph-arrow-counter-clockwise::before { content: "\e038"; }
+.ph.ph-arrow-right::before { content: "\e06c"; }
+.ph.ph-arrows-clockwise::before { content: "\e094"; }
+.ph.ph-bank::before { content: "\e0b4"; }
+.ph.ph-calendar-blank::before { content: "\e10a"; }
+.ph.ph-caret-down::before { content: "\e136"; }
+.ph.ph-cloud-sun::before { content: "\e540"; }
+.ph.ph-drop::before { content: "\e210"; }
+.ph.ph-eye::before { content: "\e220"; }
+.ph.ph-lightning::before { content: "\e2de"; }
+.ph.ph-target::before { content: "\e47c"; }
+.ph.ph-wind::before { content: "\e5d2"; }
