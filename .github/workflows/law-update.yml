@@ -1,9 +1,9 @@
 name: Publish verified legal framework changes
 
 on:
-  schedule:
-    - cron: "41 5,6 1,15 * *"
-  workflow_dispatch:
+  push:
+    branches:
+      - "automation/legal-release/**"
 
 permissions:
   contents: write
@@ -35,106 +35,81 @@ jobs:
           cache: npm
           cache-dependency-path: package-lock.json
       - run: npm ci
-      - name: Check exact Beirut 1st/15th window
-        id: gate
-        shell: bash
-        env:
-          FORCE_RUN: ${{ github.event_name == 'workflow_dispatch' }}
+      - name: Verify isolated cloud release scope
         run: |
-          force=""; if [ "$FORCE_RUN" = "true" ]; then force="--force"; fi
-          npx tsx scripts/schedule-guard.ts --mode law $force --github-output "$GITHUB_OUTPUT"
-      - name: Verify scoped analysis credentials
-        if: steps.gate.outputs.should_run == 'true'
-        shell: bash
-        env:
-          AI_API_KEY: ${{ secrets.INTELLIGENCE_API_KEY }}
-          AI_MODEL: ${{ vars.INTELLIGENCE_MODEL }}
-        run: |
-          test -n "$AI_API_KEY" || { echo "INTELLIGENCE_API_KEY is missing"; exit 1; }
-          test -n "$AI_MODEL" || { echo "INTELLIGENCE_MODEL repository variable is missing"; exit 1; }
-      - name: Build prior revision for rollback
-        if: steps.gate.outputs.should_run == 'true'
-        id: previous
-        shell: bash
-        env:
-          URL: https://haidarra82066.github.io
-          BASE_PATH: /noa-energy-atlas
-        run: |
-          echo "publication_id=$(node -p "require('./public/deployment-marker.json').publicationId")" >> "$GITHUB_OUTPUT"
-          npm run build
-          mv dist rollback-dist
-      - name: Research controlling legal sources and discovery indexes
-        if: steps.gate.outputs.should_run == 'true'
-        shell: bash
-        env:
-          AI_BASE_URL: ${{ vars.INTELLIGENCE_BASE_URL }}
-          AI_MODEL: ${{ vars.INTELLIGENCE_MODEL }}
-          AI_API_KEY: ${{ secrets.INTELLIGENCE_API_KEY }}
-          INTELLIGENCE_FETCH_CONCURRENCY: "4"
-        run: |
-          for attempt in 1 2; do npm run update:laws && break; if [ "$attempt" = "2" ]; then exit 1; fi; sleep 30; done
+          git fetch origin main
+          git merge-base --is-ancestor origin/main HEAD || { echo "Release is stale; regenerate from current main"; exit 1; }
+          npx tsx scripts/check-update-scope.ts --mode law --base origin/main
+          test -f updates/research/law-evidence.json
+          test -f updates/candidates/law.json
+          test -f updates/candidates/law-verification.json
+          test -f updates/candidates/law.md
+          test -f updates/pending-state/law.json
           npx tsx scripts/check-critical-sources.ts --mode law
-      - name: Integrate controlling-source legal changes
-        if: steps.gate.outputs.should_run == 'true'
-        id: integrate
+      - name: Determine whether public content changed
+        id: release
+        shell: bash
         run: |
-          npx tsx scripts/auto-publish.ts --mode law --github-output "$GITHUB_OUTPUT"
-          npx tsx scripts/check-update-scope.ts --mode law
+          git show origin/main:public/deployment-marker.json > "$RUNNER_TEMP/previous-marker.json"
+          current="$(node -p "require('./public/deployment-marker.json').publicationId")"
+          previous="$(node -p "require('$RUNNER_TEMP/previous-marker.json').publicationId")"
+          if [ "$current" = "$previous" ]; then changed=false; else changed=true; fi
+          echo "public_changed=$changed" >> "$GITHUB_OUTPUT"
+          echo "publication_id=$current" >> "$GITHUB_OUTPUT"
+          echo "previous_publication_id=$previous" >> "$GITHUB_OUTPUT"
       - name: Validate complete release artifact
-        if: steps.gate.outputs.should_run == 'true'
         env:
           URL: https://haidarra82066.github.io
           BASE_PATH: /noa-energy-atlas
         run: npm run validate:content && npm test && npm audit --omit=dev --audit-level=high && npm run build
-      - name: Create local immutable release commit
-        if: steps.gate.outputs.should_run == 'true' && steps.integrate.outputs.public_changed == 'true'
+      - name: Build prior revision for rollback
+        if: steps.release.outputs.public_changed == 'true'
         shell: bash
+        env:
+          URL: https://haidarra82066.github.io
+          BASE_PATH: /noa-energy-atlas
         run: |
-          git config user.name "noa-atlas-publisher"
-          git config user.email "noa-atlas-publisher@users.noreply.github.com"
-          git checkout -b "automation/legal-release-${{ github.run_id }}"
-          git add updates/research/law-evidence.json updates/candidates/law.json updates/candidates/law-verification.json updates/candidates/law.md updates/pending-state/law.json updates/publication-ledger-law.jsonl src/data/automated-publications.json public/deployment-marker.json
-          git commit -m "feat(intelligence): verified legal release ${{ steps.integrate.outputs.publication_id }} [skip pages]"
+          git worktree add "$RUNNER_TEMP/noa-rollback" origin/main
+          cd "$RUNNER_TEMP/noa-rollback"
+          npm ci
+          npm run build
+          mv dist "$GITHUB_WORKSPACE/rollback-dist"
       - name: Upload current immutable Pages artifact
-        if: steps.gate.outputs.should_run == 'true' && steps.integrate.outputs.public_changed == 'true'
+        if: steps.release.outputs.public_changed == 'true'
         uses: actions/upload-pages-artifact@v4
         with:
           name: github-pages-law-${{ github.run_id }}
           path: dist
       - name: Upload rollback Pages artifact
-        if: steps.gate.outputs.should_run == 'true' && steps.integrate.outputs.public_changed == 'true'
+        if: steps.release.outputs.public_changed == 'true'
         uses: actions/upload-pages-artifact@v4
         with:
           name: github-pages-law-rollback-${{ github.run_id }}
           path: rollback-dist
       - name: Atomically deploy current artifact
-        if: steps.gate.outputs.should_run == 'true' && steps.integrate.outputs.public_changed == 'true'
+        if: steps.release.outputs.public_changed == 'true'
         id: deploy
         uses: actions/deploy-pages@v4
         with:
           artifact_name: github-pages-law-${{ github.run_id }}
       - name: Smoke-test exact public marker
-        if: steps.gate.outputs.should_run == 'true' && steps.integrate.outputs.public_changed == 'true'
+        if: steps.release.outputs.public_changed == 'true'
+        id: smoke
         env:
-          PUBLICATION_ID: ${{ steps.integrate.outputs.publication_id }}
+          PUBLICATION_ID: ${{ steps.release.outputs.publication_id }}
           SMOKE_TIMEOUT_MS: "240000"
         run: node scripts/smoke-production.mjs https://haidarra82066.github.io/noa-energy-atlas "$PUBLICATION_ID"
-      - name: Advance state and publish release commit only after smoke success
-        if: steps.gate.outputs.should_run == 'true' && steps.integrate.outputs.public_changed == 'true'
-        run: |
-          npx tsx scripts/promote-update-state.ts --mode law
-          git add updates/state/law.json updates/pending-state/law.json
-          git commit --amend --no-edit
-          git push origin HEAD:main
-      - name: Commit successful no-op state without deploying
-        if: steps.gate.outputs.should_run == 'true' && steps.integrate.outputs.public_changed != 'true'
+      - name: Advance state and main only after validation and smoke success
+        if: success()
         shell: bash
         run: |
           npx tsx scripts/promote-update-state.ts --mode law
-          git config user.name "noa-atlas-publisher"; git config user.email "noa-atlas-publisher@users.noreply.github.com"
-          git add updates/research/law-evidence.json updates/candidates/law.json updates/candidates/law-verification.json updates/candidates/law.md updates/pending-state/law.json updates/state/law.json updates/publication-ledger-law.jsonl
-          if git diff --cached --quiet; then exit 0; fi
-          git commit -m "chore(intelligence): successful legal no-op ${{ steps.gate.outputs.local_date }} [skip pages]"
+          git config user.name "noa-atlas-publisher"
+          git config user.email "noa-atlas-publisher@users.noreply.github.com"
+          git add updates/state/law.json updates/pending-state/law.json
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(intelligence): promote cloud legal state ${{ steps.release.outputs.publication_id }} [skip pages]"
+          fi
           git push origin HEAD:main
       - name: Roll back if any post-deploy gate fails
         if: failure() && steps.deploy.outcome == 'success'
@@ -145,12 +120,12 @@ jobs:
       - name: Verify restored public marker
         if: failure() && steps.rollback.outcome == 'success'
         env:
-          PUBLICATION_ID: ${{ steps.previous.outputs.publication_id }}
+          PUBLICATION_ID: ${{ steps.release.outputs.previous_publication_id }}
           SMOKE_TIMEOUT_MS: "240000"
         run: node scripts/smoke-production.mjs https://haidarra82066.github.io/noa-energy-atlas "$PUBLICATION_ID"
       - name: Publication summary
-        if: always() && steps.gate.outputs.should_run == 'true'
-        run: echo "Legal run ${{ job.status }}; published ${{ steps.integrate.outputs.published_count || '0' }}; publication ${{ steps.integrate.outputs.publication_id || 'no-op' }}" >> "$GITHUB_STEP_SUMMARY"
+        if: always()
+        run: echo "Cloud legal release ${{ job.status }}; publication ${{ steps.release.outputs.publication_id || 'unavailable' }}; public change ${{ steps.release.outputs.public_changed || 'unknown' }}" >> "$GITHUB_STEP_SUMMARY"
       - name: Preserve failure evidence
         if: failure()
         uses: actions/upload-artifact@v4

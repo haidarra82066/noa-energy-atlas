@@ -118,12 +118,15 @@ describe("Lebanon energy intelligence contract", () => {
     expect(normalizeState({ source: "abc" }, "news").sources.source?.hash).toBe("abc");
   });
 
-  /** Accepts delayed news starts without changing the legal publication window. */
-  it("keeps Tuesday and Friday news runs eligible for the full Beirut editorial date", () => {
+  /** GitHub cron can start hours late; retain the editorial date and duplicate guard. */
+  it("accepts delayed starts only on the correct Beirut editorial dates", () => {
     expect(isScheduledWindow("news", { weekday: "Fri", day: 30, hour: 13 })).toBe(true);
     expect(isScheduledWindow("news", { weekday: "Fri", day: 30, hour: 7 })).toBe(false);
     expect(isScheduledWindow("news", { weekday: "Wed", day: 28, hour: 8 })).toBe(false);
-    expect(isScheduledWindow("law", { weekday: "Fri", day: 1, hour: 13 })).toBe(false);
+    expect(isScheduledWindow("law", { weekday: "Fri", day: 1, hour: 13 })).toBe(true);
+    expect(isScheduledWindow("law", { weekday: "Sun", day: 15, hour: 23 })).toBe(true);
+    expect(isScheduledWindow("law", { weekday: "Mon", day: 16, hour: 8 })).toBe(false);
+    expect(isScheduledWindow("law", { weekday: "Sun", day: 15, hour: 7 })).toBe(false);
     expect(isScheduledWindow("law", { weekday: "Fri", day: 1, hour: 8 })).toBe(true);
   });
 

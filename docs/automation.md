@@ -2,7 +2,7 @@
 
 ## Isolation architecture
 
-Publication is repository-native. Each run starts in a fresh GitHub Actions VM from the current `main` branch, installs locked dependencies, reads bounded evidence and version-controlled state, writes typed production data, validates the complete site, and publishes one immutable artifact to GitHub Pages. No publishing run reads a Codex task, chat transcript, or accumulated heartbeat context.
+Publication is repository-native. Each research run starts in the configured Codex Cloud environment from current `origin/main`, retrieves primary evidence using built-in browsing, and pushes a scoped release branch after all gates pass. A fresh GitHub Actions VM validates that branch and publishes one immutable artifact to GitHub Pages. No external model API key is required for these cloud research tasks. No publishing run reads a Codex task, chat transcript, or accumulated heartbeat context.
 
 News and legal processing are separate workflows with separate root concurrency groups (`noa-news-intelligence`, `noa-legal-intelligence`), source windows, fetch limits, state files, candidates, evidence packets, memory, timeouts, retry delays, and failure artifacts. All production deployments, including ordinary site releases, share `noa-production-publication`, so they cannot overlap or race. A failed run cannot mutate the other workflow's state, and GitHub Pages receives no candidate artifact until the complete build passes.
 
@@ -15,7 +15,7 @@ Continuity lives in version control:
 - `updates/publication-ledger-news.jsonl` and `updates/publication-ledger-law.jsonl`: separate immutable decision/provenance lines.
 - `src/data/automated-publications.json`: the automated production ledger consumed by Astro.
 
-The model sees at most 36 news sources with 5,500 excerpt characters each or 20 priority-one legal sources with 8,000 characters each. It receives no prior chat history. GitHub job timeouts are 50 minutes for news and 60 minutes for law. Network collection retries once; public deployment polling is bounded to four minutes.
+Cloud research uses bounded source packets and the repository source coverage gates. Evidence, rejected candidates and exact cutoffs are saved in the repository; accumulated chat history is not an evidence source. GitHub job timeouts are 50 minutes for news and 60 minutes for law. Network collection retries once; public deployment polling is bounded to four minutes.
 
 ## Schedules and daylight saving time
 
@@ -24,7 +24,7 @@ The editorial timezone is `Asia/Beirut`.
 - News: Tuesday and Friday at 08:23 Beirut time.
 - Law and policy: exactly the 1st and 15th of every month at 08:41 Beirut time.
 
-GitHub cron is UTC and cannot express an IANA timezone. Each workflow schedules both possible Beirut offsets (`05` and `06` UTC). `scripts/schedule-guard.ts` accepts only the invocation whose local Beirut hour is 08 and suppresses the other using `lastScheduledDate`. During UTC+3 daylight time, 05 UTC runs; during UTC+2 standard time, 06 UTC runs. Manual dispatch bypasses the calendar gate but never bypasses evidence or publication gates.
+ChatGPT tasks store the editorial schedule with `TZID=Asia/Beirut`, preserving daylight saving changes. News pushes `automation/news-release/**`; legal research pushes `automation/legal-release/**`. Neither publication workflow has a competing cron. Cloud tasks check the editorial date and promoted state, accept delayed starts later that date, and suppress completed dates. See [Cloud legal publisher](cloud-law-publisher.md) for the complete legal procedure. A separate daily ChatGPT health check runs at 08:00 Europe/Berlin, stays quiet when unchanged, and checks actual research completion rather than the workflow badge.
 
 ## Strict auto-publication policy
 
@@ -43,18 +43,18 @@ A candidate that misses any condition is logged as rejected. Zero accepted candi
 
 ## Secrets and repository settings
 
-The only required GitHub Actions secret is `INTELLIGENCE_API_KEY`. Required repository variables are `INTELLIGENCE_BASE_URL` and `INTELLIGENCE_MODEL`. The provider must expose an OpenAI-compatible `/chat/completions` endpoint with structured JSON output. Provider absence, retirement, outage, invalid output, or schema mismatch fails research before integration; it cannot be interpreted as a quiet period.
+The cloud tasks use their configured environment and connected GitHub access. The legacy manual `update:laws` / `update:news` scripts still require an external provider if explicitly invoked, but scheduled cloud publication does not call them. Missing cloud access, source retrieval or validation is a failure, not a quiet period.
 
 GitHub Pages deployment uses the short-lived repository `GITHUB_TOKEN` and OIDC; there is no hosting-provider token. Workflows request only the permissions they need: ordinary deploys use `contents: read`, `pages: write`, and `id-token: write`; intelligence releases add `contents: write` and `actions: read`. Secrets are never written to evidence, artifacts, the client bundle, logs, or version control. Scheduled workflows and Pages must remain enabled.
 
 ## Failure, rollback, monitoring, and escalation
 
-Before research mutates a workspace, each scheduled workflow builds the current `main` revision as a rollback artifact. The release commit remains local until the candidate artifact is deployed and its exact marker passes public smoke checks. Only then is pending state promoted and the release commit pushed to `main`. If smoke, state promotion, or final push fails after deployment, the workflow redeploys the prebuilt rollback artifact and verifies its prior marker. Never edit `automated-publications.json` partially; the integrator validates the complete ledger and atomically renames a temporary file only after success.
+Before deploying changed public content, each release workflow builds the current `main` revision as a rollback artifact. The release commit remains on its isolated release branch until the candidate artifact is deployed and its exact marker passes public smoke checks. Only then is pending state promoted and the release commit pushed to `main`. If smoke, state promotion, or final push fails after deployment, the workflow redeploys the prebuilt rollback artifact and verifies its prior marker. Never edit `automated-publications.json` partially; the integrator validates the complete ledger and atomically renames a temporary file only after success.
 
 Automated publication commits include `[skip pages]` because the workflow has already deployed and verified that artifact. This prevents the ordinary push workflow from racing the release. Ordinary product and documentation commits are built, tested, audited, deployed, and smoke-tested by `.github/workflows/pages.yml`.
 
 News and law have explicit file allowlists. The shared production ledger is protected by `noa-production-publication`; mode-specific publication decisions remain in separate ledgers. Legal releases retain immutable before/after payloads, hashes, supersession chains, controlling-source IDs, consolidated-text tracking, translation-review identity, status history, and correction history in `legalVersions`.
 
-Failures retain bounded evidence artifacts for 14 days (news) or 30 days (law). Check GitHub Actions, the mode-specific publication ledger, the failure artifact, the `github-pages` deployment environment, and the public marker. Escalate unsupported legal changes to a qualified Lebanese legal reviewer; never lower confidence thresholds. Correct the source or configuration, then re-run through `workflow_dispatch`.
+Failures retain bounded evidence artifacts for 14 days (news) or 30 days (law). Check GitHub Actions, the mode-specific publication ledger, the failure artifact, the `github-pages` deployment environment, and the public marker. Escalate unsupported legal changes to a qualified Lebanese legal reviewer; never lower confidence thresholds. Correct the source or configuration, then prepare a new scoped cloud release from current main.
 
-Any Codex automation should be a lightweight monitor or notification only. It must not research, integrate, build, or publish. No production publication depends on an overfilled chat.
+Cloud research tasks follow version-controlled procedures in fresh checkouts. The health-check task is read-only and must not research, integrate or publish. Production deployment remains in GitHub Actions; no run relies on accumulated chat memory.

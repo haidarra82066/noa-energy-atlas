@@ -16,7 +16,7 @@ await mkdir(outputDir, { recursive: true });
 
 const browser = await chromium.launch({
   headless: true,
-  executablePath: process.env.PLAYWRIGHT_BROWSER_PATH ?? "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+  executablePath: process.env.PLAYWRIGHT_BROWSER_PATH || (process.platform === "win32" ? "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe" : undefined)
 });
 const failures = [];
 
@@ -191,8 +191,12 @@ await mobile.locator(".inspector-close").click();
 
 const beforePinch = (await mobile.locator("#knowledge-graph").getAttribute("viewBox")).split(" ").map(Number);
 const session = await mobile.context().newCDPSession(mobile);
-await session.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x: 110, y: 350, id: 1 }, { x: 265, y: 350, id: 2 }] });
-await session.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: 65, y: 350, id: 1 }, { x: 310, y: 350, id: 2 }] });
+await mobile.locator("#knowledge-graph").scrollIntoViewIfNeeded();
+const pinchBox = await mobile.locator("#knowledge-graph").boundingBox();
+const pinchX = pinchBox.x + pinchBox.width / 2;
+const pinchY = Math.max(pinchBox.y + 70, Math.min(pinchBox.y + pinchBox.height / 2, 650));
+await session.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x: pinchX - 65, y: pinchY, id: 1 }, { x: pinchX + 65, y: pinchY, id: 2 }] });
+await session.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: pinchX - 110, y: pinchY, id: 1 }, { x: pinchX + 110, y: pinchY, id: 2 }] });
 await session.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
 await mobile.waitForTimeout(100);
 const afterPinch = (await mobile.locator("#knowledge-graph").getAttribute("viewBox")).split(" ").map(Number);

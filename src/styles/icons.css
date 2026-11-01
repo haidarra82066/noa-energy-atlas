@@ -53,3 +53,5 @@
 .ph.ph-lightning::before { content: "\e2de"; }
 .ph.ph-target::before { content: "\e47c"; }
 .ph.ph-wind::before { content: "\e5d2"; }
+.ph.ph-arrow-left::before { content: "\e058"; }
+.ph.ph-link::before { content: "\e2e2"; }

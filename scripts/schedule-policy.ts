@@ -11,5 +11,5 @@ export function isScheduledWindow(mode: PublicationMode, parts: BeirutSchedulePa
     return ["Tue", "Fri"].includes(parts.weekday) && parts.hour >= 8 && parts.hour <= 23;
   }
 
-  return [1, 15].includes(parts.day) && parts.hour === 8;
+  return [1, 15].includes(parts.day) && parts.hour >= 8 && parts.hour <= 23;
 }
