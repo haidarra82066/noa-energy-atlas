@@ -11,3 +11,11 @@ This register records verified briefing outcomes and quiet periods. It is append
 - The Electricity Regulatory Authority was appointed on 2025-09-11.
 
 See `src/data/atlas.ts` for the source-backed public records. These entries are memory aids, not independent evidence.
+
+## 2026-11-06 — bounded cloud research
+
+- Cutoff: 2026-11-06T07:35:54.665Z (Friday, 6 November 2026 at 09:35:54 EET); coverage November 2–6.
+- One candidate approved: official postponement of the November 5 electricity session.
+- Ten other leads rejected or excluded; see updates/candidates/news.md.
+- Source coverage: 53/67; priority one 26/33. Not a quiet period; EDL operational evidence remains unavailable.
+- Release completion is established only by the repository workflow and promoted state, not this research entry.

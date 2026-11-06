@@ -1,11 +1,65 @@
 {
   "version": 1,
-  "sources": [],
+  "sources": [
+    {
+      "id": "src-auto-cf692a43b05e80",
+      "title": "Cabinet postpones November 5 electricity session",
+      "publisher": "Presidency of the Council of Ministers",
+      "url": "https://www.pcm.gov.lb/arabic/subpg.aspx?pageid=27743",
+      "publishedAt": "2026-11-04",
+      "accessedAt": "2026-11-06T07:35:55.884Z",
+      "language": "English",
+      "kind": "regulator",
+      "note": "Automatically published from the Friday, 6 November 2026 at 09:35:54 EET verified evidence run."
+    },
+    {
+      "id": "src-auto-9a6582b8561052",
+      "title": "Cabinet agenda for November 5",
+      "publisher": "Presidency of the Council of Ministers",
+      "url": "https://www.pcm.gov.lb/Library/Files/jadwal%2011032026.pdf",
+      "publishedAt": "2026-11-03",
+      "accessedAt": "2026-11-06T07:35:55.884Z",
+      "language": "English",
+      "kind": "regulator",
+      "note": "Automatically published from the Friday, 6 November 2026 at 09:35:54 EET verified evidence run."
+    },
+    {
+      "id": "src-auto-78680539b052ae",
+      "title": "Cabinet meeting postponed",
+      "publisher": "MTV Lebanon",
+      "url": "https://www.mtv.com.lb/en/news/1755076",
+      "publishedAt": "2026-11-04",
+      "accessedAt": "2026-11-06T07:35:55.884Z",
+      "language": "English",
+      "kind": "research",
+      "note": "Automatically published from the Friday, 6 November 2026 at 09:35:54 EET verified evidence run."
+    }
+  ],
   "claims": [],
   "instruments": [],
   "instrumentUpdates": [],
   "relationships": [],
-  "news": [],
+  "news": [
+    {
+      "id": "news-auto-cabinet-electricity-session-postponed-2026-11-04",
+      "slug": "cabinet-electricity-session-postponed-2026-11-04",
+      "date": "2026-11-04",
+      "title": "Cabinet postpones November 5 electricity session",
+      "summary": "The Cabinet Secretariat announced on November 4 that the session scheduled for November 5 would move to the following week. Its signed agenda identifies electricity as the session’s subject. The postponement notice specifies neither a replacement date nor a reason.",
+      "significance": "Analysis: the delay shifts the next opportunity for Cabinet consideration of the electricity file. Investors and operators should await a dated replacement agenda and published decisions before treating discussions as approvals.",
+      "sourceIds": [
+        "src-auto-cf692a43b05e80",
+        "src-auto-9a6582b8561052",
+        "src-auto-78680539b052ae"
+      ],
+      "instrumentIds": [],
+      "tags": [
+        "electricity",
+        "cabinet",
+        "decision-timetable"
+      ]
+    }
+  ],
   "legalDetails": {},
   "instrumentAr": {},
   "claimAr": {},
